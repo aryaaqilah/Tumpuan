@@ -80,7 +80,7 @@ flutter:
         - asset: fonts/brodies.ttf
     - family : Satoshi
       fonts :
-        - asset : fonts/Satoshi.otf
+        - asset : fonts/Satoshi-Regular.otf
 
   #
   # For details regarding fonts from package dependencies,
