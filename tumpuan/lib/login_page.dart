@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(
+                        Navigator.of(context).pushReplacement(
                             MaterialPageRoute(builder: (context) => Home()));
                       },
                     ),
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => SignUpPage()));
                     },
                   )
