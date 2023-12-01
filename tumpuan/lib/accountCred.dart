@@ -3,16 +3,18 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tumpuan/genderVerif.dart';
 import 'package:tumpuan/login_page.dart';
+import 'package:tumpuan/signUp/bridgetoQ.dart';
+import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class AccountCred extends StatefulWidget {
+  const AccountCred({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<AccountCred> createState() => _AccountCredState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _AccountCredState extends State<AccountCred> {
   @override
   TextEditingController dateInputController = TextEditingController();
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   actions: [
                     IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          _showCloseDialog(context);
                         },
                         icon: Icon(
                           Icons.close,
@@ -65,7 +67,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: LinearPercentIndicator(
                     // width: ,
                     lineHeight: 3.0,
-                    percent: 0.33,
+                    percent: 1,
                     backgroundColor: Colors.grey,
                     progressColor: AppColors.pink1,
                   ),
@@ -76,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Personal Detail',
+                      'Account Credentials',
                       style: TextStyle(
                           fontFamily: 'Satoshi',
                           fontWeight: FontWeight.bold,
@@ -97,16 +99,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: TextField(
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'First and Middle Name',
+                          hintText: 'Email',
                         ),
                       ),
                     ),
                   ),
                 ),
-
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
+                //password
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Container(
@@ -117,126 +117,65 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
+                        obscureText: true,
                         decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Last Name',
+                            border: InputBorder.none,
+                            hintText: 'Password',
+                            suffixIcon: Icon(Icons.remove_red_eye_outlined)),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 200),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Container(
+                        width: 100,
+                        // padding: EdgeInsets.only(left: 0),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(251, 111, 146, 1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                          child: TextButton(
+                            child: const Text(
+                              'Back',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                            hintText: 'Birth Date',
-                            suffixIcon: Icon(Icons.calendar_month)),
-                        controller: dateInputController,
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1950),
-                              lastDate: DateTime(2050));
-
-                          if (pickedDate != null) {
-                            dateInputController.text =
-                                DateFormat('dd MMMM yyyy').format(pickedDate);
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 20,
-                ),
-                //password
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                //   child: Container(
-                //     decoration: BoxDecoration(
-                //         color: Colors.grey[200],
-                //         border: Border.all(color: Colors.black),
-                //         borderRadius: BorderRadius.circular(12)),
-                //     child: Padding(
-                //       padding: const EdgeInsets.only(left: 20.0),
-                //       child: TextField(
-                //         obscureText: true,
-                //         decoration: InputDecoration(
-                //             border: InputBorder.none,
-                //             hintText: 'Password',
-                //             suffixIcon: Icon(Icons.remove_red_eye_outlined)),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 10),
-                      child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(),
-                        hint: Text('Gender'),
-                        items: <String>['Female', 'Male'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: new Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (_) {},
-                      ),
-                    ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 20,
-                ),
-                //sign in button
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Container(
-                    width: 100,
-                    // padding: EdgeInsets.only(left: 0),
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(251, 111, 146, 1),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: TextButton(
-                        child: const Text(
-                          'Save & Next',
-                          style: TextStyle(color: Colors.white),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Container(
+                        width: 100,
+                        // padding: EdgeInsets.only(left: 0),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(251, 111, 146, 1),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => GenderVerifPage()));
-                        },
+                        child: Center(
+                          child: TextButton(
+                            child: const Text(
+                              'Save & Next',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => BridgetoQ()));
+                            },
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
 
                 // SizedBox(
@@ -271,4 +210,45 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+}
+
+Future<void> _showCloseDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        // title: Text(
+        //   'Canceling Registration?',
+        //   style: TextStyle(fontFamily: 'Satoshi'),
+        // ),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Image(image: AssetImage('images/cancelRegist.png')),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: AppColors.pink1),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Yes', style: TextStyle(color: AppColors.pink1)),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => StartPage()),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
