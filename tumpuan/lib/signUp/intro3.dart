@@ -48,7 +48,7 @@ class _Intro3State extends State<Intro3> {
             SizedBox(height: 100),
             DotsIndicator(
               dotsCount: 3,
-              position: 1,
+              position: 2,
               decorator: DotsDecorator(
                 color: AppColors.bg1,
                 activeColor: AppColors.pink1,

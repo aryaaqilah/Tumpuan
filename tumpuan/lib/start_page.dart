@@ -43,7 +43,7 @@ class _StartPageState extends State<StartPage> {
                       MaterialPageRoute(builder: (context) => LoginPage()));
                 },
                 child: Text(
-                  'Loggg In',
+                  'Login',
                   style: TextStyle(fontFamily: 'Satoshi'),
                 ),
                 style: ButtonStyle(
@@ -58,8 +58,8 @@ class _StartPageState extends State<StartPage> {
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Intro1()));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Intro1()));
                 },
                 child: Text(
                   'Sign Up',

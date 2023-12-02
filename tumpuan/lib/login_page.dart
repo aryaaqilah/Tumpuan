@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/screens/home.dart';
+import 'package:tumpuan/signUp/intro1.dart';
 import 'package:tumpuan/signUpPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -116,8 +117,8 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => SignUpPage()));
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => Intro1()));
                     },
                   )
                 ],
