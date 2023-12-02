@@ -13,6 +13,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
+        // automaticallyImplyLeading: false,
         backgroundColor: Color.fromRGBO(237, 237, 237, 1),
         title: Padding(
           padding: const EdgeInsets.only(top: 8.0),

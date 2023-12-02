@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/login_page.dart';
+import 'package:tumpuan/signUp/intro1.dart';
 import 'package:tumpuan/signUpPage.dart';
 
 class StartPage extends StatefulWidget {
@@ -58,7 +59,7 @@ class _StartPageState extends State<StartPage> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SignUpPage()));
+                      MaterialPageRoute(builder: (context) => Intro1()));
                 },
                 child: Text(
                   'Sign Up',
