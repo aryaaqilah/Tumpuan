@@ -3,14 +3,14 @@ import 'package:tumpuan/login_page.dart';
 import 'package:tumpuan/signUp/question1.dart';
 import 'package:tumpuan/signUpPage.dart';
 
-class BridgetoQ extends StatefulWidget {
-  const BridgetoQ({super.key});
+class AllSetPage extends StatefulWidget {
+  const AllSetPage({super.key});
 
   @override
-  State<BridgetoQ> createState() => _BridgetoQState();
+  State<AllSetPage> createState() => _AllSetPageState();
 }
 
-class _BridgetoQState extends State<BridgetoQ> {
+class _AllSetPageState extends State<AllSetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,17 +21,17 @@ class _BridgetoQState extends State<BridgetoQ> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 80),
-            Image(image: AssetImage('images/bridging.png')),
+            Image(image: AssetImage('images/allset.png')),
             SizedBox(height: 50),
             Container(
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => Question1()));
+                      MaterialPageRoute(builder: (context) => LoginPage()));
                 },
                 child: Text(
-                  'Next',
+                  'Login',
                   style: TextStyle(fontFamily: 'Satoshi'),
                 ),
                 style: ButtonStyle(

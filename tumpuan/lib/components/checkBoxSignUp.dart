@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tumpuan/styles/style.dart';
 
 class LabeledCheckbox extends StatelessWidget {
   const LabeledCheckbox({
@@ -22,22 +23,29 @@ class LabeledCheckbox extends StatelessWidget {
       },
       child: Padding(
         padding: padding,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-                child: Text(
-              label,
-              style: TextStyle(fontFamily: 'Satoshi'),
-            )),
-            Checkbox(
-              activeColor: Color.fromRGBO(251, 111, 146, 1),
-              value: value,
-              shape: CircleBorder(),
-              onChanged: (bool? newValue) {
-                onChanged(newValue!);
-              },
+        child: Container(
+          decoration: BoxDecoration(
+              color: AppColors.bg1, borderRadius: BorderRadius.circular(10)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                    child: Text(
+                  label,
+                  style: TextStyle(fontFamily: 'Satoshi'),
+                )),
+                Checkbox(
+                  activeColor: Color.fromRGBO(251, 111, 146, 1),
+                  value: value,
+                  shape: CircleBorder(),
+                  onChanged: (bool? newValue) {
+                    onChanged(newValue!);
+                  },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

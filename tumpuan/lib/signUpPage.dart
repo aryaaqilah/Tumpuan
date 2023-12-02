@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tumpuan/genderVerif.dart';
 import 'package:tumpuan/login_page.dart';
+import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -33,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   actions: [
                     IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          _showCloseDialog(context);
                         },
                         icon: Icon(
                           Icons.close,
@@ -271,4 +272,45 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+}
+
+Future<void> _showCloseDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        // title: Text(
+        //   'Canceling Registration?',
+        //   style: TextStyle(fontFamily: 'Satoshi'),
+        // ),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Image(image: AssetImage('images/cancelRegist.png')),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: AppColors.pink1),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Yes', style: TextStyle(color: AppColors.pink1)),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => StartPage()),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
