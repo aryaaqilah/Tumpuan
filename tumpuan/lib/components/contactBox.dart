@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/callView.dart';
+import 'package:tumpuan/components/editContact.dart';
 import 'package:tumpuan/styles/style.dart';
 
 Widget getDataContact(List<List<String>> dataContact) {
   String name;
   String image;
   String number;
+  String email;
+  String address;
   List<Widget> contactBoxes = [];
   for (var i = 0; i < dataContact.length; i++) {
     name = dataContact[i][0];
     image = dataContact[i][1];
     number = dataContact[i][2];
-    contactBoxes.add(ContactBox(name: name, image: image, number: number));
+    email = dataContact[i][3];
+    address = dataContact[i][4];
+    contactBoxes.add(ContactBox(
+      name: name,
+      image: image,
+      number: number,
+      email: email,
+      address: address,
+    ));
     contactBoxes.add(SizedBox(height: 10));
   }
   return Column(
@@ -24,11 +35,15 @@ class ContactBox extends StatelessWidget {
       {super.key,
       required this.name,
       required this.image,
-      required this.number});
+      required this.number,
+      required this.email,
+      required this.address});
 
   late final String name;
   final String image;
   final String number;
+  final String email;
+  final String address;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +70,14 @@ class ContactBox extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 onPressed: () {
-                  print('icon');
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => EditContact(
+                            name: name,
+                            image: image,
+                            number: number,
+                            email: email,
+                            address: address,
+                          )));
                 },
                 iconSize: 15,
               ),

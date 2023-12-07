@@ -14,14 +14,14 @@ class _PanggilPuanState extends State<PanggilPuan> {
   @override
   Widget build(BuildContext context) {
     final dataContact = [
-      ['Ayah', 'images/profileDefault.jpg', '082122504942'],
-      ['Ibu', 'images/profileDefault.jpg', '0000000000'],
-      ['Ayah2', 'images/profileDefault.jpg', '082122504942'],
-      ['Ayah3', 'images/profileDefault.jpg', '082122504942'],
-      ['Ayah4', 'images/profileDefault.jpg', '082122504942'],
-      ['Ayah5', 'images/profileDefault.jpg', '082122504942'],
-      ['Ayah6', 'images/profileDefault.jpg', '082122504942'],
-      ['Ayah7', 'images/profileDefault.jpg', '082122504942'],
+      ['Ayah', 'images/profileDefault.jpg', '082122504942', 'Email', 'Address'],
+      ['Ibu', 'images/profileDefault.jpg', '0000000000', '', ''],
+      ['Ayah2', 'images/profileDefault.jpg', '082122504942', '', ''],
+      ['Ayah3', 'images/profileDefault.jpg', '082122504942', '', ''],
+      ['Ayah4', 'images/profileDefault.jpg', '082122504942', '', ''],
+      ['Ayah5', 'images/profileDefault.jpg', '082122504942', '', ''],
+      ['Ayah6', 'images/profileDefault.jpg', '082122504942', '', ''],
+      ['Ayah7', 'images/profileDefault.jpg', '082122504942', '', ''],
     ];
 
     final datanya = ['Ayah', 'images/profileDefault.jpg', '082122504942'];
