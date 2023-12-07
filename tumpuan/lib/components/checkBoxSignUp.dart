@@ -33,12 +33,12 @@ class LabeledCheckbox extends StatelessWidget {
                 Expanded(
                     child: Text(
                   label,
-                  style: TextStyle(fontFamily: 'Satoshi'),
+                  style: const TextStyle(fontFamily: 'Satoshi'),
                 )),
                 Checkbox(
-                  activeColor: Color.fromRGBO(251, 111, 146, 1),
+                  activeColor: const Color.fromRGBO(251, 111, 146, 1),
                   value: value,
-                  shape: CircleBorder(),
+                  shape: const CircleBorder(),
                   onChanged: (bool? newValue) {
                     onChanged(newValue!);
                   },
@@ -54,7 +54,7 @@ class LabeledCheckbox extends StatelessWidget {
 
 class LabeledCheckboxExample extends StatefulWidget {
   String sentences;
-  LabeledCheckboxExample({required this.sentences});
+  LabeledCheckboxExample({super.key, required this.sentences});
 
   @override
   State<LabeledCheckboxExample> createState() =>

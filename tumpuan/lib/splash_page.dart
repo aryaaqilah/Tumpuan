@@ -3,6 +3,8 @@ import 'start_page.dart';
 import 'dart:async';
 
 class SplashPage extends StatefulWidget {
+  const SplashPage({super.key});
+
   @override
   _SplashPageState createState() => _SplashPageState();
 }
@@ -11,20 +13,19 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    // Tunda perpindahan ke StartPage selama 3 detik
     Timer(
-      Duration(seconds: 3),
+      const Duration(seconds: 4),
       () => Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => StartPage()),
+        MaterialPageRoute(builder: (context) => const StartPage()),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
+    return const Scaffold(
+      backgroundColor: Color.fromRGBO(237, 237, 237, 1),
       body: SafeArea(
           child: Center(
         child: Column(

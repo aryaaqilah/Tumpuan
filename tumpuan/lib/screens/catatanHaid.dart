@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CatatanHaid extends StatefulWidget {
+  const CatatanHaid({super.key});
+
   @override
   State<CatatanHaid> createState() {
     return _CatatanHaidState();
@@ -13,9 +15,9 @@ class _CatatanHaidState extends State<CatatanHaid> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(237, 237, 237, 1),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+        backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
+        title: const Padding(
+          padding: EdgeInsets.only(top: 8.0),
           child: Text(
             'Tumpuan',
             style: TextStyle(
@@ -23,7 +25,7 @@ class _CatatanHaidState extends State<CatatanHaid> {
           ),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'Catatan Haid Page',
           style: TextStyle(fontSize: 40),

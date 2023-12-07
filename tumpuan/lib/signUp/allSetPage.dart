@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/login_page.dart';
-import 'package:tumpuan/signUp/question1.dart';
-import 'package:tumpuan/signUpPage.dart';
 
 class AllSetPage extends StatefulWidget {
   const AllSetPage({super.key});
@@ -20,23 +18,23 @@ class _AllSetPageState extends State<AllSetPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 80),
-            Image(image: AssetImage('images/allset.png')),
-            SizedBox(height: 50),
-            Container(
+            const SizedBox(height: 80),
+            const Image(image: AssetImage('images/allset.png')),
+            const SizedBox(height: 50),
+            SizedBox(
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => LoginPage()));
+                      MaterialPageRoute(builder: (context) => const LoginPage()));
                 },
-                child: Text(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(251, 111, 146, 1))),
+                child: const Text(
                   'Login',
                   style: TextStyle(fontFamily: 'Satoshi'),
                 ),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Color.fromRGBO(251, 111, 146, 1))),
               ),
             ),
           ],

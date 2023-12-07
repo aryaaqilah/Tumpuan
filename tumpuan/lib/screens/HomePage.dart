@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
         // automaticallyImplyLeading: false,
-        backgroundColor: Color.fromRGBO(237, 237, 237, 1),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+        backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
+        title: const Padding(
+          padding: EdgeInsets.only(top: 8.0),
           child: Text(
             'Tumpuan',
             style: TextStyle(
@@ -24,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
           ),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'Home Page',
           style: TextStyle(fontSize: 40),

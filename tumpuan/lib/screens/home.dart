@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/screens/catatanHaid.dart';
-import 'package:tumpuan/screens/dashboard.dart';
+import 'package:tumpuan/screens/HomePage.dart';
 import 'package:tumpuan/screens/more.dart';
 import 'package:tumpuan/screens/pageHome.dart';
 import 'package:tumpuan/screens/panggilPuan.dart';
@@ -17,49 +17,49 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int currentTab = 0;
   final List<Widget> screens = [
-    Dashboard(),
-    PageHome(),
-    CatatanHaid(),
-    PanggilPuan(),
-    TombolAman(),
-    More()
+    const HomePage(),
+    const PageHome(),
+    const CatatanHaid(),
+    const PanggilPuan(),
+    const TombolAman(),
+    const More()
   ];
 
-  final PageStorageBucket bucket = new PageStorageBucket();
-  Widget currentScreen = Dashboard();
+  final PageStorageBucket bucket = PageStorageBucket();
+  Widget currentScreen = const HomePage();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       body: PageStorage(
-        child: currentScreen,
         bucket: bucket,
+        child: currentScreen,
       ),
       floatingActionButton: FloatingActionButton(
         child: Container(
           width: 60,
           height: 60,
-          child: Icon(
-            Icons.sos,
-            size: 30,
-            color: Colors.white,
-          ),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(colors: [
                 Color.fromRGBO(251, 111, 146, 1),
                 Color.fromRGBO(255, 143, 171, 1)
               ])),
+          child: const Icon(
+            Icons.sos,
+            size: 30,
+            color: Colors.white,
+          ),
         ),
         onPressed: () {},
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromRGBO(237, 237, 237, 1),
-        shape: CircularNotchedRectangle(),
+        color: const Color.fromRGBO(237, 237, 237, 1),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 10,
-        child: Container(
+        child: SizedBox(
           height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = Dashboard();
+                        currentScreen = const HomePage();
                         currentTab = 0;
                       });
                     },
@@ -81,14 +81,14 @@ class _HomeState extends State<Home> {
                         Icon(
                           Icons.home,
                           color: currentTab == 0
-                              ? Color.fromRGBO(251, 111, 146, 1)
+                              ? const Color.fromRGBO(251, 111, 146, 1)
                               : Colors.grey,
                         ),
                         Text(
                           'Home',
                           style: TextStyle(
                               color: currentTab == 0
-                                  ? Color.fromRGBO(251, 111, 146, 1)
+                                  ? const Color.fromRGBO(251, 111, 146, 1)
                                   : Colors.grey,
                               fontSize: 12),
                         )
@@ -99,7 +99,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = CatatanHaid();
+                        currentScreen = const CatatanHaid();
                         currentTab = 1;
                       });
                     },
@@ -109,14 +109,14 @@ class _HomeState extends State<Home> {
                         Icon(
                           Icons.calendar_month,
                           color: currentTab == 1
-                              ? Color.fromRGBO(251, 111, 146, 1)
+                              ? const Color.fromRGBO(251, 111, 146, 1)
                               : Colors.grey,
                         ),
                         Text(
                           'Catatan Haid',
                           style: TextStyle(
                               color: currentTab == 1
-                                  ? Color.fromRGBO(251, 111, 146, 1)
+                                  ? const Color.fromRGBO(251, 111, 146, 1)
                                   : Colors.grey,
                               fontSize: 12),
                         )
@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = PanggilPuan();
+                        currentScreen = const PanggilPuan();
                         currentTab = 3;
                       });
                     },
@@ -146,14 +146,14 @@ class _HomeState extends State<Home> {
                         Icon(
                           Icons.call,
                           color: currentTab == 3
-                              ? Color.fromRGBO(251, 111, 146, 1)
+                              ? const Color.fromRGBO(251, 111, 146, 1)
                               : Colors.grey,
                         ),
                         Text(
                           'Panggil Puan',
                           style: TextStyle(
                               color: currentTab == 3
-                                  ? Color.fromRGBO(251, 111, 146, 1)
+                                  ? const Color.fromRGBO(251, 111, 146, 1)
                                   : Colors.grey,
                               fontSize: 12),
                         )
@@ -164,7 +164,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = More();
+                        currentScreen = const More();
                         currentTab = 4;
                       });
                     },
@@ -174,14 +174,14 @@ class _HomeState extends State<Home> {
                         Icon(
                           Icons.more_horiz,
                           color: currentTab == 4
-                              ? Color.fromRGBO(251, 111, 146, 1)
+                              ? const Color.fromRGBO(251, 111, 146, 1)
                               : Colors.grey,
                         ),
                         Text(
                           'More',
                           style: TextStyle(
                               color: currentTab == 4
-                                  ? Color.fromRGBO(251, 111, 146, 1)
+                                  ? const Color.fromRGBO(251, 111, 146, 1)
                                   : Colors.grey,
                               fontSize: 12),
                         ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tumpuan/genderVerif.dart';
-import 'package:tumpuan/login_page.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
@@ -16,6 +15,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   TextEditingController dateInputController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
@@ -26,7 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 AppBar(
                   toolbarHeight: 70,
                   backgroundColor: AppColors.bg1,
@@ -36,12 +36,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         onPressed: () {
                           _showCloseDialog(context);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.close,
                           color: Colors.black,
                         ))
                   ],
-                  title: Align(
+                  title: const Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       'Tumpuan',
@@ -53,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 // Padding(
                 //   padding: const EdgeInsets.only(left: 25.0),
                 //   child: Align(
@@ -71,9 +71,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     progressColor: AppColors.pink1,
                   ),
                 ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 25.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -85,7 +85,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Container(
@@ -93,8 +93,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         color: Colors.grey[200],
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 20.0),
                       child: TextField(
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -105,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
@@ -115,8 +115,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         color: Colors.grey[200],
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 20.0),
                       child: TextField(
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -127,7 +127,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
@@ -162,7 +162,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 //password
@@ -198,12 +198,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20, right: 10),
                       child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(),
-                        hint: Text('Gender'),
+                        decoration: const InputDecoration(),
+                        hint: const Text('Gender'),
                         items: <String>['Female', 'Male'].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: new Text(value),
+                            child: Text(value),
                           );
                         }).toList(),
                         onChanged: (_) {},
@@ -212,7 +212,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 //sign in button
@@ -222,7 +222,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     width: 100,
                     // padding: EdgeInsets.only(left: 0),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(251, 111, 146, 1),
+                      color: const Color.fromRGBO(251, 111, 146, 1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -233,7 +233,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => GenderVerifPage()));
+                              builder: (context) => const GenderVerifPage()));
                         },
                       ),
                     ),
@@ -284,7 +284,7 @@ Future<void> _showCloseDialog(BuildContext context) async {
         //   'Canceling Registration?',
         //   style: TextStyle(fontFamily: 'Satoshi'),
         // ),
-        content: SingleChildScrollView(
+        content: const SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               Image(image: AssetImage('images/cancelRegist.png')),
@@ -293,7 +293,7 @@ Future<void> _showCloseDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: Text(
+            child: const Text(
               'Cancel',
               style: TextStyle(color: AppColors.pink1),
             ),
@@ -302,10 +302,10 @@ Future<void> _showCloseDialog(BuildContext context) async {
             },
           ),
           TextButton(
-            child: Text('Yes', style: TextStyle(color: AppColors.pink1)),
+            child: const Text('Yes', style: TextStyle(color: AppColors.pink1)),
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => StartPage()),
+                MaterialPageRoute(builder: (context) => const StartPage()),
               );
             },
           ),

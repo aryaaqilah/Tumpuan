@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tumpuan/components/checkBoxSignUp.dart';
-import 'package:tumpuan/genderVerif.dart';
-import 'package:tumpuan/login_page.dart';
-import 'package:tumpuan/signUp/bridgetoQ.dart';
 import 'package:tumpuan/signUp/question3.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
@@ -19,6 +16,7 @@ class Question2 extends StatefulWidget {
 class _Question2State extends State<Question2> {
   @override
   TextEditingController dateInputController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg,
@@ -29,7 +27,7 @@ class _Question2State extends State<Question2> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 AppBar(
                   toolbarHeight: 70,
                   backgroundColor: AppColors.bg,
@@ -39,12 +37,12 @@ class _Question2State extends State<Question2> {
                         onPressed: () {
                           _showCloseDialog(context);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.close,
                           color: Colors.black,
                         ))
                   ],
-                  title: Align(
+                  title: const Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       'Tumpuan',
@@ -56,7 +54,7 @@ class _Question2State extends State<Question2> {
                     ),
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 // Padding(
                 //   padding: const EdgeInsets.only(left: 25.0),
                 //   child: Align(
@@ -74,9 +72,9 @@ class _Question2State extends State<Question2> {
                     progressColor: AppColors.pink1,
                   ),
                 ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 25.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -88,9 +86,9 @@ class _Question2State extends State<Question2> {
                     ),
                   ),
                 ),
-                SizedBox(height: 100),
+                const SizedBox(height: 100),
 
-                Text(
+                const Text(
                   'When did your last period start ?',
                   style: TextStyle(
                       fontFamily: 'Satoshi',
@@ -99,7 +97,7 @@ class _Question2State extends State<Question2> {
                   textAlign: TextAlign.center,
                 ),
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -138,13 +136,13 @@ class _Question2State extends State<Question2> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       LabeledCheckboxExample(sentences: 'I don\'t know'),
                     ],
                   ),
                 ),
 
-                SizedBox(height: 150),
+                const SizedBox(height: 150),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -154,7 +152,7 @@ class _Question2State extends State<Question2> {
                         width: 100,
                         // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(251, 111, 146, 1),
+                          color: const Color.fromRGBO(251, 111, 146, 1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
@@ -176,7 +174,7 @@ class _Question2State extends State<Question2> {
                         width: 100,
                         // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(251, 111, 146, 1),
+                          color: const Color.fromRGBO(251, 111, 146, 1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
@@ -187,7 +185,7 @@ class _Question2State extends State<Question2> {
                             ),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Question3()));
+                                  builder: (context) => const Question3()));
                             },
                           ),
                         ),
@@ -214,7 +212,7 @@ Future<void> _showCloseDialog(BuildContext context) async {
         //   'Canceling Registration?',
         //   style: TextStyle(fontFamily: 'Satoshi'),
         // ),
-        content: SingleChildScrollView(
+        content: const SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               Image(image: AssetImage('images/cancelRegist.png')),
@@ -223,7 +221,7 @@ Future<void> _showCloseDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: Text(
+            child: const Text(
               'Cancel',
               style: TextStyle(color: AppColors.pink1),
             ),
@@ -232,10 +230,10 @@ Future<void> _showCloseDialog(BuildContext context) async {
             },
           ),
           TextButton(
-            child: Text('Yes', style: TextStyle(color: AppColors.pink1)),
+            child: const Text('Yes', style: TextStyle(color: AppColors.pink1)),
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => StartPage()),
+                MaterialPageRoute(builder: (context) => const StartPage()),
               );
             },
           ),

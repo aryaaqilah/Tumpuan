@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/screens/home.dart';
 import 'package:tumpuan/signUp/intro1.dart';
-import 'package:tumpuan/signUpPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -21,14 +20,14 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Tumpuan',
                 style: TextStyle(
                     fontFamily: 'Brodies',
                     color: Color.fromRGBO(251, 111, 146, 1),
                     fontSize: 40),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
@@ -36,8 +35,8 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.grey[200],
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(12)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 20.0),
                     child: TextField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -48,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               //password
@@ -59,8 +58,8 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.grey[200],
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(12)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 20.0),
                     child: TextField(
                       obscureText: true,
                       decoration: InputDecoration(
@@ -71,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               //sign in button
@@ -80,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   // padding: EdgeInsets.only(left: 0),
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(251, 111, 146, 1),
+                    color: const Color.fromRGBO(251, 111, 146, 1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
@@ -91,21 +90,21 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => Home()));
+                            MaterialPageRoute(builder: (context) => const Home()));
                       },
                     ),
                   ),
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               // register button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Not a member?',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -118,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => Intro1()));
+                          MaterialPageRoute(builder: (context) => const Intro1()));
                     },
                   )
                 ],

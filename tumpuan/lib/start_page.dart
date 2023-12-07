@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/login_page.dart';
 import 'package:tumpuan/signUp/intro1.dart';
-import 'package:tumpuan/signUpPage.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -20,54 +19,54 @@ class _StartPageState extends State<StartPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Tumpuan',
               style: TextStyle(
                   fontFamily: 'Brodies',
                   color: Color.fromRGBO(251, 111, 146, 1),
                   fontSize: 40),
             ),
-            Text(
+            const Text(
               'Tempat Untuk Menguatkan Perempuan',
               style: TextStyle(
                   fontFamily: 'Satoshi',
                   color: Color.fromRGBO(251, 111, 146, 1),
                   fontSize: 13),
             ),
-            SizedBox(height: 200),
-            Container(
+            const SizedBox(height: 200),
+            SizedBox(
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => LoginPage()));
+                      MaterialPageRoute(builder: (context) => const LoginPage()));
                 },
-                child: Text(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(251, 111, 146, 1))),
+                child: const Text(
                   'Login',
                   style: TextStyle(fontFamily: 'Satoshi'),
                 ),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Color.fromRGBO(251, 111, 146, 1))),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Container(
+            SizedBox(
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Intro1()));
+                      .push(MaterialPageRoute(builder: (context) => const Intro1()));
                 },
-                child: Text(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(251, 111, 146, 1))),
+                child: const Text(
                   'Sign Up',
                   style: TextStyle(fontFamily: 'Satoshi'),
                 ),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Color.fromRGBO(251, 111, 146, 1))),
               ),
             ),
           ],

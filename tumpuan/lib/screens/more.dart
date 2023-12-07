@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class More extends StatefulWidget {
+  const More({super.key});
+
   @override
   State<More> createState() {
     return _MoreState();
@@ -13,9 +15,9 @@ class _MoreState extends State<More> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(237, 237, 237, 1),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+        backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
+        title: const Padding(
+          padding: EdgeInsets.only(top: 8.0),
           child: Text(
             'Tumpuan',
             style: TextStyle(
@@ -23,7 +25,7 @@ class _MoreState extends State<More> {
           ),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'More Page',
           style: TextStyle(fontSize: 40),

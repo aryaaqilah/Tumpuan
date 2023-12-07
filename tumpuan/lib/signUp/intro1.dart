@@ -1,9 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:tumpuan/login_page.dart';
 import 'package:tumpuan/signUp/intro2.dart';
-import 'package:tumpuan/signUp/question1.dart';
-import 'package:tumpuan/signUpPage.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class Intro1 extends StatefulWidget {
@@ -23,10 +20,10 @@ class _Intro1State extends State<Intro1> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 80),
-            Image(image: AssetImage('images/intro1.png')),
-            SizedBox(height: 15),
-            Text(
+            const SizedBox(height: 80),
+            const Image(image: AssetImage('images/intro1.png')),
+            const SizedBox(height: 15),
+            const Text(
               'Breaking Stereotypes,\nEmpowering Women',
               style: TextStyle(
                   fontFamily: 'Satoshi',
@@ -34,8 +31,8 @@ class _Intro1State extends State<Intro1> {
                   color: AppColors.pink1,
                   fontSize: 20),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Tumpuan App Paves the Way for\nGender Equality in Indonesia',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -44,30 +41,30 @@ class _Intro1State extends State<Intro1> {
                   color: Colors.black,
                   fontSize: 15),
             ),
-            SizedBox(height: 80),
+            const SizedBox(height: 80),
             DotsIndicator(
               dotsCount: 3,
               position: 0,
-              decorator: DotsDecorator(
+              decorator: const DotsDecorator(
                 color: AppColors.bg1,
                 activeColor: AppColors.pink1,
               ),
             ),
-            SizedBox(height: 10),
-            Container(
+            const SizedBox(height: 10),
+            SizedBox(
               width: 75,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Intro2()));
+                      .push(MaterialPageRoute(builder: (context) => const Intro2()));
                 },
-                child: Text(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(251, 111, 146, 1))),
+                child: const Text(
                   'Next',
                   style: TextStyle(fontFamily: 'Satoshi'),
                 ),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Color.fromRGBO(251, 111, 146, 1))),
               ),
             ),
           ],

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tumpuan/accountCred.dart';
-import 'package:tumpuan/login_page.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
@@ -16,6 +14,7 @@ class GenderVerifPage extends StatefulWidget {
 class _GenderVerifPageState extends State<GenderVerifPage> {
   @override
   TextEditingController dateInputController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
@@ -26,7 +25,7 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 AppBar(
                   toolbarHeight: 70,
                   backgroundColor: AppColors.bg1,
@@ -39,12 +38,12 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                           //         builder: (context) => StartPage()));
                           _showCloseDialog(context);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.close,
                           color: Colors.black,
                         ))
                   ],
-                  title: Align(
+                  title: const Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       'Tumpuan',
@@ -56,7 +55,7 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 // Padding(
                 //   padding: const EdgeInsets.only(left: 25.0),
                 //   child: Align(
@@ -74,9 +73,9 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                     progressColor: AppColors.pink1,
                   ),
                 ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 25.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -88,15 +87,15 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 IconButton(
                   icon: Image.asset('images/ktp.png'),
                   iconSize: 300,
                   onPressed: () {},
                 ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 0),
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 0),
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -105,7 +104,7 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 //sign in button
@@ -118,7 +117,7 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                         width: 100,
                         // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(251, 111, 146, 1),
+                          color: const Color.fromRGBO(251, 111, 146, 1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
@@ -140,7 +139,7 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                         width: 100,
                         // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(251, 111, 146, 1),
+                          color: const Color.fromRGBO(251, 111, 146, 1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
@@ -151,7 +150,7 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                             ),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AccountCred()));
+                              builder: (context) => const AccountCred()));
                             },
                           ),
                         ),
@@ -204,7 +203,7 @@ Future<void> _showCloseDialog(BuildContext context) async {
         //   'Canceling Registration?',
         //   style: TextStyle(fontFamily: 'Satoshi'),
         // ),
-        content: SingleChildScrollView(
+        content: const SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               Image(image: AssetImage('images/cancelRegist.png')),
@@ -213,7 +212,7 @@ Future<void> _showCloseDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: Text(
+            child: const Text(
               'Cancel',
               style: TextStyle(color: AppColors.pink1),
             ),
@@ -222,10 +221,10 @@ Future<void> _showCloseDialog(BuildContext context) async {
             },
           ),
           TextButton(
-            child: Text('Yes', style: TextStyle(color: AppColors.pink1)),
+            child: const Text('Yes', style: TextStyle(color: AppColors.pink1)),
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => StartPage()),
+                MaterialPageRoute(builder: (context) => const StartPage()),
               );
             },
           ),
