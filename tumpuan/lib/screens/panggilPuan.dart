@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/contactBox.dart';
+import 'package:tumpuan/screens/addContact.dart';
 
 class PanggilPuan extends StatefulWidget {
   const PanggilPuan({super.key});
@@ -70,7 +71,10 @@ class _PanggilPuanState extends State<PanggilPuan> {
             getDataContact(dataContact),
             SizedBox(height: 10),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const AddContact()));
+                },
                 icon: Icon(
                   Icons.add_circle,
                   size: 35,
