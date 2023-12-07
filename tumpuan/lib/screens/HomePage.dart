@@ -106,7 +106,8 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 20),
                   ),
                   SizedBox(height: 20),
-                  Image(image: AssetImage('images/lastmonthperiodex.png'))
+                  Image(image: AssetImage('images/lastmonthperiodex.png')),
+                  SizedBox(height: 50),
                 ],
               ),
             ),
