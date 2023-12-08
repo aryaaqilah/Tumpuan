@@ -33,6 +33,7 @@ dependencies:
   intl : ^0.17.0
   percent_indicator: ^4.0.1
   dots_indicator: ^2.1.1
+  sticky_headers: ^0.3.0+2
 
 
   # The following adds the Cupertino Icons font to your application.

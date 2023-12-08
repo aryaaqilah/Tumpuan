@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tumpuan/screens/untukPuan.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -63,12 +64,19 @@ class _HomePageState extends State<HomePage> {
                                 image: AssetImage("images/btn_suarapuan.png"))),
                       ),
                       SizedBox(width: 10),
-                      Container(
-                        width: 145,
-                        height: 80,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("images/btn_untukpuan.png"))),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const UntukPuan()));
+                        },
+                        child: Container(
+                          width: 145,
+                          height: 80,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage("images/btn_untukpuan.png"))),
+                        ),
                       ),
                     ],
                   ),
