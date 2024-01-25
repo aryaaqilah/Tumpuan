@@ -1,77 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:sticky_headers/sticky_headers/widget.dart';
-import 'package:tumpuan/components/contactBox.dart';
-import 'package:tumpuan/components/listCard.dart';
-import 'package:tumpuan/components/searchCard.dart';
-import 'package:tumpuan/styles/style.dart';
-import 'package:sticky_headers/sticky_headers.dart';
+import '../Widgets/sliver_app_bar.dart';
+import '../Widgets/sliver_list.dart';
+import '../Widgets/sliver_list2.dart';
+import '../Widgets/sliver_list3.dart';
+import '../Widgets/sliver_search.dart';
+import '../screensUntukPuan/foodPage.dart';
+import '../screensUntukPuan/saloonPage.dart';
+import '../screensUntukPuan/spaPage.dart';
 
 class UntukPuan extends StatefulWidget {
-  const UntukPuan({super.key});
+  const UntukPuan({Key? key, required this.title}) : super(key: key);
+
+  final String title;
 
   @override
-  State<UntukPuan> createState() => _UntukPuanState();
+  _UntukPuanState createState() => _UntukPuanState();
 }
 
 class _UntukPuanState extends State<UntukPuan> {
+  final PageController controller = PageController();
+  int currentTab = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: TextField(
-          decoration: InputDecoration(suffixIcon: Icon(Icons.search)),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
       body: Column(
         children: [
-          // Container(
-          //   height: 175,
-          //   width: MediaQuery.of(context).size.width,
-          //   decoration: BoxDecoration(
-          //       image: DecorationImage(
-          //           image: AssetImage("images/bannerUntukPuan.png"))),
-          // ),
-          SafeArea(
-            bottom: false,
-            child: ListView(
-              controller: _controller,
-              children: [
-                const SearchCard(),
-                StickyHeader(
-                  controller: _controller,
-                  header: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: const [
-                          // MenuCard(text: "Italy", color: Colors.orange),
-                          // MenuCard(text: "France", color: Colors.pink)
-                        ],
-                      ),
-                    ),
+          Container(
+            height: 280,
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBarBldr(),
+                SliverAppBar(
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  elevation: 0,
+                  pinned: true,
+                  bottom: const PreferredSize(
+                      preferredSize: Size.fromHeight(-30.0), child: SizedBox()),
+                  flexibleSpace: NavBar(
+                    onTabChanged: (index) {
+                      controller.animateToPage(
+                        index,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    currentTab: currentTab,
                   ),
-                  content: const ListCard(),
-                )
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: PageView(
+              controller: controller,
+              onPageChanged: (index) {
+                setState(() {
+                  currentTab = index;
+                });
+              },
+              children: [
+                CustomScrollView(
+                  slivers: [
+                    SliverListBldr(),
+                    // Add other slivers as needed
+                  ],
+                ),
+                CustomScrollView(
+                  slivers: [
+                    SliverListBldr2(),
+                    // Add other slivers as needed
+                  ],
+                ),
+                CustomScrollView(
+                  slivers: [
+                    SliverListBldr3(),
+                    // Add other slivers as needed
+                  ],
+                ),
               ],
             ),
           ),
@@ -81,12 +87,38 @@ class _UntukPuanState extends State<UntukPuan> {
   }
 }
 
-final ScrollController _controller = ScrollController();
+class NavBar extends StatelessWidget {
+  const NavBar({Key? key, required this.onTabChanged, required this.currentTab})
+      : super(key: key);
 
-void _scrollDown() {
-  _controller.animateTo(
-    _controller.position.maxScrollExtent,
-    duration: Duration(seconds: 2),
-    curve: Curves.fastOutSlowIn,
-  );
+  final void Function(int) onTabChanged;
+  final int currentTab;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _buildTab('Spa & Massage', 0),
+        _buildTab('Saloon', 1),
+        _buildTab('Food', 2),
+      ],
+    );
+  }
+
+  Widget _buildTab(String text, int index) {
+    return MaterialButton(
+      minWidth: 40,
+      onPressed: () => onTabChanged(index),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: currentTab == index
+              ? const Color.fromRGBO(251, 111, 146, 1)
+              : Colors.grey,
+          fontSize: 12,
+        ),
+      ),
+    );
+  }
 }
