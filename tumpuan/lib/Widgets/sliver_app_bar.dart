@@ -9,7 +9,8 @@ class SliverAppBarBldr extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       title: TextField(
-        decoration: InputDecoration(suffixIcon: Icon(Icons.search)),
+        decoration: InputDecoration(
+            suffixIcon: Icon(Icons.search, color: Colors.black)),
       ),
       actions: <Widget>[
         IconButton(
@@ -17,9 +18,7 @@ class SliverAppBarBldr extends StatelessWidget {
             Icons.settings,
             color: Colors.black,
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () {},
         ),
       ],
       leading: IconButton(

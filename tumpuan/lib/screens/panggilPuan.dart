@@ -72,8 +72,8 @@ class _PanggilPuanState extends State<PanggilPuan> {
             SizedBox(height: 10),
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const AddContact()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AddContact()));
                 },
                 icon: Icon(
                   Icons.add_circle,

@@ -1,15 +1,26 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumpuan/screens/home.dart';
+import 'package:tumpuan/services/tumpuanServices.dart';
 import 'package:tumpuan/signUp/intro1.dart';
+import 'package:tumpuan/utils/snackbar_helper.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final Map? login;
+
+  const LoginPage({super.key, this.login});
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool visible = false;
+
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +46,13 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.grey[200],
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.only(left: 20.0),
                     child: TextField(
+                      controller: usernameController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Email',
+                        hintText: 'Username',
                       ),
                     ),
                   ),
@@ -58,9 +70,10 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.grey[200],
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(12)),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.only(left: 20.0),
                     child: TextField(
+                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -89,8 +102,9 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => const Home()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const Home()));
+                        // submitData();
                       },
                     ),
                   ),
@@ -116,8 +130,9 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => const Intro1()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const Intro1()));
+                      // submitData();
                     },
                   )
                 ],
@@ -127,5 +142,34 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> submitData() async {
+    // submit data to the server
+    final isSuccess = await TumpuanServices.Login(body);
+    // show succes or fail message based on status
+
+    if (isSuccess) {
+      usernameController.text = '';
+      passwordController.text = '';
+      showSuccessMessage(context, message: 'Creation Success');
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const Intro1()));
+    } else {
+      showErrorMessage(context, message: 'Creation Error');
+    }
+    // print(response.statusCode);
+  }
+
+  Map get body {
+    // get the data form
+
+    final username = usernameController.text;
+    final password = passwordController.text;
+
+    return {
+      "username": username,
+      "password": password,
+    };
   }
 }

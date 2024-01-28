@@ -5,7 +5,10 @@ import 'package:tumpuan/screens/more.dart';
 import 'package:tumpuan/screens/pageHome.dart';
 import 'package:tumpuan/screens/panggilPuan.dart';
 import 'package:tumpuan/screens/tombolAman.dart';
+import 'package:tumpuan/screens/suaraPuan.dart';
 // import 'package:flutter_app/page/dashboard.dart';
+
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,7 +18,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  Widget currentScreen = HomePage();
   int currentTab = 0;
+
   final List<Widget> screens = [
     const HomePage(),
     const PageHome(),
@@ -26,7 +32,16 @@ class _HomeState extends State<Home> {
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = const HomePage();
+
+//   Widget ScreenChanger {
+//   static void changeScreen(Widget newScreen, int newTab, Function setStateCallback) {
+//     currentScreen = More();
+//     currentTab = newTab;
+//     setStateCallback();
+//   }
+// }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +89,9 @@ class _HomeState extends State<Home> {
                         currentScreen = const HomePage();
                         currentTab = 0;
                       });
+                      // ScreenChanger.changeScreen(const HomePage(), 0, () {
+                      //   setState(() {});
+                      // });
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -197,3 +215,9 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+
+
+// class SetCurrent{
+//   currentScreen = Home();
+// }

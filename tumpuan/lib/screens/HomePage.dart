@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tumpuan/screens/suaraPuan.dart';
 import 'package:tumpuan/screens/untukPuan.dart';
+import 'package:tumpuan/screens/home.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -56,12 +58,24 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceAro,
                     children: [
-                      Container(
-                        width: 145,
-                        height: 80,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("images/btn_suarapuan.png"))),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const SuaraPuan(
+                                  // title: 'Suara Puan',
+                                  )));
+                          // ScreenChanger.changeScreen(SuaraPuan(), 0, () {
+                          //   setState(() {});
+                          // });
+                        },
+                        child: Container(
+                          width: 145,
+                          height: 80,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage("images/btn_suarapuan.png"))),
+                        ),
                       ),
                       SizedBox(width: 10),
                       GestureDetector(
