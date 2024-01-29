@@ -6,42 +6,49 @@ import 'package:tumpuan/screens/pageHome.dart';
 import 'package:tumpuan/screens/panggilPuan.dart';
 import 'package:tumpuan/screens/tombolAman.dart';
 import 'package:tumpuan/screens/suaraPuan.dart';
-// import 'package:flutter_app/page/dashboard.dart';
-
-
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-
   Widget currentScreen = HomePage();
   int currentTab = 0;
+  bool sosActive = false;
+  Gradient _gradient = LinearGradient(colors: [
+    const Color.fromRGBO(251, 111, 146, 1),
+    const Color.fromRGBO(255, 143, 171, 1)
+  ]);
+
+  Gradient _gradient2 = LinearGradient(colors: [
+    Color.fromARGB(255, 37, 159, 70),
+    Color.fromARGB(255, 37, 159, 70)
+  ]);
+
+  Icon icon1 = Icon(
+    Icons.sos,
+    size: 30,
+    color: Colors.white,
+  );
+  Icon icon2 = Icon(
+    Icons.close,
+    size: 30,
+    color: Colors.white,
+  );
 
   final List<Widget> screens = [
-    const HomePage(),
-    const PageHome(),
-    const CatatanHaid(),
-    const PanggilPuan(),
-    const TombolAman(),
-    const More()
+    HomePage(),
+    PageHome(),
+    CatatanHaid(),
+    PanggilPuan(),
+    TombolAman(),
+    More()
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
-
-//   Widget ScreenChanger {
-//   static void changeScreen(Widget newScreen, int newTab, Function setStateCallback) {
-//     currentScreen = More();
-//     currentTab = newTab;
-//     setStateCallback();
-//   }
-// }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,21 +60,17 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Container(
-          width: 60,
-          height: 60,
-          decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(colors: [
-                Color.fromRGBO(251, 111, 146, 1),
-                Color.fromRGBO(255, 143, 171, 1)
-              ])),
-          child: const Icon(
-            Icons.sos,
-            size: 30,
-            color: Colors.white,
-          ),
-        ),
-        onPressed: () {},
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: sosActive ? _gradient2 : _gradient),
+            child: sosActive ? icon2 : icon1),
+        onPressed: () {
+          setState(() {
+            sosActive = !sosActive;
+          });
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -86,12 +89,9 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = const HomePage();
+                        currentScreen = HomePage();
                         currentTab = 0;
                       });
-                      // ScreenChanger.changeScreen(const HomePage(), 0, () {
-                      //   setState(() {});
-                      // });
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +117,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = const CatatanHaid();
+                        currentScreen = CatatanHaid();
                         currentTab = 1;
                       });
                     },
@@ -143,10 +143,6 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
-              // Text(
-              //   'Tombol\nAman',
-              //   style: TextStyle(fontSize: 12),
-              // ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -154,7 +150,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = const PanggilPuan();
+                        currentScreen = PanggilPuan();
                         currentTab = 3;
                       });
                     },
@@ -182,7 +178,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = const More();
+                        currentScreen = More();
                         currentTab = 4;
                       });
                     },
@@ -215,9 +211,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
-
-
-// class SetCurrent{
-//   currentScreen = Home();
-// }

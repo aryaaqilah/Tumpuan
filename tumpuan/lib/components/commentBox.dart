@@ -1,56 +1,49 @@
-// import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/callView.dart';
 import 'package:tumpuan/components/editContact.dart';
-import 'package:tumpuan/screens/commentRuangPuan.dart';
 import 'package:tumpuan/styles/style.dart';
 
-Widget getDataMore(List<List<String>> dataMore) {
+Widget getDataComment(List<List<String>> dataComment) {
   String username;
   String profilePict;
-  String image;
   String date;
   String teks;
   String idPost;
   String likeCount;
   String commentCount;
 
-  List<Widget> dataMoreBoxes = [];
-  for (var i = 0; i < dataMore.length; i++) {
-    username = dataMore[i][0];
-    profilePict = dataMore[i][1];
-    image = dataMore[i][2];
-    date = dataMore[i][3];
-    teks = dataMore[i][4];
-    idPost = dataMore[i][5];
-    likeCount = dataMore[i][6];
-    commentCount = dataMore[i][7];
-    dataMoreBoxes.add(MoreBox(
+  List<Widget> dataCommentBoxes = [];
+  for (var i = 0; i < dataComment.length; i++) {
+    username = dataComment[i][0];
+    profilePict = dataComment[i][1];
+    date = dataComment[i][2];
+    teks = dataComment[i][3];
+    idPost = dataComment[i][4];
+    likeCount = dataComment[i][5];
+    commentCount = dataComment[i][6];
+    dataCommentBoxes.add(CommentBox(
       username: username,
       profilePict: profilePict,
-      image: image,
       date: date,
       teks: teks,
       idPost: idPost,
       likeCount: likeCount,
       commentCount: commentCount,
     ));
-    dataMoreBoxes.add(SizedBox(height: 10));
+    dataCommentBoxes.add(SizedBox(height: 10));
   }
   return Column(
-    children: dataMoreBoxes,
+    children: dataCommentBoxes,
   );
 }
 
-class MoreBox extends StatelessWidget {
+class CommentBox extends StatelessWidget {
   // var username;
 
-  MoreBox(
+  CommentBox(
       {super.key,
       required this.username,
       required this.profilePict,
-      required this.image,
       required this.date,
       required this.teks,
       required this.idPost,
@@ -59,7 +52,6 @@ class MoreBox extends StatelessWidget {
 
   late final String username;
   final String profilePict;
-  final String image;
   final String date;
   final String teks;
   final String idPost;
@@ -72,7 +64,6 @@ class MoreBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool showImage = image.isNotEmpty;
     return Center(
         child: Container(
       // height: 100,
@@ -136,27 +127,21 @@ class MoreBox extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          // if(checker = 0){}
-          if (showImage) Image.asset(image),
-          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 child: Row(
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.mode_comment_outlined),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Comment(
-                                  idPost: idPost,
-                                )));
-                      },
+                    IconButton(icon : Icon(Icons.mode_comment_outlined), 
+                    onPressed: () { 
+                      // Navigator.of(context).pushReplacement(
+                      // MaterialPageRoute(builder: (context) => const ()));
+                    },
                     ),
-                    // SizedBox(
-                    //   width: 5,
-                    // ),
+                    SizedBox(
+                      width: 5,
+                    ),
                     Text(commentCount)
                   ],
                 ),

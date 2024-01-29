@@ -27,7 +27,8 @@ class _SuaraPuanState extends State<SuaraPuan> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         title: TextField(
           decoration: InputDecoration(
               suffixIcon: Icon(Icons.search, color: Colors.black)),

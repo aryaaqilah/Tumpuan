@@ -16,7 +16,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         title: const Padding(
           padding: EdgeInsets.only(top: 8.0),
           child: Text(

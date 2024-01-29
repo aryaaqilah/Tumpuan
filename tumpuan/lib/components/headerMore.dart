@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tumpuan/screens/editProfile.dart';
+import 'package:tumpuan/screens/settings.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class HeaderMore extends StatelessWidget {
@@ -53,7 +55,14 @@ class HeaderMore extends StatelessWidget {
                             backgroundColor:
                                 MaterialStateProperty.all(AppColors.pink1),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => EditProfile(
+                                      username: username,
+                                      profilePicture: img,
+                                      userID: userid,
+                                    )));
+                          },
                           child: Text(
                             'Edit Profile',
                             style: TextStyle(fontSize: 10),
@@ -79,7 +88,12 @@ class HeaderMore extends StatelessWidget {
                         color: Colors.black,
                       ),
                       onPressed: () {
-                        // do something
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Settings(
+                                  username: username,
+                                  profilePicture: img,
+                                  userID: userid,
+                                )));
                       },
                     )
                   ],

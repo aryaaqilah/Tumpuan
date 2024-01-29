@@ -30,7 +30,8 @@ class _PanggilPuanState extends State<PanggilPuan> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         title: const Padding(
           padding: EdgeInsets.only(top: 8.0),
           child: Text(
@@ -54,7 +55,7 @@ class _PanggilPuanState extends State<PanggilPuan> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 35),
+            SizedBox(height: 15),
             Align(
               alignment: Alignment.center,
               child: Text(

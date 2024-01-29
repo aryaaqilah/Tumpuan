@@ -2,37 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:tumpuan/components/contactBox.dart';
 import 'package:tumpuan/styles/style.dart';
 
-class EditContact extends StatefulWidget {
-  const EditContact(
-      {super.key,
-      required this.name,
-      required this.image,
-      required this.number,
-      required this.email,
-      required this.address});
+class EditProfile extends StatefulWidget {
+  const EditProfile({
+    super.key,
+    required this.username,
+    required this.profilePicture,
+    required this.userID,
+  });
 
-  final String name;
-  final String number;
-  final String image;
-  final String email;
-  final String address;
+  final String username;
+  final String userID;
+  final String profilePicture;
 
   @override
-  State<EditContact> createState() => _EditContactState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _EditContactState extends State<EditContact> {
-  late String name;
-  late String number;
-  late String image;
-  late String email;
-  late String address;
+class _EditProfileState extends State<EditProfile> {
+  late String username;
+  late String userID;
+  late String profilePicture;
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Edit Profile',
+              style: TextStyle(color: Colors.black),
+            ),
+          ],
+        ),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -56,37 +60,30 @@ class _EditContactState extends State<EditContact> {
       ),
       body: Column(
         children: [
-          // SizedBox(
-          //   height: 20,
-          // ),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Edit Contact',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: 'Satoshi',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25),
-              ),
+              // Text(
+              //   'Edit Profile',
+              //   textAlign: TextAlign.center,
+              //   style: TextStyle(
+              //       fontFamily: 'Satoshi',
+              //       fontWeight: FontWeight.bold,
+              //       fontSize: 25),
+              // ),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           CircleAvatar(
-            backgroundImage: AssetImage(widget.image),
+            backgroundImage: AssetImage(widget.profilePicture),
             radius: 40,
           ),
           SizedBox(height: 20),
-          Text(
-            widget.name,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontFamily: 'Satoshi',
-                fontWeight: FontWeight.bold,
-                fontSize: 25),
-          ),
-          SizedBox(height: 30),
+          Text('Change Profile Picture'),
+          SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Container(
@@ -97,7 +94,7 @@ class _EditContactState extends State<EditContact> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'Name',
+                        'Username',
                         style: TextStyle(
                             fontFamily: 'Satoshi',
                             fontWeight: FontWeight.bold,
@@ -112,22 +109,37 @@ class _EditContactState extends State<EditContact> {
                     padding: const EdgeInsets.symmetric(horizontal: 0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: Colors.white,
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: TextField(
-                          readOnly: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: widget.name,
+                            // hintText: widget.userID,
                           ),
                         ),
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Change of username will be in effect at least 1 day',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontFamily: 'Satoshi',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -143,7 +155,7 @@ class _EditContactState extends State<EditContact> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'Phone Number',
+                        'User ID',
                         style: TextStyle(
                             fontFamily: 'Satoshi',
                             fontWeight: FontWeight.bold,
@@ -168,99 +180,7 @@ class _EditContactState extends State<EditContact> {
                           readOnly: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: widget.number,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Container(
-              // width: 300,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Email (Optional)',
-                        style: TextStyle(
-                            fontFamily: 'Satoshi',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: widget.email,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Container(
-              // width: 300,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Address (Optional)',
-                        style: TextStyle(
-                            fontFamily: 'Satoshi',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: widget.address,
+                            hintText: widget.userID,
                           ),
                         ),
                       ),
