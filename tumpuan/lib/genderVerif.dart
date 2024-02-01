@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:tumpuan/accountCred.dart';
+import 'package:tumpuan/screens/takePhoto.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
@@ -12,13 +17,12 @@ class GenderVerifPage extends StatefulWidget {
 }
 
 class _GenderVerifPageState extends State<GenderVerifPage> {
-  @override
-  TextEditingController dateInputController = TextEditingController();
+  File? _image;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
-      // ignore: prefer_const_constructors
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -28,20 +32,17 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                 const SizedBox(height: 10),
                 AppBar(
                   toolbarHeight: 70,
-                  backgroundColor: AppColors.bg1,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
                   automaticallyImplyLeading: false,
                   actions: [
                     IconButton(
-                        onPressed: () {
-                          // Navigator.of(context).pushReplacement(
-                          //     MaterialPageRoute(
-                          //         builder: (context) => StartPage()));
-                          _showCloseDialog(context);
-                        },
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.black,
-                        ))
+                      onPressed: () => _showCloseDialog(context),
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.black,
+                      ),
+                    ),
                   ],
                   title: const Align(
                     alignment: Alignment.bottomLeft,
@@ -49,24 +50,17 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                       'Tumpuan',
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                          fontFamily: 'Brodies',
-                          color: Color.fromRGBO(251, 111, 146, 1),
-                          fontSize: 40),
+                        fontFamily: 'Brodies',
+                        color: Color.fromRGBO(251, 111, 146, 1),
+                        fontSize: 40,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 40),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 25.0),
-                //   child: Align(
-                //       alignment: Alignment.bottomLeft,
-                //       child:
-                //           Image(image: AssetImage('images/progressbar3.png'))),
-                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: LinearPercentIndicator(
-                    // width: ,
                     lineHeight: 3.0,
                     percent: 0.67,
                     backgroundColor: Colors.grey,
@@ -81,18 +75,32 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                     child: Text(
                       'Gender Verification',
                       style: TextStyle(
-                          fontFamily: 'Satoshi',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25),
+                        fontFamily: 'Satoshi',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                IconButton(
-                  icon: Image.asset('images/ktp.png'),
-                  iconSize: 300,
-                  onPressed: () {},
-                ),
+                _image == null
+                    ? IconButton(
+                        icon: Image.asset('images/ktp.png'),
+                        iconSize: 300,
+                        onPressed: () async {
+                          final pickedImage = await Navigator.push<File?>(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ImageSelectionPage(),
+                            ),
+                          );
+                          setState(() {
+                            _image = pickedImage ?? File('images/ktp.png');
+                          });
+                        },
+                      )
+                    : Container(
+                        height: 400, width: 300, child: Image.file(_image!)),
                 const SizedBox(height: 20),
                 const Padding(
                   padding: EdgeInsets.only(left: 0),
@@ -104,10 +112,7 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                //sign in button
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -115,7 +120,6 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
                         width: 100,
-                        // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
                           color: const Color.fromRGBO(251, 111, 146, 1),
                           borderRadius: BorderRadius.circular(12),
@@ -137,7 +141,6 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
                         width: 100,
-                        // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
                           color: const Color.fromRGBO(251, 111, 146, 1),
                           borderRadius: BorderRadius.circular(12),
@@ -150,7 +153,8 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                             ),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const AccountCred()));
+                                builder: (context) => const AccountCred(),
+                              ));
                             },
                           ),
                         ),
@@ -158,32 +162,6 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                     ),
                   ],
                 ),
-
-                // SizedBox(
-                //   height: 15,
-                // ),
-                // // register button
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       'Have An Account?',
-                //       style: TextStyle(fontWeight: FontWeight.bold),
-                //     ),
-                //     TextButton(
-                //       child: const Text(
-                //         'Login Here',
-                //         style: TextStyle(
-                //             color: Color.fromRGBO(251, 111, 146, 1),
-                //             fontWeight: FontWeight.bold),
-                //       ),
-                //       onPressed: () {
-                //         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //             builder: (context) => LoginPage()));
-                //       },
-                //     )
-                //   ],
-                // ),
               ],
             ),
           ),
@@ -191,45 +169,43 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
       ),
     );
   }
+
+  Future<void> _showCloseDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Image(image: AssetImage('images/cancelRegist.png')),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: AppColors.pink1),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child:
+                  const Text('Yes', style: TextStyle(color: AppColors.pink1)),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const StartPage()),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
-Future<void> _showCloseDialog(BuildContext context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        // title: Text(
-        //   'Canceling Registration?',
-        //   style: TextStyle(fontFamily: 'Satoshi'),
-        // ),
-        content: const SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Image(image: AssetImage('images/cancelRegist.png')),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text(
-              'Cancel',
-              style: TextStyle(color: AppColors.pink1),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            child: const Text('Yes', style: TextStyle(color: AppColors.pink1)),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const StartPage()),
-              );
-            },
-          ),
-        ],
-      );
-    },
-  );
-}

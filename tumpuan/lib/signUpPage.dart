@@ -13,6 +13,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  
   @override
   TextEditingController dateInputController = TextEditingController();
   @override
@@ -29,7 +30,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(height: 10),
                 AppBar(
                   toolbarHeight: 70,
-                  backgroundColor: AppColors.bg1,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
                   automaticallyImplyLeading: false,
                   actions: [
                     IconButton(
@@ -165,6 +167,25 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(
                   height: 20,
                 ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Address',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 //password
                 // Padding(
                 //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -188,29 +209,29 @@ class _SignUpPageState extends State<SignUpPage> {
                 // SizedBox(
                 //   height: 20,
                 // ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 10),
-                      child: DropdownButtonFormField<String>(
-                        decoration: const InputDecoration(),
-                        hint: const Text('Gender'),
-                        items: <String>['Female', 'Male'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (_) {},
-                      ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //         color: Colors.grey[200],
+                //         border: Border.all(color: Colors.black),
+                //         borderRadius: BorderRadius.circular(12)),
+                //     child: Padding(
+                //       padding: const EdgeInsets.only(left: 20, right: 10),
+                //       child: DropdownButtonFormField<String>(
+                //         decoration: const InputDecoration(),
+                //         hint: const Text('Gender'),
+                //         items: <String>['Female', 'Male'].map((String value) {
+                //           return DropdownMenuItem<String>(
+                //             value: value,
+                //             child: Text(value),
+                //           );
+                //         }).toList(),
+                //         onChanged: (_) {},
+                //       ),
+                //     ),
+                //   ),
+                // ),
 
                 const SizedBox(
                   height: 20,
@@ -313,4 +334,49 @@ Future<void> _showCloseDialog(BuildContext context) async {
       );
     },
   );
+}
+
+class LabeledCheckboxExample extends StatelessWidget {
+  final String sentences;
+  final bool? value;
+  final ValueChanged<bool?>? onChanged;
+
+  const LabeledCheckboxExample({
+    required this.sentences,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: AppColors.bg1, borderRadius: BorderRadius.circular(10)),
+          child: CheckboxListTile(
+            // controlAffinity: ListTileControlAffinity.leading,
+            // contentPadding: EdgeInsets.zero,
+            dense: true,
+            title: Text(
+              sentences,
+              style: const TextStyle(
+                  fontSize: 16.0, color: Colors.black, fontFamily: 'Satoshi'),
+            ),
+            value: value,
+            onChanged: onChanged,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0), // Optionally
+              side: const BorderSide(color: Colors.pink),
+            ),
+            activeColor: const Color.fromRGBO(251, 111, 146, 1),
+            checkboxShape: CircleBorder(),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        )
+      ],
+    );
+  }
 }

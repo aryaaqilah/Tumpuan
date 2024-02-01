@@ -87,26 +87,19 @@ class _LoginPageState extends State<LoginPage> {
                 height: 20,
               ),
               //sign in button
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Container(
-                  // padding: EdgeInsets.only(left: 0),
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(251, 111, 146, 1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: TextButton(
-                      child: const Text(
-                        'Log In',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const Home()));
-                        // submitData();
-                      },
-                    ),
+              SizedBox(
+                width: 100,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => const Home()));
+                  },
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color.fromRGBO(251, 111, 146, 1))),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(fontFamily: 'Satoshi'),
                   ),
                 ),
               ),

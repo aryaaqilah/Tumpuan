@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tumpuan/components/dailyQuiz.dart';
 import 'package:tumpuan/screens/suaraPuan.dart';
 import 'package:tumpuan/screens/untukPuan.dart';
 import 'package:tumpuan/screens/home.dart';
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         title: const Padding(
           padding: EdgeInsets.only(top: 8.0),
           child: Text(
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 // mainAxisAlignment: Ma,
                 children: [
-                  SizedBox(height: 15),
+                  // SizedBox(height: 15),
                   Container(
                     width: 600,
                     height: 200,
@@ -109,12 +111,19 @@ class _HomePageState extends State<HomePage> {
                                 image: AssetImage("images/btn_countdown.png"))),
                       ),
                       SizedBox(width: 10),
-                      Container(
-                        width: 145,
-                        height: 150,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("images/btn_dailyquiz.png"))),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const DailyQuiz()));
+                        },
+                        child: Container(
+                          width: 145,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage("images/btn_dailyquiz.png"))),
+                        ),
                       ),
                     ],
                   ),

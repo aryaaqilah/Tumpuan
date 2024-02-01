@@ -32,6 +32,7 @@ class _PanggilPuanState extends State<PanggilPuan> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         title: const Padding(
           padding: EdgeInsets.only(top: 8.0),
           child: Text(

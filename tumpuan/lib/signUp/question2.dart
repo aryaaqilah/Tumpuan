@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:tumpuan/components/checkBoxSignUp.dart';
+
 import 'package:tumpuan/signUp/question3.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class Question2 extends StatefulWidget {
-  const Question2({super.key});
+  const Question2({Key? key}) : super(key: key);
 
   @override
   State<Question2> createState() => _Question2State();
 }
 
 class _Question2State extends State<Question2> {
+  late TextEditingController dateInputController;
+  late bool dontKnowSelected;
+
   @override
-  TextEditingController dateInputController = TextEditingController();
+  void initState() {
+    super.initState();
+    dateInputController = TextEditingController();
+    dontKnowSelected = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bg,
-      // ignore: prefer_const_constructors
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -30,7 +37,8 @@ class _Question2State extends State<Question2> {
                 const SizedBox(height: 10),
                 AppBar(
                   toolbarHeight: 70,
-                  backgroundColor: AppColors.bg,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
                   automaticallyImplyLeading: false,
                   actions: [
                     IconButton(
@@ -54,18 +62,10 @@ class _Question2State extends State<Question2> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 25.0),
-                //   child: Align(
-                //       alignment: Alignment.bottomLeft,
-                //       child:
-                //           Image(image: AssetImage('images/progressbar3.png'))),
-                // ),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: LinearPercentIndicator(
-                    // width: ,
                     lineHeight: 3.0,
                     percent: 0.4,
                     backgroundColor: Colors.grey,
@@ -87,7 +87,6 @@ class _Question2State extends State<Question2> {
                   ),
                 ),
                 const SizedBox(height: 100),
-
                 const Text(
                   'When did your last period start ?',
                   style: TextStyle(
@@ -96,9 +95,7 @@ class _Question2State extends State<Question2> {
                       fontWeight: FontWeight.w600),
                   textAlign: TextAlign.center,
                 ),
-
                 const SizedBox(height: 20),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
@@ -109,17 +106,18 @@ class _Question2State extends State<Question2> {
                         child: Container(
                           decoration: BoxDecoration(
                               color: Colors.grey[200],
-                              // border: Border.all(color: Colors.black),
                               borderRadius: BorderRadius.circular(12)),
                           child: Padding(
                             padding: const EdgeInsets.only(left: 20.0),
                             child: TextFormField(
                               decoration: const InputDecoration(
-                                  // hintText: 'Enter Date',
                                   prefixIcon: Icon(Icons.calendar_month)),
                               controller: dateInputController,
                               readOnly: true,
                               onTap: () async {
+                                setState(() {
+                                  dontKnowSelected = false;
+                                });
                                 DateTime? pickedDate = await showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
@@ -137,11 +135,24 @@ class _Question2State extends State<Question2> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      LabeledCheckboxExample(sentences: 'I don\'t know'),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: LabeledCheckboxExample(
+                          sentences: "I don't know",
+                          value: dontKnowSelected,
+                          onChanged: (value) {
+                            setState(() {
+                              dontKnowSelected = value!;
+                              if (value) {
+                                dateInputController.clear();
+                              }
+                            });
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 150),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -150,7 +161,6 @@ class _Question2State extends State<Question2> {
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
                         width: 100,
-                        // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
                           color: const Color.fromRGBO(251, 111, 146, 1),
                           borderRadius: BorderRadius.circular(12),
@@ -172,7 +182,6 @@ class _Question2State extends State<Question2> {
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
                         width: 100,
-                        // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
                           color: const Color.fromRGBO(251, 111, 146, 1),
                           borderRadius: BorderRadius.circular(12),
@@ -205,13 +214,9 @@ class _Question2State extends State<Question2> {
 Future<void> _showCloseDialog(BuildContext context) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        // title: Text(
-        //   'Canceling Registration?',
-        //   style: TextStyle(fontFamily: 'Satoshi'),
-        // ),
         content: const SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
@@ -241,4 +246,48 @@ Future<void> _showCloseDialog(BuildContext context) async {
       );
     },
   );
+}
+
+class LabeledCheckboxExample extends StatelessWidget {
+  final String sentences;
+  final bool value;
+  final ValueChanged<bool?>? onChanged;
+
+  const LabeledCheckboxExample({
+    required this.sentences,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: AppColors.bg1, borderRadius: BorderRadius.circular(10)),
+          child: CheckboxListTile(
+            dense: true,
+            title: Text(
+              sentences,
+              style: const TextStyle(
+                  fontSize: 16.0, color: Colors.black, fontFamily: 'Satoshi'),
+            ),
+            value: value,
+            onChanged:
+                onChanged != null ? (newValue) => onChanged!(newValue) : null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: const BorderSide(color: Colors.pink),
+            ),
+            activeColor: const Color.fromRGBO(251, 111, 146, 1),
+            checkboxShape: CircleBorder(),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        )
+      ],
+    );
+  }
 }

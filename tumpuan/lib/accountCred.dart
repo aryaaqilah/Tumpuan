@@ -28,7 +28,8 @@ class _AccountCredState extends State<AccountCred> {
                 const SizedBox(height: 10),
                 AppBar(
                   toolbarHeight: 70,
-                  backgroundColor: AppColors.bg1,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
                   automaticallyImplyLeading: false,
                   actions: [
                     IconButton(

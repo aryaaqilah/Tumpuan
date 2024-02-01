@@ -52,6 +52,34 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    Widget okButton = TextButton(
+      child: Text(
+        "OK",
+        style: TextStyle(
+            color: const Color.fromRGBO(251, 111, 146, 1),
+            fontFamily: 'Satoshi'),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      // title: Text("My title"),
+      content: Text(
+        "Your Location is Now Shared to Your Contacts",
+        style: TextStyle(
+            fontFamily: 'Satoshi', fontWeight: FontWeight.bold, fontSize: 15),
+      ),
+      actions: [
+        // okButton,
+      ],
+      // backgroundColor: Colors.transparent,
+      insetPadding: EdgeInsets.only(top: 470, left: 80, right: 80),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(32.0))),
+    );
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       body: PageStorage(
@@ -69,6 +97,17 @@ class _HomeState extends State<Home> {
         onPressed: () {
           setState(() {
             sosActive = !sosActive;
+            if (sosActive) {
+              showDialog(
+                  barrierColor: Color(0x01000000),
+                  context: context,
+                  builder: (BuildContext context) {
+                    Future.delayed(Duration(seconds: 3), () {
+                      Navigator.of(context).pop(true);
+                    });
+                    return alert;
+                  });
+            }
           });
         },
       ),

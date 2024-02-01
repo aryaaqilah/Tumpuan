@@ -38,8 +38,8 @@ class _StartPageState extends State<StartPage> {
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const LoginPage()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const LoginPage()));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
@@ -57,8 +57,8 @@ class _StartPageState extends State<StartPage> {
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => const Intro1()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Intro1()));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(

@@ -35,12 +35,17 @@ dependencies:
   dots_indicator: ^2.1.1
   sticky_headers: "^0.3.0"
   flutter_sticky_header:
+  image_picker: ^0.8.4+4
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^1.1.0
+  camera: ^0.10.5+9
+  path_provider: ^2.1.2
+  path: ^1.8.3
+  # image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

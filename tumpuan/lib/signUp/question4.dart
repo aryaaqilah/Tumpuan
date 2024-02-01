@@ -15,6 +15,15 @@ class Question4 extends StatefulWidget {
 class _Question4State extends State<Question4> {
   @override
   TextEditingController dateInputController = TextEditingController();
+  List<Map<String, dynamic>> checkListItems = [
+    {"id": 0, "selected": false, "title": 'Painful menstrual cramps'},
+    {"id": 1, "selected": false, "title": 'PMS symptoms'},
+    {"id": 2, "selected": false, "title": 'Unusual discharge'},
+    {"id": 3, "selected": false, "title": 'Heavy menstrual flow'},
+    {"id": 4, "selected": false, "title": 'Mood Swings'},
+    {"id": 5, "selected": false, "title": 'Other'},
+    {"id": 6, "selected": false, "title": 'No, nothings bother me'},
+  ];
   @override
   Widget build(BuildContext context) {
     final sentences = [
@@ -60,7 +69,8 @@ class _Question4State extends State<Question4> {
                 const SizedBox(height: 10),
                 AppBar(
                   toolbarHeight: 70,
-                  backgroundColor: AppColors.bg,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
                   automaticallyImplyLeading: false,
                   actions: [
                     IconButton(
@@ -84,7 +94,7 @@ class _Question4State extends State<Question4> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: LinearPercentIndicator(
@@ -121,16 +131,29 @@ class _Question4State extends State<Question4> {
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: sentences2
-                        .map((sentence) => Column(
-                              children: [
-                                LabeledCheckboxExample(sentences: sentence),
-                                const SizedBox(height: 7)
-                              ],
-                            ))
-                        .toList(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        checkListItems.length,
+                        (index) => LabeledCheckboxExample(
+                          sentences: checkListItems[index]["title"],
+                          value: checkListItems[index]["selected"],
+                          onChanged: (value) {
+                            setState(() {
+                              for (var i = 0; i < checkListItems.length; i++) {
+                                if (i == index) {
+                                  checkListItems[i]["selected"] = true;
+                                } else {
+                                  checkListItems[i]["selected"] = false;
+                                }
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -232,4 +255,49 @@ Future<void> _showCloseDialog(BuildContext context) async {
       );
     },
   );
+}
+
+class LabeledCheckboxExample extends StatelessWidget {
+  final String sentences;
+  final bool? value;
+  final ValueChanged<bool?>? onChanged;
+
+  const LabeledCheckboxExample({
+    required this.sentences,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: AppColors.bg1, borderRadius: BorderRadius.circular(10)),
+          child: CheckboxListTile(
+            // controlAffinity: ListTileControlAffinity.leading,
+            // contentPadding: EdgeInsets.zero,
+            dense: true,
+            title: Text(
+              sentences,
+              style: const TextStyle(
+                  fontSize: 16.0, color: Colors.black, fontFamily: 'Satoshi'),
+            ),
+            value: value,
+            onChanged: onChanged,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0), // Optionally
+              side: const BorderSide(color: Colors.pink),
+            ),
+            activeColor: const Color.fromRGBO(251, 111, 146, 1),
+            checkboxShape: CircleBorder(),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        )
+      ],
+    );
+  }
 }
