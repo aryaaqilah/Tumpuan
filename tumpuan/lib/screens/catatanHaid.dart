@@ -12,6 +12,9 @@ class CatatanHaid extends StatefulWidget {
 class _CatatanHaidState extends State<CatatanHaid> {
   late DateTime _focusedDay = DateTime.now();
   late DateTime _selectedDay = DateTime.now();
+  late DateTime _rangeStartDay = DateTime.utc(2024, 2, 12);
+  late DateTime _rangeEndDay = DateTime.utc(2024, 2, 18);
+  late DateTime _previousFocusedMonth = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +40,8 @@ class _CatatanHaidState extends State<CatatanHaid> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TableCalendar(
-                rangeStartDay: DateTime.utc(2024, 2, 12),
-                rangeEndDay: DateTime.utc(2024, 2, 16),
+                rangeStartDay: _rangeStartDay,
+                rangeEndDay: _rangeEndDay,
                 rangeSelectionMode: RangeSelectionMode.toggledOn,
                 firstDay: DateTime.utc(2010, 10, 16),
                 lastDay: DateTime.utc(2030, 3, 14),
@@ -46,15 +49,9 @@ class _CatatanHaidState extends State<CatatanHaid> {
                 onPageChanged: (focusedDay) {
                   setState(() {
                     _focusedDay = focusedDay;
+                    _handlePageChange();
                   });
                 },
-                // selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
-                // onDaySelected: (selectedDay, focusedDay) {
-                //   setState(() {
-                //     _selectedDay = selectedDay;
-                //     _focusedDay = focusedDay;
-                //   });
-                // },
                 availableCalendarFormats: const {CalendarFormat.month: 'month'},
                 calendarStyle: const CalendarStyle(
                   defaultTextStyle: TextStyle(
@@ -123,5 +120,16 @@ class _CatatanHaidState extends State<CatatanHaid> {
         ),
       ),
     );
+  }
+
+  void _handlePageChange() {
+    if (_focusedDay.isAfter(_previousFocusedMonth)) {
+      _rangeStartDay = _rangeStartDay.add(const Duration(days: 30));
+      _rangeEndDay = _rangeEndDay.add(const Duration(days: 30));
+    } else if (_focusedDay.isBefore(_previousFocusedMonth)) {
+      _rangeStartDay = _rangeStartDay.subtract(const Duration(days: 30));
+      _rangeEndDay = _rangeEndDay.subtract(const Duration(days: 30));
+    }
+    _previousFocusedMonth = _focusedDay;
   }
 }
