@@ -54,223 +54,225 @@ class _EditContactState extends State<EditContact> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // SizedBox(
-          //   height: 20,
-          // ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Edit Contact',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: 'Satoshi',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          CircleAvatar(
-            backgroundImage: AssetImage(widget.image),
-            radius: 40,
-          ),
-          SizedBox(height: 20),
-          Text(
-            widget.name,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontFamily: 'Satoshi',
-                fontWeight: FontWeight.bold,
-                fontSize: 25),
-          ),
-          SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Container(
-              // width: 300,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Name',
-                        style: TextStyle(
-                            fontFamily: 'Satoshi',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: widget.name,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // SizedBox(
+            //   height: 20,
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Edit Contact',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: 'Satoshi',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            CircleAvatar(
+              backgroundImage: AssetImage(widget.image),
+              radius: 40,
+            ),
+            SizedBox(height: 20),
+            Text(
+              widget.name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: 'Satoshi',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25),
+            ),
+            SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                // width: 300,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Name',
+                          style: TextStyle(
+                              fontFamily: 'Satoshi',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: TextField(
+                            // readOnly: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: widget.name,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Container(
-              // width: 300,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Phone Number',
-                        style: TextStyle(
-                            fontFamily: 'Satoshi',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: widget.number,
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                // width: 300,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Phone Number',
+                          style: TextStyle(
+                              fontFamily: 'Satoshi',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: TextField(
+                            // readOnly: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: widget.number,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Container(
-              // width: 300,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Email (Optional)',
-                        style: TextStyle(
-                            fontFamily: 'Satoshi',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: widget.email,
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                // width: 300,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Email (Optional)',
+                          style: TextStyle(
+                              fontFamily: 'Satoshi',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: TextField(
+                            // readOnly: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: widget.email,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Container(
-              // width: 300,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Address (Optional)',
-                        style: TextStyle(
-                            fontFamily: 'Satoshi',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: widget.address,
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                // width: 300,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Address (Optional)',
+                          style: TextStyle(
+                              fontFamily: 'Satoshi',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: TextField(
+                            // readOnly: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: widget.address,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

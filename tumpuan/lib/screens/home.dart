@@ -80,170 +80,175 @@ class _HomeState extends State<Home> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(32.0))),
     );
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
-      body: PageStorage(
-        bucket: bucket,
-        child: currentScreen,
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: sosActive ? _gradient2 : _gradient),
-            child: sosActive ? icon2 : icon1),
-        onPressed: () {
-          setState(() {
-            sosActive = !sosActive;
-            if (sosActive) {
-              showDialog(
-                  barrierColor: Color(0x01000000),
-                  context: context,
-                  builder: (BuildContext context) {
-                    Future.delayed(Duration(seconds: 3), () {
-                      Navigator.of(context).pop(true);
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
+        body: PageStorage(
+          bucket: bucket,
+          child: currentScreen,
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: sosActive ? _gradient2 : _gradient),
+              child: sosActive ? icon2 : icon1),
+          onPressed: () {
+            setState(() {
+              sosActive = !sosActive;
+              if (sosActive) {
+                showDialog(
+                    barrierColor: Color(0x01000000),
+                    context: context,
+                    builder: (BuildContext context) {
+                      Future.delayed(Duration(seconds: 3), () {
+                        Navigator.of(context).pop(true);
+                      });
+                      return alert;
                     });
-                    return alert;
-                  });
-            }
-          });
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: const Color.fromRGBO(237, 237, 237, 1),
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 10,
-        child: SizedBox(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentScreen = HomePage();
-                        currentTab = 0;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.home,
-                          color: currentTab == 0
-                              ? const Color.fromRGBO(251, 111, 146, 1)
-                              : Colors.grey,
-                        ),
-                        Text(
-                          'Home',
-                          style: TextStyle(
-                              color: currentTab == 0
-                                  ? const Color.fromRGBO(251, 111, 146, 1)
-                                  : Colors.grey,
-                              fontSize: 12),
-                        )
-                      ],
+              }
+            });
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          color: const Color.fromRGBO(237, 237, 237, 1),
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 10,
+          child: SizedBox(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: () {
+                        setState(() {
+                          currentScreen = HomePage();
+                          currentTab = 0;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.home,
+                            color: currentTab == 0
+                                ? const Color.fromRGBO(251, 111, 146, 1)
+                                : Colors.grey,
+                          ),
+                          Text(
+                            'Home',
+                            style: TextStyle(
+                                color: currentTab == 0
+                                    ? const Color.fromRGBO(251, 111, 146, 1)
+                                    : Colors.grey,
+                                fontSize: 12),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentScreen = CatatanHaid();
-                        currentTab = 1;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.calendar_month,
-                          color: currentTab == 1
-                              ? const Color.fromRGBO(251, 111, 146, 1)
-                              : Colors.grey,
-                        ),
-                        Text(
-                          'Catatan Haid',
-                          style: TextStyle(
-                              color: currentTab == 1
-                                  ? const Color.fromRGBO(251, 111, 146, 1)
-                                  : Colors.grey,
-                              fontSize: 12),
-                        )
-                      ],
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: () {
+                        setState(() {
+                          currentScreen = CatatanHaid();
+                          currentTab = 1;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.calendar_month,
+                            color: currentTab == 1
+                                ? const Color.fromRGBO(251, 111, 146, 1)
+                                : Colors.grey,
+                          ),
+                          Text(
+                            'Catatan Haid',
+                            style: TextStyle(
+                                color: currentTab == 1
+                                    ? const Color.fromRGBO(251, 111, 146, 1)
+                                    : Colors.grey,
+                                fontSize: 12),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentScreen = PanggilPuan();
-                        currentTab = 3;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.call,
-                          color: currentTab == 3
-                              ? const Color.fromRGBO(251, 111, 146, 1)
-                              : Colors.grey,
-                        ),
-                        Text(
-                          'Panggil Puan',
-                          style: TextStyle(
-                              color: currentTab == 3
-                                  ? const Color.fromRGBO(251, 111, 146, 1)
-                                  : Colors.grey,
-                              fontSize: 12),
-                        )
-                      ],
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: () {
+                        setState(() {
+                          currentScreen = PanggilPuan();
+                          currentTab = 3;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.call,
+                            color: currentTab == 3
+                                ? const Color.fromRGBO(251, 111, 146, 1)
+                                : Colors.grey,
+                          ),
+                          Text(
+                            'Panggil Puan',
+                            style: TextStyle(
+                                color: currentTab == 3
+                                    ? const Color.fromRGBO(251, 111, 146, 1)
+                                    : Colors.grey,
+                                fontSize: 12),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        currentScreen = More();
-                        currentTab = 4;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.more_horiz,
-                          color: currentTab == 4
-                              ? const Color.fromRGBO(251, 111, 146, 1)
-                              : Colors.grey,
-                        ),
-                        Text(
-                          'More',
-                          style: TextStyle(
-                              color: currentTab == 4
-                                  ? const Color.fromRGBO(251, 111, 146, 1)
-                                  : Colors.grey,
-                              fontSize: 12),
-                        ),
-                      ],
+                    MaterialButton(
+                      minWidth: 40,
+                      onPressed: () {
+                        setState(() {
+                          currentScreen = More();
+                          currentTab = 4;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.more_horiz,
+                            color: currentTab == 4
+                                ? const Color.fromRGBO(251, 111, 146, 1)
+                                : Colors.grey,
+                          ),
+                          Text(
+                            'More',
+                            style: TextStyle(
+                                color: currentTab == 4
+                                    ? const Color.fromRGBO(251, 111, 146, 1)
+                                    : Colors.grey,
+                                fontSize: 12),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
