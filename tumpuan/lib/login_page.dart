@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:tumpuan/screens/home.dart';
+import 'package:tumpuan/screens/navScreen.dart';
 import 'package:tumpuan/services/tumpuanServices.dart';
 import 'package:tumpuan/signUp/intro1.dart';
 import 'package:tumpuan/utils/snackbar_helper.dart';
@@ -91,8 +92,10 @@ class _LoginPageState extends State<LoginPage> {
                 width: 100,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => const Home()));
+                    // Navigator.of(context).pushReplacement(
+                    //     MaterialPageRoute(builder: (context) => const Home()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const MainScreen()));
                   },
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
