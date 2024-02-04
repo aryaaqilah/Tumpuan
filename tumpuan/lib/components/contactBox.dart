@@ -70,25 +70,27 @@ class ContactBox extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => EditContact(
-                            name: name,
-                            image: image,
-                            number: number,
-                            email: email,
-                            address: address,
-                          )));
+                  Navigator.of(context, rootNavigator: true)
+                      .push(MaterialPageRoute(
+                          builder: (context) => EditContact(
+                                name: name,
+                                image: image,
+                                number: number,
+                                email: email,
+                                address: address,
+                              )));
                 },
                 iconSize: 15,
               ),
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CallView(
-                          name: name,
-                          number: number,
-                        )));
+                Navigator.of(context, rootNavigator: true)
+                    .push(MaterialPageRoute(
+                        builder: (context) => CallView(
+                              name: name,
+                              number: number,
+                            )));
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,

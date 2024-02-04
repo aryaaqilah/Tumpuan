@@ -50,7 +50,7 @@ class NavBar extends StatelessWidget {
                 ),
                 const SizedBox(width: 80),
                 navItem(
-                  Icons.call,
+                  Icons.call_outlined,
                   'Panggil Puan', // tambahkan teks di sini
                   pageIndex == 2,
                   onTap: () => onTap(2),

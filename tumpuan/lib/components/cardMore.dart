@@ -148,10 +148,11 @@ class MoreBox extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.mode_comment_outlined),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Comment(
-                                  idPost: idPost,
-                                )));
+                        Navigator.of(context, rootNavigator: true)
+                            .push(MaterialPageRoute(
+                                builder: (context) => Comment(
+                                      idPost: idPost,
+                                    )));
                       },
                     ),
                     // SizedBox(

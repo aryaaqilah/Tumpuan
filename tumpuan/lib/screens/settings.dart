@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/contactBox.dart';
 import 'package:tumpuan/screens/editProfile.dart';
+import 'package:tumpuan/screens/navScreen.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class Settings extends StatefulWidget {
@@ -25,6 +26,7 @@ class _SettingsState extends State<Settings> {
   late String profilePicture;
 
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

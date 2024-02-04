@@ -56,12 +56,13 @@ class HeaderMore extends StatelessWidget {
                                 MaterialStateProperty.all(AppColors.pink1),
                           ),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => EditProfile(
-                                      username: username,
-                                      profilePicture: img,
-                                      userID: userid,
-                                    )));
+                            Navigator.of(context, rootNavigator: true)
+                                .push(MaterialPageRoute(
+                                    builder: (context) => EditProfile(
+                                          username: username,
+                                          profilePicture: img,
+                                          userID: userid,
+                                        )));
                           },
                           child: Text(
                             'Edit Profile',
@@ -88,12 +89,13 @@ class HeaderMore extends StatelessWidget {
                         color: Colors.black,
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Settings(
-                                  username: username,
-                                  profilePicture: img,
-                                  userID: userid,
-                                )));
+                        Navigator.of(context, rootNavigator: true)
+                            .push(MaterialPageRoute(
+                                builder: (context) => Settings(
+                                      username: username,
+                                      profilePicture: img,
+                                      userID: userid,
+                                    )));
                       },
                     )
                   ],

@@ -93,7 +93,10 @@ class _SuaraPuanState extends State<SuaraPuan> {
                   getDataSuaraPuan(dataSuaraPuan),
                 ],
               ),
-            ))
+            )),
+            SizedBox(
+              height: 30,
+            )
           ],
         ),
       ),

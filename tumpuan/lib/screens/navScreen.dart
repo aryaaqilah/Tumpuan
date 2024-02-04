@@ -19,7 +19,14 @@ class _MainScreenState extends State<MainScreen> {
   final haidNavKey = GlobalKey<NavigatorState>();
   final panggilNavKey = GlobalKey<NavigatorState>();
   final moreNavKey = GlobalKey<NavigatorState>();
-  int selectedTab = 0;
+  int _selectedTab = 0;
+
+  int get selectedTab => _selectedTab;
+
+  set selectedTab(int value) {
+    _selectedTab = value;
+  }
+
   List<NavModel> items = [];
 
   bool sosActive = false;
@@ -115,7 +122,6 @@ class _MainScreenState extends State<MainScreen> {
           height: 64,
           width: 64,
           child: FloatingActionButton(
-            
             elevation: 0,
             backgroundColor: Colors.transparent,
             // shape: RoundedRectangleBorder(
@@ -165,21 +171,23 @@ class _MainScreenState extends State<MainScreen> {
           //   ),
           // ),
         ),
-        bottomNavigationBar: NavBar(
-          pageIndex: selectedTab,
-          onTap: (index) {
-            if (index == selectedTab) {
-              items[index]
-                  .navKey
-                  .currentState
-                  ?.popUntil((route) => route.isFirst);
-            } else {
-              setState(() {
-                selectedTab = index;
-              });
-            }
-          },
-        ),
+        bottomNavigationBar: selectedTab == 99
+            ? null
+            : NavBar(
+                pageIndex: selectedTab,
+                onTap: (index) {
+                  if (index == selectedTab) {
+                    items[index]
+                        .navKey
+                        .currentState
+                        ?.popUntil((route) => route.isFirst);
+                  } else {
+                    setState(() {
+                      selectedTab = index;
+                    });
+                  }
+                },
+              ),
       ),
     );
   }

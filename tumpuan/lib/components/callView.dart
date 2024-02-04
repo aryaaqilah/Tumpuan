@@ -10,12 +10,16 @@ class CallView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("images/bgCall.png"))),
+            image: DecorationImage(
+                image: AssetImage("images/bgQuiz.png"), fit: BoxFit.fill)),
         child: SafeArea(
           child: Column(
             children: [
               Column(
                 children: [
+                  SizedBox(
+                    height: 30,
+                  ),
                   Text(
                     name,
                     style: TextStyle(
@@ -39,7 +43,7 @@ class CallView extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 450,
+                height: 420,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 ElevatedButton(
