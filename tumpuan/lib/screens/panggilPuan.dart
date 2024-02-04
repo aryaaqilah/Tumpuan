@@ -27,6 +27,52 @@ class _PanggilPuanState extends State<PanggilPuan> {
 
     final datanya = ['Ayah', 'images/profileDefault.jpg', '082122504942'];
 
+    Widget addButton = Container(
+      height: 25,
+      // color: Colors.amber,
+      child: TextButton(
+        child: Text(
+          "Add Contact",
+          style: TextStyle(color: Colors.white, fontSize: 10),
+        ),
+        onPressed: () {
+          Navigator.of(context, rootNavigator: true).pop();
+          Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(builder: (context) => const AddContact()));
+        },
+      ),
+    );
+    Widget deleteButton = Container(
+      height: 25,
+      // color: const Color.fromARGB(255, 94, 80, 39),
+      child: TextButton(
+        child: Text(
+          "Delete Contact",
+          style: TextStyle(color: Colors.white, fontSize: 10),
+        ),
+        onPressed: () {
+          Navigator.of(context, rootNavigator: true).pop();
+        },
+      ),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 130, vertical: 320),
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          addButton,
+          Divider(
+            color: Colors.white,
+          ),
+          deleteButton,
+        ],
+      ),
+      actionsAlignment: MainAxisAlignment.center,
+      backgroundColor: Colors.black,
+    );
+
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
@@ -74,9 +120,17 @@ class _PanggilPuanState extends State<PanggilPuan> {
             SizedBox(height: 10),
             IconButton(
                 onPressed: () {
-                  Navigator.of(context, rootNavigator: true).push(
-                      MaterialPageRoute(
-                          builder: (context) => const AddContact()));
+                  // Navigator.of(context, rootNavigator: true).push(
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const AddContact()));
+                  setState(() {
+                    showDialog(
+                        barrierColor: Color(0x01000000),
+                        context: context,
+                        builder: (BuildContext context) {
+                          return alert;
+                        });
+                  });
                 },
                 icon: Icon(
                   Icons.add_circle,

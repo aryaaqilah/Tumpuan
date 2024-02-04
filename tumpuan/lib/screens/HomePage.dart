@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/dailyQuiz.dart';
+import 'package:tumpuan/screens/newUntukPuan.dart';
 import 'package:tumpuan/screens/suaraPuan.dart';
 import 'package:tumpuan/screens/untukPuan.dart';
 import 'package:tumpuan/screens/home.dart';
@@ -96,8 +97,8 @@ class _HomePageState extends State<HomePage> {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const UntukPuan(
-                                    title: 'Untuk Puan',
+                              builder: (context) => const newUntukPuan(
+                                  // title: 'Untuk Puan',
                                   )));
                         },
                         child: Container(
