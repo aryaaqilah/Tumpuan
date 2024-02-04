@@ -3,6 +3,8 @@ import 'package:tumpuan/components/dailyQuiz.dart';
 import 'package:tumpuan/screens/suaraPuan.dart';
 import 'package:tumpuan/screens/untukPuan.dart';
 import 'package:tumpuan/screens/home.dart';
+import 'package:tumpuan/styles/style.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,8 +14,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late int countdown = 22;
+  late DateTime _rangeStartDay = DateTime.utc(2024, 2, 26);
+  late DateTime _rangeEndDay = DateTime.utc(2024, 3, 3);
+
   @override
   Widget build(BuildContext context) {
+    String formattedEndDate = DateFormat('d MMMM yyyy').format(_rangeEndDay);
+    String formattedStartDate =
+        DateFormat('d MMMM yyyy').format(_rangeStartDay);
+
+    String prediction =
+        'Prediction : ' + formattedStartDate + ' - ' + formattedEndDate;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
@@ -133,14 +145,73 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 15),
                   Text(
-                    'Last Month Period',
+                    'Your Period Tracker',
                     style: TextStyle(
                         fontFamily: 'Satoshi',
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
                   ),
                   SizedBox(height: 20),
-                  Image(image: AssetImage('images/lastmonthperiodex.png')),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset('images/homeCircle.png'),
+                      Image.asset('images/homeElipse.png'),
+                      Column(
+                        children: [
+                          Text(
+                            'Period in',
+                            style: TextStyle(
+                                fontFamily: 'Satoshi',
+                                fontSize: 10,
+                                fontWeight: FontWeight.w200),
+                          ),
+                          Text(
+                            '${countdown} Days',
+                            style: TextStyle(
+                                fontFamily: 'Satoshi',
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.pink1),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    prediction,
+                    style: TextStyle(
+                        fontFamily: 'Satoshi',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w100,
+                        color: Colors.black),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    height: 25,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(AppColors.pink1)),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const Home()));
+                      },
+                      child: Text(
+                        'See Details',
+                        style: TextStyle(
+                            fontFamily: 'Satoshi',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 50),
                 ],
               ),
