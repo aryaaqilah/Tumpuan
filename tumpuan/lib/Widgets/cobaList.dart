@@ -34,8 +34,7 @@ class _CobaListState extends State<CobaList> {
 
   @override
   Widget build(BuildContext context) {
-    return
-      Scaffold(
+    return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text('PageView'),
@@ -73,9 +72,8 @@ class Pages extends StatelessWidget {
               Text(
                 text,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w400),
+                style:
+                    const TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
               ),
             ]),
       ),

@@ -15,13 +15,12 @@ class Question2 extends StatefulWidget {
 
 class _Question2State extends State<Question2> {
   late TextEditingController dateInputController;
-  late bool dontKnowSelected;
+  bool dontKnowSelected = false;
 
   @override
   void initState() {
     super.initState();
     dateInputController = TextEditingController();
-    dontKnowSelected = false;
   }
 
   @override
@@ -42,13 +41,14 @@ class _Question2State extends State<Question2> {
                   automaticallyImplyLeading: false,
                   actions: [
                     IconButton(
-                        onPressed: () {
-                          _showCloseDialog(context);
-                        },
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.black,
-                        ))
+                      onPressed: () {
+                        _showCloseDialog(context);
+                      },
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.black,
+                      ),
+                    )
                   ],
                   title: const Align(
                     alignment: Alignment.bottomLeft,
@@ -56,9 +56,10 @@ class _Question2State extends State<Question2> {
                       'Tumpuan',
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                          fontFamily: 'Brodies',
-                          color: Color.fromRGBO(251, 111, 146, 1),
-                          fontSize: 40),
+                        fontFamily: 'Brodies',
+                        color: Color.fromRGBO(251, 111, 146, 1),
+                        fontSize: 40,
+                      ),
                     ),
                   ),
                 ),
@@ -80,9 +81,10 @@ class _Question2State extends State<Question2> {
                     child: Text(
                       'Question 2',
                       style: TextStyle(
-                          fontFamily: 'Satoshi',
-                          fontWeight: FontWeight.w900,
-                          fontSize: 25),
+                        fontFamily: 'Satoshi',
+                        fontWeight: FontWeight.w900,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                 ),
@@ -90,9 +92,10 @@ class _Question2State extends State<Question2> {
                 const Text(
                   'When did your last period start ?',
                   style: TextStyle(
-                      fontFamily: 'Satoshi',
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600),
+                    fontFamily: 'Satoshi',
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
@@ -105,13 +108,15 @@ class _Question2State extends State<Question2> {
                         padding: const EdgeInsets.symmetric(horizontal: 17.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(12)),
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           child: Padding(
                             padding: const EdgeInsets.only(left: 20.0),
                             child: TextFormField(
                               decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.calendar_month)),
+                                prefixIcon: Icon(Icons.calendar_month),
+                              ),
                               controller: dateInputController,
                               readOnly: true,
                               onTap: () async {
@@ -119,10 +124,11 @@ class _Question2State extends State<Question2> {
                                   dontKnowSelected = false;
                                 });
                                 DateTime? pickedDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1950),
-                                    lastDate: DateTime(2050));
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime(2050),
+                                );
 
                                 if (pickedDate != null) {
                                   dateInputController.text =
@@ -167,13 +173,13 @@ class _Question2State extends State<Question2> {
                         ),
                         child: Center(
                           child: TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             child: const Text(
                               'Back',
                               style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
                           ),
                         ),
                       ),
@@ -183,19 +189,33 @@ class _Question2State extends State<Question2> {
                       child: Container(
                         width: 100,
                         decoration: BoxDecoration(
-                          color: const Color.fromRGBO(251, 111, 146, 1),
+                          color: ((dateInputController.text.isNotEmpty &&
+                                      !dontKnowSelected) ||
+                                  dontKnowSelected)
+                              ? const Color.fromRGBO(251, 111, 146, 1)
+                              : Colors.grey,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
                           child: TextButton(
+                            onPressed: () {
+                              if (dateInputController.text.isNotEmpty ||
+                                  dontKnowSelected) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const Question3()));
+                              } else {
+                                // Show a snackbar or dialog to inform the user to fill the required fields.
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          'Please select a date or check "I don\'t know".')),
+                                );
+                              }
+                            },
                             child: const Text(
                               'Save & Next',
                               style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Question3()));
-                            },
                           ),
                         ),
                       ),
@@ -251,7 +271,7 @@ Future<void> _showCloseDialog(BuildContext context) async {
 class LabeledCheckboxExample extends StatelessWidget {
   final String sentences;
   final bool value;
-  final ValueChanged<bool?>? onChanged;
+  final ValueChanged<bool>? onChanged;
 
   const LabeledCheckboxExample({
     required this.sentences,
@@ -265,23 +285,28 @@ class LabeledCheckboxExample extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: AppColors.bg1, borderRadius: BorderRadius.circular(10)),
+            color: AppColors.bg1,
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: CheckboxListTile(
             dense: true,
             title: Text(
               sentences,
               style: const TextStyle(
-                  fontSize: 16.0, color: Colors.black, fontFamily: 'Satoshi'),
+                fontSize: 16.0,
+                color: Colors.black,
+                fontFamily: 'Satoshi',
+              ),
             ),
             value: value,
             onChanged:
-                onChanged != null ? (newValue) => onChanged!(newValue) : null,
+                onChanged != null ? (newValue) => onChanged!(newValue!) : null,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
               side: const BorderSide(color: Colors.pink),
             ),
             activeColor: const Color.fromRGBO(251, 111, 146, 1),
-            checkboxShape: CircleBorder(),
+            checkboxShape: const CircleBorder(),
           ),
         ),
         const SizedBox(

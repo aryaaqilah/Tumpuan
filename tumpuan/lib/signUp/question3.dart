@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-// import 'package:tumpuan/components/checkBoxSignUp.dart';
+import 'package:tumpuan/components/checkBoxSignUp.dart';
 import 'package:tumpuan/signUp/question4.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class Question3 extends StatefulWidget {
-  const Question3({super.key});
+  const Question3({Key? key}) : super(key: key);
 
   @override
   State<Question3> createState() => _Question3State();
-  
 }
 
 class _Question3State extends State<Question3> {
-  @override
-  TextEditingController dateInputController = TextEditingController();
   List<Map<String, dynamic>> checkListItems = [
     {"id": 0, "selected": false, "title": 'No, I sleep well'},
     {"id": 1, "selected": false, "title": 'Difficulty falling asleep'},
@@ -25,42 +22,11 @@ class _Question3State extends State<Question3> {
     {"id": 5, "selected": false, "title": 'Insomnia'},
     {"id": 6, "selected": false, "title": 'Other'},
   ];
+
   @override
   Widget build(BuildContext context) {
-    final sentences = [
-      'No, I sleep well',
-      'Difficulty falling asleep',
-      'Waking up tired',
-      'Waking up during the night',
-      'Lack of sleep schedule',
-      'Insomnia',
-      'Other'
-    ];
-
-    final sentences2 = [
-      'Painful menstrual cramps',
-      'PMS symptoms',
-      'Unusual discharge',
-      'Heavy menstrual flow',
-      'Mood Swings',
-      'Other',
-      'No, nothings bother me'
-    ];
-
-    final sentences3 = [
-      'None',
-      'Lose weight',
-      'Gain weight',
-      'Maintain healthy weight',
-      'Start exercising',
-      'Learn about nutrition',
-      'Get more energy',
-      'Other'
-    ];
-
     return Scaffold(
       backgroundColor: AppColors.bg,
-      // ignore: prefer_const_constructors
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -75,13 +41,14 @@ class _Question3State extends State<Question3> {
                   automaticallyImplyLeading: false,
                   actions: [
                     IconButton(
-                        onPressed: () {
-                          _showCloseDialog(context);
-                        },
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.black,
-                        ))
+                      onPressed: () {
+                        _showCloseDialog(context);
+                      },
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.black,
+                      ),
+                    )
                   ],
                   title: const Align(
                     alignment: Alignment.bottomLeft,
@@ -89,9 +56,10 @@ class _Question3State extends State<Question3> {
                       'Tumpuan',
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                          fontFamily: 'Brodies',
-                          color: Color.fromRGBO(251, 111, 146, 1),
-                          fontSize: 40),
+                        fontFamily: 'Brodies',
+                        color: Color.fromRGBO(251, 111, 146, 1),
+                        fontSize: 40,
+                      ),
                     ),
                   ),
                 ),
@@ -99,7 +67,6 @@ class _Question3State extends State<Question3> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: LinearPercentIndicator(
-                    // width: ,
                     lineHeight: 3.0,
                     percent: 0.6,
                     backgroundColor: Colors.grey,
@@ -114,9 +81,10 @@ class _Question3State extends State<Question3> {
                     child: Text(
                       'Question 3',
                       style: TextStyle(
-                          fontFamily: 'Satoshi',
-                          fontWeight: FontWeight.w900,
-                          fontSize: 25),
+                        fontFamily: 'Satoshi',
+                        fontWeight: FontWeight.w900,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                 ),
@@ -124,35 +92,33 @@ class _Question3State extends State<Question3> {
                 const Text(
                   'Is there anything you want to\nimprove about your sleep?',
                   style: TextStyle(
-                      fontFamily: 'Satoshi',
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600),
+                    fontFamily: 'Satoshi',
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        checkListItems.length,
-                        (index) => LabeledCheckboxExample(
-                          sentences: checkListItems[index]["title"],
-                          value: checkListItems[index]["selected"],
-                          onChanged: (value) {
-                            setState(() {
-                              for (var i = 0; i < checkListItems.length; i++) {
-                                if (i == index) {
-                                  checkListItems[i]["selected"] = true;
-                                } else {
-                                  checkListItems[i]["selected"] = false;
-                                }
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      checkListItems.length,
+                      (index) => LabeledCheckboxExample(
+                        sentences: checkListItems[index]["title"],
+                        value: checkListItems[index]["selected"],
+                        onChanged: (value) {
+                          setState(() {
+                            for (var i = 0; i < checkListItems.length; i++) {
+                              if (i == index) {
+                                checkListItems[i]["selected"] = value ?? false;
+                              } else {
+                                checkListItems[i]["selected"] = false;
                               }
-                            });
-                          },
-                        ),
+                            }
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -165,20 +131,17 @@ class _Question3State extends State<Question3> {
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
                         width: 100,
-                        // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
                           color: const Color.fromRGBO(251, 111, 146, 1),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Center(
-                          child: TextButton(
-                            child: const Text(
-                              'Back',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            'Back',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
@@ -187,21 +150,25 @@ class _Question3State extends State<Question3> {
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
                         width: 100,
-                        // padding: EdgeInsets.only(left: 0),
                         decoration: BoxDecoration(
-                          color: const Color.fromRGBO(251, 111, 146, 1),
+                          color: _isAnyOptionSelected()
+                              ? const Color.fromRGBO(251, 111, 146, 1)
+                              : Colors.grey,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Center(
-                          child: TextButton(
-                            child: const Text(
-                              'Save & Next',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Question4()));
-                            },
+                        child: TextButton(
+                          onPressed: _isAnyOptionSelected()
+                              ? () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => const Question4(),
+                                    ),
+                                  );
+                                }
+                              : null,
+                          child: const Text(
+                            'Save & Next',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
@@ -214,51 +181,49 @@ class _Question3State extends State<Question3> {
         ),
       ),
     );
-    
   }
-  
-}
 
-Future<void> _showCloseDialog(BuildContext context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        // title: Text(
-        //   'Canceling Registration?',
-        //   style: TextStyle(fontFamily: 'Satoshi'),
-        // ),
-        content: const SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Image(image: AssetImage('images/cancelRegist.png')),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text(
-              'Cancel',
-              style: TextStyle(color: AppColors.pink1),
+  bool _isAnyOptionSelected() {
+    return checkListItems.any((item) => item['selected'] == true);
+  }
+
+  Future<void> _showCloseDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Image(image: AssetImage('images/cancelRegist.png')),
+              ],
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
           ),
-          TextButton(
-            child: const Text('Yes', style: TextStyle(color: AppColors.pink1)),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const StartPage()),
-              );
-            },
-          ),
-        ],
-      );
-    },
-  );
-  
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: AppColors.pink1),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child:
+                  const Text('Yes', style: TextStyle(color: AppColors.pink1)),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const StartPage()),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 class LabeledCheckboxExample extends StatelessWidget {
@@ -278,29 +243,30 @@ class LabeledCheckboxExample extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: AppColors.bg1, borderRadius: BorderRadius.circular(10)),
+            color: AppColors.bg1,
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: CheckboxListTile(
-            // controlAffinity: ListTileControlAffinity.leading,
-            // contentPadding: EdgeInsets.zero,
             dense: true,
             title: Text(
               sentences,
               style: const TextStyle(
-                  fontSize: 16.0, color: Colors.black, fontFamily: 'Satoshi'),
+                fontSize: 16.0,
+                color: Colors.black,
+                fontFamily: 'Satoshi',
+              ),
             ),
             value: value,
             onChanged: onChanged,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0), // Optionally
+              borderRadius: BorderRadius.circular(20.0),
               side: const BorderSide(color: Colors.pink),
             ),
             activeColor: const Color.fromRGBO(251, 111, 146, 1),
-            checkboxShape: CircleBorder(),
+            checkboxShape: const CircleBorder(),
           ),
         ),
-        SizedBox(
-          height: 10,
-        )
+        const SizedBox(height: 10),
       ],
     );
   }

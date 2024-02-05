@@ -1,8 +1,5 @@
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:tumpuan/accountCred.dart';
 import 'package:tumpuan/screens/takePhoto.dart';
@@ -10,7 +7,7 @@ import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class GenderVerifPage extends StatefulWidget {
-  const GenderVerifPage({super.key});
+  const GenderVerifPage({Key? key}) : super(key: key);
 
   @override
   State<GenderVerifPage> createState() => _GenderVerifPageState();
@@ -21,6 +18,8 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isImageUploaded = _image != null;
+
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       body: SingleChildScrollView(
@@ -100,7 +99,10 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                         },
                       )
                     : Container(
-                        height: 400, width: 300, child: Image.file(_image!)),
+                        height: 400,
+                        width: 300,
+                        child: Image.file(_image!),
+                      ),
                 const SizedBox(height: 20),
                 const Padding(
                   padding: EdgeInsets.only(left: 0),
@@ -142,7 +144,10 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                       child: Container(
                         width: 100,
                         decoration: BoxDecoration(
-                          color: const Color.fromRGBO(251, 111, 146, 1),
+                          color: isImageUploaded
+                              ? const Color.fromRGBO(251, 111, 146, 1)
+                              : Colors
+                                  .grey, // Disable button when no image is uploaded
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
@@ -151,11 +156,16 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                               'Save & Next',
                               style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const AccountCred(),
-                              ));
-                            },
+                            onPressed: isImageUploaded
+                                ? () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AccountCred(),
+                                      ),
+                                    );
+                                  }
+                                : null, // Disable button when no image is uploaded
                           ),
                         ),
                       ),
@@ -208,4 +218,3 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
     );
   }
 }
-
