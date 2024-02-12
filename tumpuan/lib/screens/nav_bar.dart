@@ -18,7 +18,7 @@ class NavBar extends StatelessWidget {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     return Container(
-      height: queryData.size.height / 10,
+      height: queryData.size.height / 10 - 18,
       color: Color.fromARGB(0, 0, 0, 0),
       margin: EdgeInsets.only(
         left: 16,
