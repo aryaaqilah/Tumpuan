@@ -144,9 +144,9 @@ class _newUntukPuanState extends State<newUntukPuan> {
                     });
                   },
                   children: [
-                    getDataMore(datanewUntukPuan),
-                    getDataMore(datanewUntukPuan),
-                    getDataMore(datanewUntukPuan)
+                    // getDataMore(datanewUntukPuan),
+                    // getDataMore(datanewUntukPuan),
+                    // getDataMore(datanewUntukPuan)
                   ],
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/dailyQuiz.dart';
+import 'package:tumpuan/components/widgetUntukPuan.dart';
 import 'package:tumpuan/screens/newUntukPuan.dart';
 import 'package:tumpuan/screens/suaraPuan.dart';
 import 'package:tumpuan/screens/untukPuan.dart';
@@ -48,7 +49,10 @@ class _HomePageState extends State<HomePage> {
               color: Colors.grey,
             ),
             onPressed: () {
-              // do something
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const WidgetUntukPuan(
+                      // title: 'Untuk Puan',
+                      )));
             },
           )
         ],
