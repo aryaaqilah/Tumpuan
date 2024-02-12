@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumpuan/screens/home.dart';
 import 'package:tumpuan/screens/navScreen.dart';
+import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/services/tumpuanServices.dart';
 import 'package:tumpuan/signUp/intro1.dart';
 import 'package:tumpuan/utils/snackbar_helper.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   final Map? login;
@@ -20,6 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool obscurePassword = false; // Added to track password visibility
+
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  List<dynamic> dataMore = [];
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 40),
                 buildTextField(
                   controller: usernameController,
+                  obscureText: false,
                   hintText: 'Email',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -80,13 +92,13 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   width: 100,
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const MainScreen(),
-                        ));
-                      }
-                    },
+                    onPressed:
+                        // if (_formKey.currentState!.validate()) {
+                        //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        //     builder: (context) => const MainScreen(),
+                        //   ));
+                        // }
+                        doLogin,
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                             const Color.fromRGBO(251, 111, 146, 1))),
@@ -162,5 +174,44 @@ class _LoginPageState extends State<LoginPage> {
         onTap: onTap,
       ),
     );
+  }
+
+  doLogin() async {
+    bool isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      final username = usernameController.text;
+      final password = passwordController.text;
+
+      bool isSuccess =
+          await AuthService().login(username: username, password: password);
+
+      if (!isSuccess) {
+        print(isSuccess);
+      } else {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const MainScreen(),
+        ));
+      }
+    }
+  }
+
+  Future<void> getData() async {
+    // get data from form
+    // submit data to the server
+    final url = 'http://10.0.2.2:8000/api/ruangPuans';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map;
+      print('items kita' + json['data'].toString());
+      final result = json['data'] ?? [] as List;
+      setState(() {
+        dataMore = result;
+      });
+    } else {}
+    // showsuccess or fail message based on status
+    print(response.statusCode);
+    print('data pas api tarik' + response.body);
   }
 }
