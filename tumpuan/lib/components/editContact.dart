@@ -8,14 +8,12 @@ class EditContact extends StatefulWidget {
       required this.name,
       required this.image,
       required this.number,
-      required this.email,
-      required this.address});
+      required this.relation});
 
   final String name;
   final String number;
   final String image;
-  final String email;
-  final String address;
+  final String relation;
 
   @override
   State<EditContact> createState() => _EditContactState();
@@ -75,7 +73,7 @@ class _EditContactState extends State<EditContact> {
             ),
             SizedBox(height: 20),
             CircleAvatar(
-              backgroundImage: AssetImage(widget.image),
+              // backgroundImage: AssetImage(widget.image),
               radius: 40,
             ),
             SizedBox(height: 20),
@@ -179,6 +177,7 @@ class _EditContactState extends State<EditContact> {
                 ),
               ),
             ),
+
             SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -190,7 +189,7 @@ class _EditContactState extends State<EditContact> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Email (Optional)',
+                          'Relation',
                           style: TextStyle(
                               fontFamily: 'Satoshi',
                               fontWeight: FontWeight.bold,
@@ -215,53 +214,7 @@ class _EditContactState extends State<EditContact> {
                             // readOnly: true,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: widget.email,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Container(
-                // width: 300,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Address (Optional)',
-                          style: TextStyle(
-                              fontFamily: 'Satoshi',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: TextField(
-                            // readOnly: true,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: widget.address,
+                              hintText: widget.relation,
                             ),
                           ),
                         ),

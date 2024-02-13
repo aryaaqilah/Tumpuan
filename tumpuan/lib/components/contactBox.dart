@@ -3,30 +3,26 @@ import 'package:tumpuan/components/callView.dart';
 import 'package:tumpuan/components/editContact.dart';
 import 'package:tumpuan/styles/style.dart';
 
-Widget getDataContact(List<List<String>> dataContact) {
+Widget getDataContact(List<dynamic> dataMore) {
   String name;
-  String image;
+  String image = 'images/profileDefault.jpg';
   String number;
-  String email;
-  String address;
-  List<Widget> contactBoxes = [];
-  for (var i = 0; i < dataContact.length; i++) {
-    name = dataContact[i][0];
-    image = dataContact[i][1];
-    number = dataContact[i][2];
-    email = dataContact[i][3];
-    address = dataContact[i][4];
-    contactBoxes.add(ContactBox(
-      name: name,
-      image: image,
-      number: number,
-      email: email,
-      address: address,
-    ));
-    contactBoxes.add(SizedBox(height: 10));
+  String relation;
+
+  List<Widget> dataMoreBoxes = [];
+  for (var i = 0; i < dataMore.length; i++) {
+    name = dataMore[i]['name'].toString();
+    number = dataMore[i]['phoneNumber'].toString();
+    relation = dataMore[i]['relation'].toString();
+
+    print('${name} - ${number} - ${relation} ');
+
+    dataMoreBoxes.add(ContactBox(
+        name: name, image: image, number: number, relation: relation));
+    dataMoreBoxes.add(SizedBox(height: 10));
   }
   return Column(
-    children: contactBoxes,
+    children: dataMoreBoxes,
   );
 }
 
@@ -36,14 +32,12 @@ class ContactBox extends StatelessWidget {
       required this.name,
       required this.image,
       required this.number,
-      required this.email,
-      required this.address});
+      required this.relation});
 
   late final String name;
-  final String image;
   final String number;
-  final String email;
-  final String address;
+  final String relation;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -70,15 +64,13 @@ class ContactBox extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 onPressed: () {
-                  Navigator.of(context, rootNavigator: true)
-                      .push(MaterialPageRoute(
+                  Navigator.of(context, rootNavigator: true).push(
+                      MaterialPageRoute(
                           builder: (context) => EditContact(
-                                name: name,
-                                image: image,
-                                number: number,
-                                email: email,
-                                address: address,
-                              )));
+                              name: name,
+                              image: image,
+                              number: number,
+                              relation: relation)));
                 },
                 iconSize: 15,
               ),
@@ -96,7 +88,7 @@ class ContactBox extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage(image),
+                    // backgroundImage: AssetImage(image),
                     radius: 40,
                   ),
                   SizedBox(width: 20),
