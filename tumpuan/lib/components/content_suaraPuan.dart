@@ -3,25 +3,27 @@ import 'package:tumpuan/components/callView.dart';
 import 'package:tumpuan/components/editContact.dart';
 import 'package:tumpuan/styles/style.dart';
 
-Widget getDataSuaraPuan(List<List<String>> dataSuara) {
-  String author;
-  String image;
-  String date;
-  String category;
+Widget getDataSuaraPuan(List<dynamic> dataSuaraPuan) {
   String title;
+  String media;
+  String content;
+  String dop;
+  String kategori_id;
+
   List<Widget> dataSuaraBoxes = [];
-  for (var i = 0; i < dataSuara.length; i++) {
-    author = dataSuara[i][0];
-    image = dataSuara[i][1];
-    date = dataSuara[i][2];
-    category = dataSuara[i][3];
-    title = dataSuara[i][4];
+  for (var i = 0; i < dataSuaraPuan.length; i++) {
+    title = dataSuaraPuan[i]['title'].toString();
+    media = dataSuaraPuan[i]['media'].toString();
+    content = dataSuaraPuan[i]['content'].toString();
+    dop = dataSuaraPuan[i]['dop'].toString();
+    kategori_id = dataSuaraPuan[i]['kategori_id'].toString();
+
     dataSuaraBoxes.add(SuaraPuanBox(
-      author: author,
-      image: image,
-      date: date,
-      category: category,
       title: title,
+      media: media,
+      content: content,
+      dop: dop,
+      kategori_id: kategori_id,
     ));
     dataSuaraBoxes.add(SizedBox(height: 10));
   }
@@ -33,17 +35,18 @@ Widget getDataSuaraPuan(List<List<String>> dataSuara) {
 class SuaraPuanBox extends StatelessWidget {
   SuaraPuanBox(
       {super.key,
-      required this.author,
-      required this.image,
-      required this.date,
-      required this.category,
-      required this.title});
+      required this.title,
+      required this.media,
+      required this.content,
+      required this.dop,
+      required this.kategori_id});
 
-  late final String author;
-  final String image;
-  final String date;
-  final String category;
+  // late final String ;
   final String title;
+  final String media;
+  final String content;
+  final String dop;
+  final String kategori_id;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +82,7 @@ class SuaraPuanBox extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        category,
+                        kategori_id,
                         style: TextStyle(
                             fontFamily: 'Satoshi',
                             fontWeight: FontWeight.bold,
@@ -116,13 +119,13 @@ class SuaraPuanBox extends StatelessWidget {
                   width: 330,
                   height: 150,
                   decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage(image))),
+                      image: DecorationImage(image: AssetImage(media))),
                 ),
                 SizedBox(height: 10),
                 IntrinsicHeight(
                   child: Row(
                     children: [
-                      Text(date,
+                      Text(dop,
                           style: TextStyle(
                               fontFamily: 'Satoshi',
                               fontWeight: FontWeight.bold,
@@ -132,7 +135,7 @@ class SuaraPuanBox extends StatelessWidget {
                         color: Colors.grey,
                         thickness: 1,
                       ),
-                      Text(author,
+                      Text(title,
                           style: TextStyle(
                               fontFamily: 'Satoshi',
                               fontWeight: FontWeight.bold,

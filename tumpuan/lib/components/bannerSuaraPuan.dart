@@ -11,21 +11,21 @@ Widget getDataBannerSuaraPuan(List<String> dataBannerSuara) {
   String title;
   List<Widget> dataBannerSuaraBoxes = [];
   // for (var i = 0; i < dataBannerSuara.length; i++) {
-    
+
   //   dataBannerSuaraBoxes.add(SizedBox(height: 10));
   // }
   author = dataBannerSuara[0];
-    image = dataBannerSuara[1];
-    date = dataBannerSuara[2];
-    category = dataBannerSuara[3];
-    title = dataBannerSuara[4];
-    dataBannerSuaraBoxes.add(BannerSuaraPuanBox(
-      author: author,
-      image: image,
-      date: date,
-      category: category,
-      title: title,
-    ));
+  image = dataBannerSuara[1];
+  date = dataBannerSuara[2];
+  category = dataBannerSuara[3];
+  title = dataBannerSuara[4];
+  dataBannerSuaraBoxes.add(BannerSuaraPuanBox(
+    author: author,
+    image: image,
+    date: date,
+    category: category,
+    title: title,
+  ));
   return Column(
     children: dataBannerSuaraBoxes,
   );
