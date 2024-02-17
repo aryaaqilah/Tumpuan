@@ -7,7 +7,18 @@ import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class GenderVerifPage extends StatefulWidget {
-  const GenderVerifPage({Key? key}) : super(key: key);
+  // const GenderVerifPage({Key? key}) : super(key: key);
+
+  final String name;
+  final String dob;
+  final String email;
+
+  const GenderVerifPage({
+    Key? key,
+    required this.name,
+    required this.dob,
+    required this.email,
+  }) : super(key: key);
 
   @override
   State<GenderVerifPage> createState() => _GenderVerifPageState();
@@ -160,8 +171,11 @@ class _GenderVerifPageState extends State<GenderVerifPage> {
                                 ? () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const AccountCred(),
+                                        builder: (context) => AccountCred(
+                                          name: widget.name,
+                                          dob: widget.dob,
+                                          email: widget.email,
+                                        ),
                                       ),
                                     );
                                   }

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tumpuan/genderVerif.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -17,7 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController dateInputController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -97,17 +100,17 @@ class _SignUpPageState extends State<SignUpPage> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 20),
-                  buildTextField(
-                    controller: lastNameController,
-                    hintText: 'Last Name',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your last name';
-                      }
-                      return null;
-                    },
-                  ),
+                  // const SizedBox(height: 20),
+                  // buildTextField(
+                  //   controller: lastNameController,
+                  //   hintText: 'Last Name',
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter your last name';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
                   const SizedBox(height: 20),
                   buildTextField(
                     controller: dateInputController,
@@ -128,17 +131,17 @@ class _SignUpPageState extends State<SignUpPage> {
 
                       if (pickedDate != null) {
                         dateInputController.text =
-                            DateFormat('dd MMMM yyyy').format(pickedDate);
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
                       }
                     },
                   ),
                   const SizedBox(height: 20),
                   buildTextField(
-                    controller: addressController,
-                    hintText: 'Address',
+                    controller: emailController,
+                    hintText: 'Email',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your address';
+                        return 'Please enter your email';
                       }
                       return null;
                     },
@@ -156,7 +159,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const GenderVerifPage(),
+                              builder: (context) => GenderVerifPage(
+                                name: firstNameController.text,
+                                dob: dateInputController.text,
+                                email: emailController.text,
+                              ),
                             ));
                           }
                         },

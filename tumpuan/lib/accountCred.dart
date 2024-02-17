@@ -1,11 +1,29 @@
+import 'dart:convert';
+
+import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:tumpuan/newSignUpPage.dart';
 import 'package:tumpuan/signUp/bridgetoQ.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
+import 'package:http/http.dart' as http;
 
 class AccountCred extends StatefulWidget {
-  const AccountCred({super.key});
+  // const AccountCred({
+  //   super.key
+  // });
+
+  final String name;
+  final String dob;
+  final String email;
+
+  const AccountCred({
+    Key? key,
+    required this.name,
+    required this.dob,
+    required this.email,
+  }) : super(key: key);
 
   @override
   State<AccountCred> createState() => _AccountCredState();
@@ -15,7 +33,7 @@ class _AccountCredState extends State<AccountCred> {
   @override
   TextEditingController dateInputController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -92,11 +110,11 @@ class _AccountCredState extends State<AccountCred> {
                   ),
                   const SizedBox(height: 30),
                   buildTextField(
-                    controller: emailController,
-                    hintText: 'Email',
+                    controller: usernameController,
+                    hintText: 'Username',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return 'Please enter your username';
                       }
                       return null;
                     },
@@ -151,6 +169,7 @@ class _AccountCredState extends State<AccountCred> {
                           child: TextButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
+                                RegistrationUser();
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const BridgetoQ(),
                                 ));
@@ -198,6 +217,40 @@ class _AccountCredState extends State<AccountCred> {
         ),
       ),
     );
+  }
+
+  Future<void> RegistrationUser() async {
+    final name = widget.name;
+    final dob = widget.dob;
+    final email = widget.email;
+
+    final username = usernameController.text;
+    final password = passwordController.text;
+
+    print('Name: $name');
+    print('DOB: $dob');
+    print('Email: $email');
+
+    final token = Uuid().v4();
+
+    final body = {
+      "name": name,
+      "dob": dob,
+      "email": email,
+      "username": username,
+      "password": password,
+      "gender": 1,
+      "token": token,
+    };
+
+    final url = 'http://10.0.2.2:8000/api/users';
+    final uri = Uri.parse(url);
+    final response = await http.post(uri, body: jsonEncode(body), headers: {
+      'Content-Type': 'application/json',
+    });
+
+    print(response.statusCode);
+    print(response.body);
   }
 
   Widget buildTextField({
