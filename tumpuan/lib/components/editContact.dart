@@ -252,15 +252,20 @@ class _EditContactState extends State<EditContact> {
   }
 
   Future<void> editData() async {
-    final name = nameController.text;
-    final number = numberController.text;
-    final relation = relationController.text;
+    final name =
+        nameController.text.isNotEmpty ? nameController.text : widget.name;
+    final number = numberController.text.isNotEmpty
+        ? numberController.text
+        : widget.number;
+    final relation = relationController.text.isNotEmpty
+        ? relationController.text
+        : widget.relation;
     final body = {
       'name': name,
       'phoneNumber': number,
       'relation': relation,
     };
-    final id = dataMore[0]['id'];
+    final id = dataMore.isNotEmpty ? dataMore[0]['id'] : "";
     final url = "http://10.0.2.2:8000/api/kontakpalsus/$id";
     final uri = Uri.parse(url);
     final response = await http.put(uri, body: jsonEncode(body), headers: {
