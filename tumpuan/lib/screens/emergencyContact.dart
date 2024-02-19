@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:tumpuan/components/contactBox.dart';
-import 'package:tumpuan/screens/addContact.dart';
+import 'package:tumpuan/components/emergencyContactBox.dart';
+import 'package:tumpuan/screens/addEmergencyContact.dart';
 import 'package:tumpuan/services/auth_service.dart';
 
 class EmergencyContact extends StatefulWidget {
@@ -51,8 +51,8 @@ class _EmergencyContactState extends State<EmergencyContact> {
         ),
         onPressed: () {
           Navigator.of(context, rootNavigator: true).pop();
-          Navigator.of(context, rootNavigator: true).push(
-              MaterialPageRoute(builder: (context) => const AddContact()));
+          Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+              builder: (context) => const AddEmergencyContact()));
         },
       ),
     );
@@ -124,7 +124,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
                 //     name: 'Ayah',
                 //     image: 'images/profileDefault.jpg',
                 //     number: '082122504942'),
-                getDataContact(dataMore),
+                getDataEmergencyContact(dataMore),
                 SizedBox(height: 10),
                 IconButton(
                     onPressed: () {
@@ -160,7 +160,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
     });
     // get data from form
     // submit data to the server
-    final url = 'http://10.0.2.2:8000/api/kontakpalsus';
+    final url = 'http://10.0.2.2:8000/api/kontakamans';
     final uri = Uri.parse(url);
     final response =
         await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
