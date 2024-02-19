@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/callView.dart';
 import 'package:tumpuan/components/editContact.dart';
+import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/styles/style.dart';
+import 'package:http/http.dart' as http;
 
 Widget getDataContact(List<dynamic> dataMore) {
   String name;
   String image = 'images/profileDefault.jpg';
   String number;
   String relation;
+  String id;
 
   List<Widget> dataMoreBoxes = [];
   for (var i = 0; i < dataMore.length; i++) {
     name = dataMore[i]['name'].toString();
     number = dataMore[i]['phoneNumber'].toString();
     relation = dataMore[i]['relation'].toString();
+    id = dataMore[i]['id'].toString();
 
-    print('${name} - ${number} - ${relation} ');
+    print('${name} - ${number} - ${relation} - ${id}');
 
     dataMoreBoxes.add(ContactBox(
-        name: name, image: image, number: number, relation: relation));
+      name: name,
+      image: image,
+      number: number,
+      relation: relation,
+      id: id,
+    ));
     dataMoreBoxes.add(SizedBox(height: 10));
   }
   return Column(
@@ -32,12 +41,14 @@ class ContactBox extends StatelessWidget {
       required this.name,
       required this.image,
       required this.number,
-      required this.relation});
+      required this.relation,
+      required this.id});
 
   late final String name;
   final String number;
   final String relation;
   final String image;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +140,7 @@ class ContactBox extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 onPressed: () {
-                  // delete disini
+                  deleteContact(id);
                 },
                 iconSize: 15,
               ),
@@ -138,5 +149,19 @@ class ContactBox extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> deleteContact(String id) async {
+    // final id = dataMore.isNotEmpty ? dataMore[0]['id'] : "";
+    final url = "http://10.0.2.2:8000/api/kontakpalsus/$id";
+    final uri = Uri.parse(url);
+    final response = await http
+        .delete(uri, headers: {'Authorization': '${AuthService.token}'});
+
+    if (response.statusCode == 200) {
+      print('delete success');
+    } else {
+      print('delete failed');
+    }
   }
 }
