@@ -40,7 +40,7 @@ class BannerSuaraPuanBox extends StatelessWidget {
       required this.category,
       required this.title});
 
-  late final String author;
+  final String author;
   final String image;
   final String date;
   final String category;
@@ -50,6 +50,9 @@ class BannerSuaraPuanBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 14),
+        ),
         Container(
           decoration: BoxDecoration(
               // color: Colors.white,
@@ -58,15 +61,21 @@ class BannerSuaraPuanBox extends StatelessWidget {
               ),
           // height: 200,
           width: 330,
+
           child: Center(
             // padding: const EdgeInsets.only(left: 20.0),
             child: Column(
               children: [
                 Container(
-                  width: 330,
-                  height: 150,
+                  width: 390,
+                  height: 120,
                   decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage(image))),
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: AssetImage(image),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 10),
                 IntrinsicHeight(
@@ -91,14 +100,20 @@ class BannerSuaraPuanBox extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 7),
-                Text(title,
+                // SizedBox(height: 2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.left,
                     style: TextStyle(
-                        fontFamily: 'Satoshi',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                    maxLines: 2),
+                      fontFamily: 'Satoshi',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
