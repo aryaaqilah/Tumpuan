@@ -7,12 +7,19 @@ import 'package:tumpuan/screens/commentRuangPuan.dart';
 import 'package:tumpuan/screens/more.dart';
 import 'package:tumpuan/styles/style.dart';
 
-Widget getDataUntukPuan(List<dynamic> DataUntukPuan) {
-  String name;
-  String image;
-  String address;
+Widget getDataUntukPuan(List<dynamic> dataUntukPuan) {
+  String nama;
+  String alamat;
+  String deskripsi;
+  String phoneNumber;
+  String jamBuka;
+  String jamTutup;
+  String foto;
+  String price;
+  String website;
+  String kategori_id;
 
-  print('ini datanya : ${DataUntukPuan}');
+  print('ini datanya : ${dataUntukPuan}');
 
   List<Widget> dataUntukPuanBoxes = [];
   dataUntukPuanBoxes.add(SizedBox(height: 5));
@@ -75,17 +82,32 @@ Widget getDataUntukPuan(List<dynamic> DataUntukPuan) {
         fontFamily: 'Satoshi', fontWeight: FontWeight.bold, fontSize: 20),
   ));
   dataUntukPuanBoxes.add(SizedBox(height: 15));
-  for (var i = 0; i < DataUntukPuan.length; i++) {
+  for (var i = 0; i < dataUntukPuan.length; i++) {
     // name = DataUntukPuan[i]['threadName'].toString();
     // address = DataUntukPuan[i]['threadDate'].toString();
     // image = "lala";
-    name = DataUntukPuan[i][0];
-    image = DataUntukPuan[i][1];
-    address = DataUntukPuan[i][2];
+    nama = dataUntukPuan[i]['nama'].toString();
+    alamat = dataUntukPuan[i]['alamat'].toString();
+    deskripsi = dataUntukPuan[i]['deskripsi'].toString();
+    phoneNumber = dataUntukPuan[i]['phoneNumber'].toString();
+    jamBuka = dataUntukPuan[i]['jamBuka'].toString();
+    jamTutup = dataUntukPuan[i]['jamTutup'].toString();
+    foto = dataUntukPuan[i]['foto'].toString();
+    price = dataUntukPuan[i]['price'].toString();
+    website = dataUntukPuan[i]['website'].toString();
+    kategori_id = dataUntukPuan[i]['kategori_id'].toString();
+
     dataUntukPuanBoxes.add(UntukPuanBox(
-      image: image,
-      name: name,
-      address: address,
+      nama: nama,
+      alamat: alamat,
+      deskripsi: deskripsi,
+      phoneNumber: phoneNumber,
+      jamBuka: jamBuka,
+      jamTutup: jamTutup,
+      foto: foto,
+      price: price,
+      website: website,
+      kategori_id: kategori_id,
     ));
     dataUntukPuanBoxes.add(SizedBox(height: 15));
   }
@@ -97,13 +119,28 @@ Widget getDataUntukPuan(List<dynamic> DataUntukPuan) {
 class UntukPuanBox extends StatelessWidget {
   UntukPuanBox({
     super.key,
-    required this.image,
-    required this.name,
-    required this.address,
+    required this.nama,
+    required this.alamat,
+    required this.deskripsi,
+    required this.phoneNumber,
+    required this.jamBuka,
+    required this.jamTutup,
+    required this.foto,
+    required this.price,
+    required this.website,
+    required this.kategori_id,
   });
-  final String image;
-  final String name;
-  final String address;
+
+  final String nama;
+  final String alamat;
+  final String deskripsi;
+  final String phoneNumber;
+  final String jamBuka;
+  final String jamTutup;
+  final String foto;
+  final String price;
+  final String website;
+  final String kategori_id;
 
   int checker = 1;
 
@@ -123,8 +160,7 @@ class UntukPuanBox extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                        image: AssetImage('images/untukPuan.png'),
-                        fit: BoxFit.fill)),
+                        image: AssetImage(foto), fit: BoxFit.fill)),
               ),
               Container(
                 child: Row(
@@ -143,7 +179,7 @@ class UntukPuanBox extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Apsara Spa',
+                                    nama,
                                     style: TextStyle(
                                         fontFamily: 'Satoshi',
                                         fontWeight: FontWeight.bold,
@@ -160,7 +196,7 @@ class UntukPuanBox extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Pasar Bersih, Sentul City, Bogor',
+                                    alamat,
                                     style: TextStyle(
                                         fontFamily: 'Satoshi',
                                         fontWeight: FontWeight.w100,

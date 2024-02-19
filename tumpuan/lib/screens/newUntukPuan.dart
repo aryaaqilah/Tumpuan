@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:tumpuan/components/cardMore.dart';
 import 'package:tumpuan/components/dataUntukPuan.dart';
+import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/styles/style.dart';
 import '../Widgets/sliver_list.dart';
 import '../Widgets/sliver_list2.dart';
 import '../Widgets/sliver_list3.dart';
+import 'package:http/http.dart' as http;
 
 class newUntukPuan extends StatefulWidget {
   const newUntukPuan({super.key});
@@ -19,11 +23,20 @@ class newUntukPuan extends StatefulWidget {
 class _newUntukPuanState extends State<newUntukPuan> {
   final ScrollController _scrollController = ScrollController();
 
-  final DataUntukPuan = [
-    ['Spa', 'image', 'Sentul'],
-    ['Spa', 'image', 'Sentul'],
-    ['Spa', 'image', 'Sentul'],
-  ];
+  bool isLoading = true;
+
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  List<dynamic> dataUntukPuan = [];
+
+  // final DataUntukPuan = [
+  //   ['Spa', 'image', 'Sentul'],
+  //   ['Spa', 'image', 'Sentul'],
+  //   ['Spa', 'image', 'Sentul'],
+  // ];
 
   final dataUser = ['Nixonnn', 'images/profilePict.png', '12345'];
 
@@ -32,7 +45,7 @@ class _newUntukPuanState extends State<newUntukPuan> {
 
   @override
   Widget build(BuildContext context) {
-    Widget konten = getDataUntukPuan(DataUntukPuan);
+    Widget konten = getDataUntukPuan(dataUntukPuan);
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
@@ -94,7 +107,7 @@ class _newUntukPuanState extends State<newUntukPuan> {
                 ),
               ),
               content: Container(
-                height: (260 * DataUntukPuan.length) + 120,
+                height: (260 * dataUntukPuan.length) + 120,
                 child: PageView(
                   controller: controller,
                   onPageChanged: (index) {
@@ -111,6 +124,61 @@ class _newUntukPuanState extends State<newUntukPuan> {
         ),
       ),
     );
+  }
+
+  Future<void> getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    // get data from form
+    // submit data to the server
+    final url = 'http://10.0.2.2:8000/api/untukpuans';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body) as Map;
+      final List<dynamic> resultList = jsonResponse['data'] ?? [];
+
+      for (var data in resultList) {
+        var nama = data['nama'].toString();
+        var alamat = data['alamat'].toString();
+        var deskripsi = data['deskripsi'].toString();
+        var phoneNumber = data['phoneNumber'].toString();
+        var jamBuka = data['jamBuka'].toString();
+        var jamTutup = data['jamTutup'].toString();
+        var foto = data['foto'].toString();
+        var price = data['price'].toString();
+        var website = data['website'].toString();
+        var kategori_id = data['kategori_id'].toString();
+
+        dataUntukPuan.add({
+          'nama': nama,
+          'alamat': alamat,
+          'deskripsi': deskripsi,
+          'phoneNumber': phoneNumber,
+          'jamBuka': jamBuka,
+          'jamTutup': jamTutup,
+          'foto': foto,
+          'price': price,
+          'website': website,
+          'kategori_id': kategori_id
+        });
+      }
+
+      setState(() {
+        // Update state after fetching data
+        dataUntukPuan = resultList;
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false; // Set isLoading to false if request failed
+      });
+    }
+    // showsuccess or fail message based on status
+    print(response.statusCode);
+    print('data pas api tarik' + response.body);
   }
 }
 
