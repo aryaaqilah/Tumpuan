@@ -46,7 +46,7 @@ class ContactBox extends StatelessWidget {
           color: Colors.white,
           // border: Border.all(Colo),
           borderRadius: BorderRadius.all(Radius.circular(10))),
-      height: 120,
+      height: 130,
       width: 330,
       child: Padding(
         padding: const EdgeInsets.only(left: 20.0),
@@ -116,6 +116,22 @@ class ContactBox extends StatelessWidget {
                     ],
                   ),
                 ],
+              ),
+            ),
+            Container(
+              height: 20,
+              width: 320,
+              alignment: Alignment.bottomRight,
+              // color: Colors.amber,
+              child: IconButton(
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  // delete disini
+                },
+                iconSize: 15,
               ),
             ),
           ],
