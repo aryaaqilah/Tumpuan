@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:tumpuan/components/cardMore.dart';
+import 'package:tumpuan/components/dataUntukPuan.dart';
+import 'package:tumpuan/styles/style.dart';
 import '../Widgets/sliver_list.dart';
 import '../Widgets/sliver_list2.dart';
 import '../Widgets/sliver_list3.dart';
@@ -17,47 +19,10 @@ class newUntukPuan extends StatefulWidget {
 class _newUntukPuanState extends State<newUntukPuan> {
   final ScrollController _scrollController = ScrollController();
 
-  final datanewUntukPuan = [
-    [
-      'author',
-      'images/profilePict.png',
-      'images/suaraPuanImg.png',
-      'date',
-      'teks',
-      'idPost',
-      '1',
-      '2'
-    ],
-    [
-      'author2',
-      'images/profilePict.png',
-      'images/suaraPuanImg.png',
-      'date2',
-      'teks2',
-      'idPost2',
-      '3',
-      '4'
-    ],
-    [
-      'author2',
-      'images/profilePict.png',
-      'images/suaraPuanImg.png',
-      'date2',
-      'teks2',
-      'idPost2',
-      '3',
-      '4'
-    ],
-    [
-      'author2',
-      'images/profilePict.png',
-      '',
-      'date2',
-      'teks2',
-      'idPost2',
-      '3',
-      '4'
-    ],
+  final DataUntukPuan = [
+    ['Spa', 'image', 'Sentul'],
+    ['Spa', 'image', 'Sentul'],
+    ['Spa', 'image', 'Sentul'],
   ];
 
   final dataUser = ['Nixonnn', 'images/profilePict.png', '12345'];
@@ -67,6 +32,7 @@ class _newUntukPuanState extends State<newUntukPuan> {
 
   @override
   Widget build(BuildContext context) {
+    Widget konten = getDataUntukPuan(DataUntukPuan);
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
@@ -95,13 +61,6 @@ class _newUntukPuanState extends State<newUntukPuan> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         centerTitle: false,
-        // flexibleSpace: const FlexibleSpaceBar(
-        //   stretchModes: [StretchMode.zoomBackground],
-        //   background: Image(
-        //     image: AssetImage('images/bannerUntukPuan.png'),
-        //     fit: BoxFit.cover,
-        //   ),
-        // ),
       ),
       body: SafeArea(
         bottom: false,
@@ -135,7 +94,7 @@ class _newUntukPuanState extends State<newUntukPuan> {
                 ),
               ),
               content: Container(
-                height: MediaQuery.of(context).size.height + 500,
+                height: (260 * DataUntukPuan.length) + 120,
                 child: PageView(
                   controller: controller,
                   onPageChanged: (index) {
@@ -143,11 +102,7 @@ class _newUntukPuanState extends State<newUntukPuan> {
                       currentTab = index;
                     });
                   },
-                  children: [
-                    // getDataMore(datanewUntukPuan),
-                    // getDataMore(datanewUntukPuan),
-                    // getDataMore(datanewUntukPuan)
-                  ],
+                  children: [konten, konten, konten],
                 ),
               ),
             ),
