@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:tumpuan/styles/style.dart';
 
@@ -171,7 +172,7 @@ class _CatatanHaidState extends State<CatatanHaid> {
                                 MaterialStateProperty.all(AppColors.pink1)),
                         onPressed: () {
                           // Handle button press
-                          
+                          _showMarkDialog(context);
                         },
                         child: Text(
                           'Mark My Period',
@@ -254,7 +255,7 @@ class _CatatanHaidState extends State<CatatanHaid> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Phase',
+                            'Next Period',
                             style: TextStyle(
                                 fontFamily: 'Satoshi',
                                 fontSize: 13,
@@ -284,38 +285,24 @@ class _CatatanHaidState extends State<CatatanHaid> {
                                   children: [
                                     Column(
                                       children: [
-                                        Text(
-                                          'You\'re in',
-                                          style: TextStyle(
-                                              fontFamily: 'Satoshi',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 159, 159, 159)),
-                                        ),
-                                        SizedBox(
-                                          height: 7,
-                                        ),
-                                        Text(
-                                          'Luteal',
-                                          style: TextStyle(
-                                              fontFamily: 'Satoshi',
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: const Color.fromARGB(
-                                                  255, 251, 85, 126)),
-                                        ),
-                                        SizedBox(
-                                          height: 7,
-                                        ),
-                                        Text(
-                                          'Phase',
-                                          style: TextStyle(
-                                              fontFamily: 'Satoshi',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 159, 159, 159)),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              'Period in',
+                                              style: TextStyle(
+                                                  fontFamily: 'Satoshi',
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w200),
+                                            ),
+                                            Text(
+                                              '7 Days',
+                                              style: TextStyle(
+                                                  fontFamily: 'Satoshi',
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: AppColors.pink1),
+                                            )
+                                          ],
                                         )
                                       ],
                                     ),
@@ -634,4 +621,163 @@ class Bar extends StatelessWidget {
       ],
     );
   }
+}
+
+Future<void> _showMarkDialog(BuildContext context) async {
+  late TextEditingController dateInputController = TextEditingController();
+  late TextEditingController dateInputControllerend = TextEditingController();
+  bool dontKnowSelected = false;
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content: Container(
+          height: 190,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 5,
+              ),
+              const Text(
+                'When did your last period start ?',
+                style: TextStyle(
+                  fontFamily: 'Satoshi',
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.calendar_month),
+                            ),
+                            controller: dateInputController,
+                            readOnly: true,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1950),
+                                lastDate: DateTime(2050),
+                              );
+
+                              if (pickedDate != null) {
+                                dateInputController.text =
+                                    DateFormat('dd MMMM yyyy')
+                                        .format(pickedDate);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              const Text(
+                'When did your last period end ?',
+                style: TextStyle(
+                  fontFamily: 'Satoshi',
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.calendar_month),
+                            ),
+                            controller: dateInputControllerend,
+                            readOnly: true,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1950),
+                                lastDate: DateTime(2050),
+                              );
+
+                              if (pickedDate != null) {
+                                dateInputControllerend.text =
+                                    DateFormat('dd MMMM yyyy')
+                                        .format(pickedDate);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    // const SizedBox(height: 10),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        // const SingleChildScrollView(
+        //   child: ListBody(
+        //     children: <Widget>[
+        //       Column(
+        //         children: [Text('data'),
+
+        //         ],
+        //       )
+        //     ],
+        //   ),
+        // ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: AppColors.pink1),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('Done', style: TextStyle(color: AppColors.pink1)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

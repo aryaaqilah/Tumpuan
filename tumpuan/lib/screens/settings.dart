@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/contactBox.dart';
 import 'package:tumpuan/screens/editProfile.dart';
+import 'package:tumpuan/screens/emergencyContact.dart';
 import 'package:tumpuan/screens/navScreen.dart';
 import 'package:tumpuan/styles/style.dart';
 
@@ -26,7 +27,6 @@ class _SettingsState extends State<Settings> {
   late String profilePicture;
 
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -80,6 +80,45 @@ class _SettingsState extends State<Settings> {
                     )),
                 SizedBox(
                   height: 10,
+                ),
+                Divider(
+                  color: Colors.grey,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.contact_emergency_outlined,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 7,
+                          ),
+                          Text(
+                            'Emergency Contacts',
+                            style: TextStyle(
+                                fontFamily: 'Satoshi',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => EmergencyContact()));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 15,
+                          )),
+                    ),
+                  ],
                 ),
                 Divider(
                   color: Colors.grey,

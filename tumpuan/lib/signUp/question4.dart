@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tumpuan/components/checkBoxSignUp.dart';
 import 'package:tumpuan/signUp/Question5.dart';
+import 'package:tumpuan/signUp/allSetPage.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
@@ -68,7 +69,7 @@ class _Question4State extends State<Question4> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: LinearPercentIndicator(
                     lineHeight: 3.0,
-                    percent: 0.8,
+                    percent: 1,
                     backgroundColor: Colors.grey,
                     progressColor: AppColors.pink1,
                   ),
@@ -161,13 +162,13 @@ class _Question4State extends State<Question4> {
                               ? () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => const Question5(),
+                                      builder: (context) => const AllSetPage(),
                                     ),
                                   );
                                 }
                               : null,
                           child: const Text(
-                            'Save & Next',
+                            'Finish',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),

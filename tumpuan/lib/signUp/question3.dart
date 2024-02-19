@@ -68,7 +68,7 @@ class _Question3State extends State<Question3> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: LinearPercentIndicator(
                     lineHeight: 3.0,
-                    percent: 0.6,
+                    percent: 0.75,
                     backgroundColor: Colors.grey,
                     progressColor: AppColors.pink1,
                   ),

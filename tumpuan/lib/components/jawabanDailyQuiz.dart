@@ -2,26 +2,27 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/checkBoxSignUp.dart';
-import 'package:tumpuan/components/jawabanDailyQuiz.dart';
 import 'package:tumpuan/screens/HomePage.dart';
 import 'package:tumpuan/screens/home.dart';
+import 'package:tumpuan/screens/navScreen.dart';
 import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/signUp/question2.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 import 'package:http/http.dart' as http;
 
-class DailyQuiz extends StatefulWidget {
-  const DailyQuiz({Key? key}) : super(key: key);
+class JawabanDailyQuiz extends StatefulWidget {
+  final int selectedindex;
+  const JawabanDailyQuiz({Key? key, required this.selectedindex})
+      : super(key: key);
 
   @override
-  State<DailyQuiz> createState() => _DailyQuizState();
+  State<JawabanDailyQuiz> createState() => _JawabanDailyQuizState();
 }
 
-class _DailyQuizState extends State<DailyQuiz> {
+class _JawabanDailyQuizState extends State<JawabanDailyQuiz> {
   TextEditingController dateInputController = TextEditingController();
   bool isLoading = true;
-  int selectedIndex = 0; // Tambahkan variabel selectedIndex
 
   void initState() {
     super.initState();
@@ -78,7 +79,9 @@ class _DailyQuizState extends State<DailyQuiz> {
                   automaticallyImplyLeading: false,
                   leading: IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const MainScreen(),
+                      ));
                     },
                     icon: Icon(
                       Icons.arrow_back,
@@ -123,14 +126,13 @@ class _DailyQuizState extends State<DailyQuiz> {
                                           i++) {
                                         if (i == index) {
                                           checkListItems[i]["selected"] = true;
-                                          selectedIndex =
-                                              index; // Update selectedIndex
                                         } else {
                                           checkListItems[i]["selected"] = false;
                                         }
                                       }
                                     });
                                   },
+                                  selectedIndex: widget.selectedindex,
                                 ),
                               ),
                             ),
@@ -158,14 +160,11 @@ class _DailyQuizState extends State<DailyQuiz> {
                                       onPressed: () {
                                         // Perform action based on selected option
                                         // For example, navigate to the next page
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .push(MaterialPageRoute(
-                                                builder: (context) =>
-                                                    JawabanDailyQuiz(
-                                                      selectedindex:
-                                                          selectedIndex, // Gunakan selectedIndex
-                                                    )));
+                                        Navigator.of(context)
+                                            .pushReplacement(MaterialPageRoute(
+                                          builder: (context) =>
+                                              const MainScreen(),
+                                        ));
                                       },
                                     ),
                                   ),
@@ -290,33 +289,43 @@ class LabeledCheckboxExample extends StatelessWidget {
   final bool? value;
   final ValueChanged<bool?>? onChanged;
   final int index;
+  final int selectedIndex; // Tambahkan variabel selectedIndex
 
-  const LabeledCheckboxExample(
-      {required this.sentences,
-      required this.value,
-      required this.onChanged,
-      required this.index});
+  const LabeledCheckboxExample({
+    required this.sentences,
+    required this.value,
+    required this.onChanged,
+    required this.index,
+    required this.selectedIndex, // Tambahkan parameter selectedIndex
+  });
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = index == selectedIndex
+        ? Colors.green // Jika indeks adalah selectedIndex, gunakan warna hijau
+        : Colors.red; // Jika tidak, gunakan warna merah
+
     return Column(
       children: [
         Container(
           decoration: BoxDecoration(
-              color: AppColors.bg1, borderRadius: BorderRadius.circular(10)),
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: CheckboxListTile(
-            // controlAffinity: ListTileControlAffinity.leading,
-            // contentPadding: EdgeInsets.zero,
             dense: true,
             title: Text(
               sentences,
               style: const TextStyle(
-                  fontSize: 16.0, color: Colors.black, fontFamily: 'Satoshi'),
+                fontSize: 16.0,
+                color: Colors.black,
+                fontFamily: 'Satoshi',
+              ),
             ),
             value: value,
             onChanged: onChanged,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0), // Optionally
+              borderRadius: BorderRadius.circular(20.0),
               side: const BorderSide(color: Colors.pink),
             ),
             activeColor: const Color.fromRGBO(251, 111, 146, 1),

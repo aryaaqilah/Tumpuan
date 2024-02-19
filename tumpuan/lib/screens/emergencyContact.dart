@@ -6,16 +6,16 @@ import 'package:tumpuan/components/contactBox.dart';
 import 'package:tumpuan/screens/addContact.dart';
 import 'package:tumpuan/services/auth_service.dart';
 
-class PanggilPuan extends StatefulWidget {
-  const PanggilPuan({super.key});
+class EmergencyContact extends StatefulWidget {
+  const EmergencyContact({super.key});
 
   @override
-  State<PanggilPuan> createState() {
-    return _PanggilPuanState();
+  State<EmergencyContact> createState() {
+    return _EmergencyContactState();
   }
 }
 
-class _PanggilPuanState extends State<PanggilPuan> {
+class _EmergencyContactState extends State<EmergencyContact> {
   bool isLoading = true;
 
   void initState() {
@@ -92,26 +92,15 @@ class _PanggilPuanState extends State<PanggilPuan> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        title: const Padding(
-          padding: EdgeInsets.only(top: 8.0),
-          child: Text(
-            'Tumpuan',
-            style: TextStyle(
-                fontFamily: 'Brodies', color: Color.fromRGBO(251, 111, 146, 1)),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              // do something
-            },
-          )
-        ],
       ),
       body: Visibility(
         visible: isLoading,
@@ -125,7 +114,7 @@ class _PanggilPuanState extends State<PanggilPuan> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Fake Contacts',
+                    'Emergency Contacts',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),

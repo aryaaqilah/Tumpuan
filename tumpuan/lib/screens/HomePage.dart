@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/dailyQuiz.dart';
 import 'package:tumpuan/components/widgetUntukPuan.dart';
+import 'package:tumpuan/screens/catatanHaid.dart';
 import 'package:tumpuan/screens/newUntukPuan.dart';
 import 'package:tumpuan/screens/suaraPuan.dart';
 import 'package:tumpuan/screens/untukPuan.dart';
@@ -25,6 +26,8 @@ class _HomePageState extends State<HomePage> {
     String formattedEndDate = DateFormat('d MMMM yyyy').format(_rangeEndDay);
     String formattedStartDate =
         DateFormat('d MMMM yyyy').format(_rangeStartDay);
+
+    // NavBar newNav = new NavBar();
 
     String prediction =
         'Prediction : ' + formattedStartDate + ' - ' + formattedEndDate;
@@ -205,8 +208,10 @@ class _HomePageState extends State<HomePage> {
                           backgroundColor:
                               MaterialStateProperty.all(AppColors.pink1)),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const Home()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const CatatanHaid(
+                                // title: 'Untuk Puan',
+                                )));
                       },
                       child: Text(
                         'See Details',

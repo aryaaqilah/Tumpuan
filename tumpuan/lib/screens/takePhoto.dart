@@ -66,40 +66,45 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
         ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _imageFile == null
-                ? Text(
-                    'No image selected.',
-                    style: TextStyle(
-                        fontFamily: 'Satoshi', fontWeight: FontWeight.bold),
-                  )
-                : Image.file(_imageFile!),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromRGBO(251, 111, 146, 1),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _imageFile == null
+                  ? Text(
+                      'No image selected.',
+                      style: TextStyle(
+                          fontFamily: 'Satoshi', fontWeight: FontWeight.bold),
+                    )
+                  : Image.file(_imageFile!),
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(251, 111, 146, 1),
+                ),
+                onPressed: () => _getImage(ImageSource.camera),
+                child: Text(
+                  'Take Picture',
+                  style: TextStyle(
+                      fontFamily: 'Satoshi', fontWeight: FontWeight.bold),
+                ),
               ),
-              onPressed: () => _getImage(ImageSource.camera),
-              child: Text(
-                'Take Picture',
-                style: TextStyle(
-                    fontFamily: 'Satoshi', fontWeight: FontWeight.bold),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(251, 111, 146, 1),
+                ),
+                onPressed: () => _getImage(ImageSource.gallery),
+                child: Text(
+                  'Choose from Gallery',
+                  style: TextStyle(
+                      fontFamily: 'Satoshi', fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromRGBO(251, 111, 146, 1),
-              ),
-              onPressed: () => _getImage(ImageSource.gallery),
-              child: Text(
-                'Choose from Gallery',
-                style: TextStyle(
-                    fontFamily: 'Satoshi', fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
+              SizedBox(
+                height: 30,
+              )
+            ],
+          ),
         ),
       ),
     );

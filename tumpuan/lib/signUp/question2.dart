@@ -15,12 +15,14 @@ class Question2 extends StatefulWidget {
 
 class _Question2State extends State<Question2> {
   late TextEditingController dateInputController;
+  late TextEditingController dateInputControllerend;
   bool dontKnowSelected = false;
 
   @override
   void initState() {
     super.initState();
     dateInputController = TextEditingController();
+    dateInputControllerend = TextEditingController();
   }
 
   @override
@@ -68,7 +70,7 @@ class _Question2State extends State<Question2> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: LinearPercentIndicator(
                     lineHeight: 3.0,
-                    percent: 0.4,
+                    percent: 0.5,
                     backgroundColor: Colors.grey,
                     progressColor: AppColors.pink1,
                   ),
@@ -98,7 +100,7 @@ class _Question2State extends State<Question2> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
@@ -141,21 +143,64 @@ class _Question2State extends State<Question2> {
                         ),
                       ),
                       const SizedBox(height: 10),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  'When did your last period end ?',
+                  style: TextStyle(
+                    fontFamily: 'Satoshi',
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: LabeledCheckboxExample(
-                          sentences: "I don't know",
-                          value: dontKnowSelected,
-                          onChanged: (value) {
-                            setState(() {
-                              dontKnowSelected = value!;
-                              if (value) {
-                                dateInputController.clear();
-                              }
-                            });
-                          },
+                        padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.calendar_month),
+                              ),
+                              controller: dateInputControllerend,
+                              readOnly: true,
+                              onTap: () async {
+                                setState(() {
+                                  dontKnowSelected = false;
+                                });
+                                DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime(2050),
+                                );
+
+                                if (pickedDate != null) {
+                                  dateInputControllerend.text =
+                                      DateFormat('dd MMMM yyyy')
+                                          .format(pickedDate);
+                                }
+                              },
+                            ),
+                          ),
                         ),
                       ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),

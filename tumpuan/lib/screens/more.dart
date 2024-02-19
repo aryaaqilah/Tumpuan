@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:tumpuan/components/cardMore.dart';
 import 'package:tumpuan/components/headerMore.dart';
 import 'package:tumpuan/components/middleBarMore.dart';
 import 'package:tumpuan/components/searchCard.dart';
+import 'package:tumpuan/screens/takePhoto.dart';
 import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/styles/style.dart';
 import 'package:http/http.dart' as http;
@@ -64,7 +66,7 @@ class _MoreState extends State<More> {
 
   final dataUser = ['Nixonnn', 'images/profilePict.png', '12345'];
   TextEditingController threadNameController = TextEditingController();
-
+  File? _image;
   @override
   Widget build(BuildContext context) {
     print(dataMore);
@@ -109,6 +111,35 @@ class _MoreState extends State<More> {
                                         hintText: 'Write your Thoughts',
                                       )),
                                 )),
+                          ),
+                          IconButton(
+                              onPressed: () async {
+                                final pickedImage = await Navigator.push<File?>(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ImageSelectionPage(),
+                                  ),
+                                );
+                                setState(() {
+                                  _image =
+                                      pickedImage ?? File('images/ktp.png');
+                                });
+                              },
+                              icon: _image != null
+                                  ? Icon(Icons.photo, color: Colors.green)
+                                  : Icon(Icons.add_photo_alternate,
+                                      color: Colors.grey)),
+                          // ElevatedButton(
+                          //     style: ButtonStyle(
+                          //         backgroundColor:
+                          //             MaterialStateProperty.all(AppColors.bg)),
+                          //     onPressed: () {},
+                          //     child: Icon(
+                          //       Icons.photo,
+                          //       color: Colors.grey,
+                          //     )),
+                          SizedBox(
+                            width: 5,
                           ),
                           ElevatedButton(
                             style: ButtonStyle(
