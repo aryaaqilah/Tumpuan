@@ -14,7 +14,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _getImage(ImageSource source) async {
-    final pickedFile = await _picker.getImage(source: source);
+    final pickedFile = await _picker.pickImage(source: source);
 
     setState(() {
       if (pickedFile != null) {
