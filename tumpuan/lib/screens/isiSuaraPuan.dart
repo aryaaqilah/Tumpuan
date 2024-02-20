@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tumpuan/components/dataSuaraPuan.dart';
-import 'package:tumpuan/components/callView.dart';
-import 'package:tumpuan/components/editContact.dart';
-import 'package:tumpuan/styles/style.dart';
 import 'package:tumpuan/components/bannerSuaraPuan.dart';
 import 'dart:ui';
+
+class Comment {
+  String text;
+  DateTime date;
+  String userName;
+  String userProfilePic;
+  Comment(this.text, this.date, this.userName, this.userProfilePic);
+}
 
 class IsiSuaraPuan extends StatefulWidget {
   const IsiSuaraPuan({super.key});
@@ -14,15 +18,12 @@ class IsiSuaraPuan extends StatefulWidget {
 }
 
 class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
+  List<Comment> comments = [];
+
+  TextEditingController _commentController = TextEditingController();
+  TextEditingController _userNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final dataIsiSuaraPuan = [
-      ['author', 'images/suaraPuanImg.png', 'date', 'category', 'title'],
-      ['author2', 'images/suaraPuanImg.png', 'date2', 'category2', 'title2'],
-      ['author3', 'images/suaraPuanImg.png', 'date3', 'category3', 'title3'],
-      ['author4', 'images/suaraPuanImg.png', 'date4', 'category4', 'title4'],
-    ];
-
     final dataSuaraPuan = [
       ['author', 'images/suaraPuanImg.png', 'date', 'category', 'title'],
       ['author2', 'images/suaraPuanImg.png', 'date2', 'category2', 'title2'],
@@ -31,7 +32,6 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
     ];
 
     final dataBannerSuara = dataSuaraPuan.sublist(0, 3);
-
     final PageController controller = PageController();
     int currentTab = 0;
 
@@ -44,15 +44,6 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
               suffixIcon: Icon(Icons.search, color: Colors.black)),
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              // do something
-            },
-          )
         ],
         leading: IconButton(
           onPressed: () {
@@ -131,7 +122,6 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
               child: Text(
                 '____________________________________________________',
                 style: TextStyle(
-                  // fontWeight: FontWeight.bold,
                   color: Colors.grey,
                 ),
               ),
@@ -163,7 +153,6 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
               child: Text(
                 '____________________________________________________',
                 style: TextStyle(
-                  // fontWeight: FontWeight.bold,
                   color: Colors.grey,
                 ),
               ),
@@ -224,20 +213,11 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                 ],
               ),
             ),
-            Container(
-                child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  getDataDataSuaraPuan(dataIsiSuaraPuan),
-                ],
-              ),
-            )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Text(
                 '____________________________________________________',
                 style: TextStyle(
-                  // fontWeight: FontWeight.bold,
                   color: Colors.grey,
                 ),
               ),
@@ -250,7 +230,7 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'Satoshi',
-                fontWeight: FontWeight.w900, // Increase the FontWeight value
+                fontWeight: FontWeight.w900,
                 color: Colors.black,
                 fontSize: 21,
               ),
@@ -281,7 +261,6 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
               child: Text(
                 '____________________________________________________',
                 style: TextStyle(
-                  // fontWeight: FontWeight.bold,
                   color: Colors.grey,
                 ),
               ),
@@ -294,17 +273,105 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'Satoshi',
-                fontWeight: FontWeight.w900, // Increase the FontWeight value
+                fontWeight: FontWeight.w900,
                 color: Colors.black,
                 fontSize: 21,
               ),
             ),
             SizedBox(
-              height: 1000,
+              height: 10,
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: comments.length,
+                      itemBuilder: (context, index) {
+                        Comment comment = comments[index];
+                        return ListTile(
+                          title: Text(comment.userName),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(comment.text),
+                              SizedBox(height: 4),
+                              Text(
+                                '${comment.date.toString().split('.')[0]}',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    Divider(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: TextField(
+                              controller: _commentController,
+                              decoration: InputDecoration(
+                                hintText: 'Add a comment...',
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.send),
+                            onPressed: _postComment,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text('Name: '),
+                          Expanded(
+                            child: TextField(
+                              controller: _userNameController,
+                              decoration: InputDecoration(
+                                hintText: 'Enter your display name...',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _postComment() {
+    String newCommentText = _commentController.text;
+    String userName = _userNameController.text.isNotEmpty
+        ? _userNameController.text
+        : 'Anonymous';
+    DateTime now = DateTime.now();
+    Comment newComment =
+        Comment(newCommentText, now, userName, 'images/profileDefault.jpg');
+    setState(() {
+      comments.add(newComment);
+      _commentController.clear();
+    });
+  }
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    _userNameController.dispose();
+    super.dispose();
   }
 }

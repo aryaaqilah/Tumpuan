@@ -38,7 +38,6 @@ Widget getDataComment(List<List<String>> dataComment) {
 }
 
 class CommentBox extends StatelessWidget {
-  // var username;
 
   CommentBox(
       {super.key,
