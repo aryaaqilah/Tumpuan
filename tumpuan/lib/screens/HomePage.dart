@@ -51,12 +51,7 @@ class _HomePageState extends State<HomePage> {
               Icons.settings,
               color: Colors.grey,
             ),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const WidgetUntukPuan(
-                      // title: 'Untuk Puan',
-                      )));
-            },
+            onPressed: () {},
           )
         ],
       ),

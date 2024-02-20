@@ -7,7 +7,30 @@ import 'package:tumpuan/components/bannerUntukPuan.dart';
 import 'package:tumpuan/components/content_suaraPuan.dart';
 
 class WidgetUntukPuan extends StatefulWidget {
-  const WidgetUntukPuan({super.key});
+  final String nama;
+  final String alamat;
+  final String deskripsi;
+  final String phoneNumber;
+  final String jamBuka;
+  final String jamTutup;
+  final String foto;
+  final String price;
+  final String website;
+  final String kategori_id;
+
+  const WidgetUntukPuan({
+    Key? key,
+    required this.nama,
+    required this.alamat,
+    required this.deskripsi,
+    required this.phoneNumber,
+    required this.jamBuka,
+    required this.jamTutup,
+    required this.foto,
+    required this.price,
+    required this.website,
+    required this.kategori_id,
+  }) : super(key: key);
 
   @override
   State<WidgetUntukPuan> createState() => _SuaraPuanState();
@@ -87,7 +110,7 @@ class _SuaraPuanState extends State<WidgetUntukPuan> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "Lorem Ipsum",
+                          widget.nama,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontFamily: 'Satoshi',
@@ -101,7 +124,7 @@ class _SuaraPuanState extends State<WidgetUntukPuan> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "Address",
+                          widget.alamat,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontFamily: 'Satoshi',
@@ -115,7 +138,10 @@ class _SuaraPuanState extends State<WidgetUntukPuan> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "Open Hours: 06:00 AM - 06.00 PM",
+                          "Open Hours: " +
+                              widget.jamBuka +
+                              " - " +
+                              widget.jamTutup,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontFamily: 'Satoshi',
@@ -186,7 +212,7 @@ class _SuaraPuanState extends State<WidgetUntukPuan> {
               ),
             ),
             Container(
-              height: 360,
+              // height: 360,
               child: Padding(
                 padding: const EdgeInsets.only(left: 40, top: 10),
                 child: Column(
@@ -209,7 +235,7 @@ class _SuaraPuanState extends State<WidgetUntukPuan> {
                         Container(
                           width: 340,
                           child: Text(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem sed risus ultricies tristique nulla aliquet. Facilisis sed odio morbi quis commodo odio aenean sed. Id eu nisl nunc mi ipsum faucibus vitae aliquet nec. Urna duis convallis convallis tellus id. Risus in hendrerit gravida rutrum quisque. Sem integer vitae justo eget magna fermentum iaculis. Viverra suspendisse potenti nullam ac tortor vitae purus. Massa id neque aliquam vestibulum morbi blandit cursus.",
+                            widget.deskripsi,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontFamily: 'Satoshi',

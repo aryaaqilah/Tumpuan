@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/callView.dart';
 import 'package:tumpuan/components/editContact.dart';
+import 'package:tumpuan/components/widgetUntukPuan.dart';
 import 'package:tumpuan/screens/commentRuangPuan.dart';
 import 'package:tumpuan/screens/more.dart';
 import 'package:tumpuan/styles/style.dart';
@@ -118,7 +119,7 @@ Widget getDataUntukPuan(List<dynamic> dataUntukPuan) {
 
 class UntukPuanBox extends StatelessWidget {
   UntukPuanBox({
-    super.key,
+    Key? key,
     required this.nama,
     required this.alamat,
     required this.deskripsi,
@@ -129,7 +130,7 @@ class UntukPuanBox extends StatelessWidget {
     required this.price,
     required this.website,
     required this.kategori_id,
-  });
+  }) : super(key: key);
 
   final String nama;
   final String alamat;
@@ -146,121 +147,138 @@ class UntukPuanBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: Stack(children: [
-        Container(
-          height: 250,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          child: Column(
-            children: [
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        image: AssetImage(foto), fit: BoxFit.fill)),
-              ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: Container(
-                              width: MediaQuery.of(context).size.width - 100,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    nama,
-                                    style: TextStyle(
-                                        fontFamily: 'Satoshi',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: Container(
-                              width: MediaQuery.of(context).size.width - 100,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    alamat,
-                                    style: TextStyle(
-                                        fontFamily: 'Satoshi',
-                                        fontWeight: FontWeight.w100,
-                                        fontSize: 12),
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ],
-                    ),
-                  ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => WidgetUntukPuan(
+                  nama: nama,
+                  alamat: alamat,
+                  deskripsi: deskripsi,
+                  phoneNumber: phoneNumber,
+                  jamBuka: jamBuka,
+                  jamTutup: jamTutup,
+                  foto: foto,
+                  price: price,
+                  website: website,
+                  kategori_id: kategori_id,
+                )));
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Stack(children: [
+          Container(
+            height: 250,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              children: [
+                Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          image: AssetImage(foto), fit: BoxFit.fill)),
                 ),
-              )
-            ],
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Container(
+                                width: MediaQuery.of(context).size.width - 100,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      nama,
+                                      style: TextStyle(
+                                          fontFamily: 'Satoshi',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Container(
+                                width: MediaQuery.of(context).size.width - 100,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      alamat,
+                                      style: TextStyle(
+                                          fontFamily: 'Satoshi',
+                                          fontWeight: FontWeight.w100,
+                                          fontSize: 12),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 190, top: 190),
-          child: Container(
-              height: 20,
-              width: MediaQuery.of(context).size.width / 2 - 55,
-              decoration: BoxDecoration(
-                  color: AppColors.pink1,
-                  borderRadius: BorderRadius.circular(5)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: 13,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: 13,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: 13,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: 13,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: 13,
-                  ),
-                  VerticalDivider(
-                    color: Colors.white,
-                    thickness: 0.5,
-                  ),
-                  Icon(Icons.monetization_on, color: Colors.green, size: 13),
-                  Icon(Icons.monetization_on, color: Colors.green, size: 13),
-                  Icon(Icons.monetization_on, color: Colors.green, size: 13),
-                  Icon(Icons.monetization_on, color: Colors.green, size: 13),
-                ],
-              )),
-        )
-      ]),
+          Padding(
+            padding: const EdgeInsets.only(left: 190, top: 190),
+            child: Container(
+                height: 20,
+                width: MediaQuery.of(context).size.width / 2 - 55,
+                decoration: BoxDecoration(
+                    color: AppColors.pink1,
+                    borderRadius: BorderRadius.circular(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                      size: 13,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                      size: 13,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                      size: 13,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                      size: 13,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                      size: 13,
+                    ),
+                    VerticalDivider(
+                      color: Colors.white,
+                      thickness: 0.5,
+                    ),
+                    Icon(Icons.monetization_on, color: Colors.green, size: 13),
+                    Icon(Icons.monetization_on, color: Colors.green, size: 13),
+                    Icon(Icons.monetization_on, color: Colors.green, size: 13),
+                    Icon(Icons.monetization_on, color: Colors.green, size: 13),
+                  ],
+                )),
+          )
+        ]),
+      ),
     );
   }
 }
