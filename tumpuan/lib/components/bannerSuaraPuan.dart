@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tumpuan/components/callView.dart';
-import 'package:tumpuan/components/editContact.dart';
-import 'package:tumpuan/styles/style.dart';
 
 Widget getDataBannerSuaraPuan(List<String> dataBannerSuara) {
   String author;

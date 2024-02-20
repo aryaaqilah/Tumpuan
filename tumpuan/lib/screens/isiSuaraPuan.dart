@@ -43,8 +43,7 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
           decoration: InputDecoration(
               suffixIcon: Icon(Icons.search, color: Colors.black)),
         ),
-        actions: <Widget>[
-        ],
+        actions: <Widget>[],
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -293,15 +292,48 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                       itemBuilder: (context, index) {
                         Comment comment = comments[index];
                         return ListTile(
-                          title: Text(comment.userName),
+                          leading: Padding(
+                            padding: const EdgeInsets.only(left: 13),
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  AssetImage(comment.userProfilePic),
+                            ),
+                          ),
+                          title: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 0),
+                            child: Text(
+                              comment.userName,
+                              style: TextStyle(
+                                fontFamily: 'Satoshi',
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 19,
+                              ),
+                            ),
+                          ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(comment.text),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0),
+                                child: Text(
+                                  comment.text,
+                                  style: TextStyle(
+                                    fontFamily: 'Satoshi',
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
                               SizedBox(height: 4),
-                              Text(
-                                '${comment.date.toString().split('.')[0]}',
-                                style: TextStyle(fontSize: 12),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0),
+                                child: Text(
+                                  '${comment.date.toString().split('.')[0]}',
+                                  style: TextStyle(fontSize: 12),
+                                ),
                               ),
                             ],
                           ),
@@ -310,7 +342,10 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                     ),
                     Divider(),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(
+                        left: 35,
+                        right: 22.0,
+                      ),
                       child: Row(
                         children: <Widget>[
                           Expanded(
@@ -329,10 +364,21 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(
+                        left: 30,
+                        right: 40,
+                      ),
                       child: Row(
                         children: <Widget>[
-                          Text('Name: '),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 0),
+                            child: Text('Name : ',
+                                style: TextStyle(
+                                  fontFamily: 'Satoshi',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                )),
+                          ),
                           Expanded(
                             child: TextField(
                               controller: _userNameController,

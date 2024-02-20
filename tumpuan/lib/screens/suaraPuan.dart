@@ -16,10 +16,10 @@ class _SuaraPuanState extends State<SuaraPuan> {
   @override
   Widget build(BuildContext context) {
     final dataSuaraPuan = [
-      ['author', 'images/suaraPuanImg.png', 'date', 'category', 'title'],
-      ['author2', 'images/suaraPuanImg.png', 'date2', 'category2', 'title2'],
-      ['author3', 'images/suaraPuanImg.png', 'date3', 'category3', 'title3'],
-      ['author4', 'images/suaraPuanImg.png', 'date4', 'category4', 'title4'],
+      ['author', 'images/suaraPuanImg.png', 'date', 'News', 'title'],
+      ['author2', 'images/suaraPuanImg.png', 'date2', 'Lifestyle', 'title2'],
+      ['author3', 'images/suaraPuanImg.png', 'date3', 'Health', 'title3'],
+      ['author4', 'images/suaraPuanImg.png', 'date4', 'Business', 'title4'],
     ];
 
     final dataBannerSuara = dataSuaraPuan.sublist(0, 3);
@@ -62,7 +62,7 @@ class _SuaraPuanState extends State<SuaraPuan> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(top: 10, left: 32),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
