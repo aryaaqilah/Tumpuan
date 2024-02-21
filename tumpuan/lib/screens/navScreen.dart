@@ -6,6 +6,7 @@ import 'package:tumpuan/screens/nav_bar.dart';
 import 'package:tumpuan/screens/nav_model.dart';
 import 'package:tumpuan/screens/panggilPuan.dart';
 import 'package:tumpuan/styles/style.dart';
+import 'package:whatsapp_share/whatsapp_share.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -151,6 +152,8 @@ class _MainScreenState extends State<MainScreen> {
                       });
                 }
               });
+              isInstalled();
+              share();
             },
           ),
           // FloatingActionButton(
@@ -189,6 +192,20 @@ class _MainScreenState extends State<MainScreen> {
                 },
               ),
       ),
+    );
+  }
+
+  Future<void> isInstalled() async {
+    final val =
+        await WhatsappShare.isInstalled(package: Package.businessWhatsapp);
+    print('Whatsapp Business is installed: $val');
+  }
+
+  Future<void> share() async {
+    await WhatsappShare.share(
+      text: 'Whatsapp share text',
+      linkUrl: 'https://flutter.dev/',
+      phone: '085773030388',
     );
   }
 }

@@ -3,11 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tumpuan/screens/home.dart';
 import 'package:tumpuan/screens/navScreen.dart';
+import 'package:tumpuan/screens/mapScreen.dart';
 import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/services/tumpuanServices.dart';
 import 'package:tumpuan/signUp/intro1.dart';
 import 'package:tumpuan/utils/snackbar_helper.dart';
 import 'package:http/http.dart' as http;
+import 'package:whatsapp_share/whatsapp_share.dart';
+import 'package:whatsapp_sender_flutter/whatsapp_sender_flutter.dart';
+import 'package:whatsapp/whatsapp.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LoginPage extends StatefulWidget {
   final Map? login;
@@ -24,6 +29,9 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool obscurePassword = false; // Added to track password visibility
+  WhatsApp whatsapp = WhatsApp();
+  String? _currentAddress;
+  Position? _currentPosition;
 
   void initState() {
     super.initState();
@@ -121,19 +129,27 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                      child: const Text(
-                        'Register Now',
-                        style: TextStyle(
-                            color: Color.fromRGBO(251, 111, 146, 1),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const Intro1()));
-                      },
-                    )
+                        child: const Text(
+                          'Register Now',
+                          style: TextStyle(
+                              color: Color.fromRGBO(251, 111, 146, 1),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: location
+                        // share
+                        // () {
+                        //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        //       builder: (context) => const Intro1()));
+                        // },
+                        //     () {
+                        //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        //       builder: (context) => MapScreen()));
+                        // },
+                        )
                   ],
                 ),
+                Text('LAT: ${_currentPosition?.latitude ?? ""}'),
+                Text('LNG: ${_currentPosition?.longitude ?? ""}'),
               ],
             ),
           ),
@@ -213,5 +229,52 @@ class _LoginPageState extends State<LoginPage> {
     // showsuccess or fail message based on status
     print(response.statusCode);
     print('data pas api tarik' + response.body);
+  }
+
+  Future<void> isInstalled() async {
+    final val =
+        await WhatsappShare.isInstalled(package: Package.businessWhatsapp);
+    print('Whatsapp Business is installed: $val');
+    if (val == true) {
+      share();
+    }
+  }
+
+  Future<void> location() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print('test');
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+
+    print('LAT: ${_currentPosition?.latitude ?? ""}');
+    print('LNG: ${_currentPosition?.longitude ?? ""}');
+  }
+
+  Future<void> share() async {
+    await WhatsappShare.share(
+      text: 'Whatsapp share text',
+      // linkUrl: 'https://flutter.dev/',
+      phone: '6285773030388',
+      // package:
+    );
+    // await WhatsAppSenderFlutter.send(
+    //   phones: [
+    //     "6281368701176",
+    //     "62895334296207",
+    //     "6288269841977",
+    //     "6285773030388"
+    //   ],
+    //   message: "Hello",
+    // );
+    // print(await whatsapp.messagesText(
+    //     to: 6288269841977,
+    //     message: "Hey, Flutter, follow me on https://example.com",
+    //     previewUrl: true));
+    // print('test');
   }
 }
