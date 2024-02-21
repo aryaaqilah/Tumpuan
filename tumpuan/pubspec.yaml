@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.19.0
+  whatsapp_share: 
   percent_indicator: ^4.0.1
   dots_indicator: ^3.0.0
   sticky_headers: "^0.3.0"
@@ -43,13 +44,22 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  http: ^1.1.0
+  http: ^0.13.6
   camera: ^0.10.5+9
   path_provider: ^2.1.2
   path: ^1.8.3
   flutter_floating_bottom_bar: ^1.2.0
   dio: ^5.4.0
-  uuid: 4.2.2
+  uuid: 
+  location: ^5.0.3
+  google_maps_flutter: ^2.0.6
+  whatsapp_sender_flutter: 
+  puppeteer: ^2.24.0
+  whatsapp: ^2.0.0
+  geolocator: ^11.0.0
+  geocoding: ^2.0.4
+  url_launcher:
+  
   # image_picker: ^1.0.7
 
 dev_dependencies:
@@ -82,6 +92,7 @@ flutter:
   assets:
     - images/
     - audios/ringtone.mp3
+  
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -100,6 +111,7 @@ flutter:
     - family: Satoshi
       fonts:
         - asset: fonts/Satoshi-Regular.otf
+  
 
   #
   # For details regarding fonts from package dependencies,

@@ -13,6 +13,7 @@ import 'package:whatsapp_share/whatsapp_share.dart';
 import 'package:whatsapp_sender_flutter/whatsapp_sender_flutter.dart';
 import 'package:whatsapp/whatsapp.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
   final Map? login;
@@ -253,6 +254,16 @@ class _LoginPageState extends State<LoginPage> {
 
     print('LAT: ${_currentPosition?.latitude ?? ""}');
     print('LNG: ${_currentPosition?.longitude ?? ""}');
+
+    _launchUrl(_currentPosition?.latitude, _currentPosition?.longitude);
+  }
+
+  Future<void> _launchUrl(double? lat, double? long) async {
+    Uri _url = Uri.parse('https://www.google.com/maps/search/${lat},${long}');
+    print(_url);
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
   }
 
   Future<void> share() async {
