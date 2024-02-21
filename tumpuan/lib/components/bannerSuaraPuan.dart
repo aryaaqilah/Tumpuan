@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 
 Widget getDataBannerSuaraPuan(List<String> dataBannerSuara) {
-  String author;
-  String image;
-  String date;
-  String category;
   String title;
+  String media;
+  String dop;
+  String kategori_id;
+  String user_id;
+
   List<Widget> dataBannerSuaraBoxes = [];
   // for (var i = 0; i < dataBannerSuara.length; i++) {
 
   //   dataBannerSuaraBoxes.add(SizedBox(height: 10));
   // }
-  author = dataBannerSuara[0];
-  image = dataBannerSuara[1];
-  date = dataBannerSuara[2];
-  category = dataBannerSuara[3];
-  title = dataBannerSuara[4];
+  // author = dataBannerSuara[0];
+  // image = dataBannerSuara[1];
+  // date = dataBannerSuara[2];
+  // category = dataBannerSuara[3];
+  // title = dataBannerSuara[4];
+
+  title = dataBannerSuara[0];
+  media = dataBannerSuara[1];
+  dop = dataBannerSuara[2];
+  kategori_id = dataBannerSuara[3];
+  user_id = dataBannerSuara[4];
+
   dataBannerSuaraBoxes.add(BannerSuaraPuanBox(
-    author: author,
-    image: image,
-    date: date,
-    category: category,
     title: title,
+    media: media,
+    dop: dop,
+    kategori_id: kategori_id,
+    user_id: user_id,
   ));
   return Column(
     children: dataBannerSuaraBoxes,
@@ -31,17 +39,17 @@ Widget getDataBannerSuaraPuan(List<String> dataBannerSuara) {
 class BannerSuaraPuanBox extends StatelessWidget {
   BannerSuaraPuanBox(
       {super.key,
-      required this.author,
-      required this.image,
-      required this.date,
-      required this.category,
-      required this.title});
+      required this.title,
+      required this.media,
+      required this.dop,
+      required this.kategori_id,
+      required this.user_id});
 
-  final String author;
-  final String image;
-  final String date;
-  final String category;
   final String title;
+  final String media;
+  final String dop;
+  final String kategori_id;
+  final String user_id;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +77,7 @@ class BannerSuaraPuanBox extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                      image: AssetImage(image),
+                      image: AssetImage(media),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -78,7 +86,7 @@ class BannerSuaraPuanBox extends StatelessWidget {
                 IntrinsicHeight(
                   child: Row(
                     children: [
-                      Text(date,
+                      Text(dop,
                           style: TextStyle(
                               fontFamily: 'Satoshi',
                               fontWeight: FontWeight.bold,
@@ -88,7 +96,7 @@ class BannerSuaraPuanBox extends StatelessWidget {
                         color: Colors.grey,
                         thickness: 1,
                       ),
-                      Text(author,
+                      Text('Tumpuan',
                           style: TextStyle(
                               fontFamily: 'Satoshi',
                               fontWeight: FontWeight.bold,
