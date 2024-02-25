@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tumpuan/screens/HomePage.dart';
 import 'package:tumpuan/screens/catatanHaid.dart';
 import 'package:tumpuan/screens/more.dart';
@@ -7,6 +8,11 @@ import 'package:tumpuan/screens/nav_model.dart';
 import 'package:tumpuan/screens/panggilPuan.dart';
 import 'package:tumpuan/styles/style.dart';
 import 'package:whatsapp_share/whatsapp_share.dart';
+import 'package:whatsapp/whatsapp.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:telephony/telephony.dart';
+import 'package:direct_sms/direct_sms.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -74,6 +80,20 @@ class _MainScreenState extends State<MainScreen> {
       ),
     ];
   }
+
+  WhatsApp whatsapp = WhatsApp();
+  String? _currentAddress;
+  Position? _currentPosition;
+  static const platform = const MethodChannel('sendSms');
+  final Telephony telephony = Telephony.instance;
+  var directSms = DirectSms();
+
+  final List listNum = [
+    '6285773030388',
+    '6281368701176',
+    '62895334296207',
+    '6288269841977'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -148,12 +168,13 @@ class _MainScreenState extends State<MainScreen> {
                         Future.delayed(Duration(seconds: 3), () {
                           Navigator.of(context).pop(true);
                         });
+                        location();
                         return alert;
                       });
                 }
               });
-              isInstalled();
-              share();
+              // isInstalled();
+              location();
             },
           ),
           // FloatingActionButton(
@@ -195,17 +216,68 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Future<void> isInstalled() async {
-    final val =
-        await WhatsappShare.isInstalled(package: Package.businessWhatsapp);
-    print('Whatsapp Business is installed: $val');
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
   }
 
-  Future<void> share() async {
-    await WhatsappShare.share(
-      text: 'Whatsapp share text',
-      linkUrl: 'https://flutter.dev/',
-      phone: '085773030388',
-    );
+  Future<void> location() async {
+    final hasPermission = await _handleLocationPermission();
+    if (!hasPermission) return;
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print('test');
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+
+    print('LAT: ${_currentPosition?.latitude ?? ""}');
+    print('LNG: ${_currentPosition?.longitude ?? ""}');
+
+    _launchUrl(_currentPosition?.latitude, _currentPosition?.longitude);
+  }
+
+  Future<void> _launchUrl(double? lat, double? long) async {
+    Uri _url = Uri.parse('https://www.google.com/maps/search/${lat},${long}');
+    print(_url);
+    // if (!await launchUrl(_url)) {
+    //   throw Exception('Could not launch $_url');
+    // }
+
+    // sendSms(_url);
+    // telephony.sendSmsByDefaultApp(to: "6285773030388", message: "${_url}");
+    final permission = Permission.sms.request();
+    if (await permission.isGranted) {
+      for (var i = 0; i < listNum.length; i++) {
+        directSms.sendSms(message: "${_url}", phone: "${listNum[i]}");
+      }
+    }
   }
 }

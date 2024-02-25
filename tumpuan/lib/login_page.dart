@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tumpuan/screens/home.dart';
 import 'package:tumpuan/screens/navScreen.dart';
 import 'package:tumpuan/screens/mapScreen.dart';
@@ -9,11 +10,13 @@ import 'package:tumpuan/services/tumpuanServices.dart';
 import 'package:tumpuan/signUp/intro1.dart';
 import 'package:tumpuan/utils/snackbar_helper.dart';
 import 'package:http/http.dart' as http;
-import 'package:whatsapp_share/whatsapp_share.dart';
-import 'package:whatsapp_sender_flutter/whatsapp_sender_flutter.dart';
 import 'package:whatsapp/whatsapp.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:telephony/telephony.dart';
+import 'package:direct_sms/direct_sms.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+// import android.telephony.SmsManager;
 
 class LoginPage extends StatefulWidget {
   final Map? login;
@@ -33,6 +36,9 @@ class _LoginPageState extends State<LoginPage> {
   WhatsApp whatsapp = WhatsApp();
   String? _currentAddress;
   Position? _currentPosition;
+  static const platform = const MethodChannel('sendSms');
+  final Telephony telephony = Telephony.instance;
+  var directSms = DirectSms();
 
   void initState() {
     super.initState();
@@ -40,6 +46,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   List<dynamic> dataMore = [];
+  final List listNum = [
+    '62895617896999',
+    '6285773030388',
+    '6281368701176',
+    '62895334296207',
+    '6282277842107'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -130,27 +143,28 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                        child: const Text(
-                          'Register Now',
-                          style: TextStyle(
-                              color: Color.fromRGBO(251, 111, 146, 1),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: location
-                        // share
-                        // () {
-                        //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        //       builder: (context) => const Intro1()));
-                        // },
-                        //     () {
-                        //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        //       builder: (context) => MapScreen()));
-                        // },
-                        )
+                      child: const Text(
+                        'Register Now',
+                        style: TextStyle(
+                            color: Color.fromRGBO(251, 111, 146, 1),
+                            fontWeight: FontWeight.bold),
+                      ),
+                      onPressed:
+                          // location
+                          // share
+                          () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const Intro1()));
+                      },
+                      //     () {
+                      //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      //       builder: (context) => MapScreen()));
+                      // },
+                    )
                   ],
                 ),
-                Text('LAT: ${_currentPosition?.latitude ?? ""}'),
-                Text('LNG: ${_currentPosition?.longitude ?? ""}'),
+                // Text('LAT: ${_currentPosition?.latitude ?? ""}'),
+                // Text('LNG: ${_currentPosition?.longitude ?? ""}'),
               ],
             ),
           ),
@@ -232,15 +246,6 @@ class _LoginPageState extends State<LoginPage> {
     print('data pas api tarik' + response.body);
   }
 
-  Future<void> isInstalled() async {
-    final val =
-        await WhatsappShare.isInstalled(package: Package.businessWhatsapp);
-    print('Whatsapp Business is installed: $val');
-    if (val == true) {
-      share();
-    }
-  }
-
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -292,31 +297,19 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _launchUrl(double? lat, double? long) async {
     Uri _url = Uri.parse('https://www.google.com/maps/search/${lat},${long}');
     print(_url);
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
-    }
-  }
+    // if (!await launchUrl(_url)) {
+    //   throw Exception('Could not launch $_url');
+    // }
 
-  Future<void> share() async {
-    await WhatsappShare.share(
-      text: 'Whatsapp share text',
-      // linkUrl: 'https://flutter.dev/',
-      phone: '6285773030388',
-      // package:
-    );
-    // await WhatsAppSenderFlutter.send(
-    //   phones: [
-    //     "6281368701176",
-    //     "62895334296207",
-    //     "6288269841977",
-    //     "6285773030388"
-    //   ],
-    //   message: "Hello",
-    // );
-    // print(await whatsapp.messagesText(
-    //     to: 6288269841977,
-    //     message: "Hey, Flutter, follow me on https://example.com",
-    //     previewUrl: true));
-    // print('test');
+    // sendSms(_url);
+    // telephony.sendSmsByDefaultApp(to: "6285773030388", message: "${_url}");
+    final permission = Permission.sms.request();
+    if (await permission.isGranted) {
+      for (var i = 0; i < listNum.length; i++) {
+        print("${listNum[i]}");
+        directSms.sendSms(
+            message: "Help Your Friend !!! \n${_url}", phone: "${listNum[i]}");
+      }
+    }
   }
 }

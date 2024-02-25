@@ -59,6 +59,10 @@ dependencies:
   geolocator: ^11.0.0
   geocoding: ^2.0.4
   url_launcher:
+  telephony:
+  # flutter_qpython:
+  direct_sms:
+  permission_handler: 
   
   # image_picker: ^1.0.7
 
