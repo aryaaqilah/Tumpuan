@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tumpuan/screens/HomePage.dart';
@@ -6,6 +9,7 @@ import 'package:tumpuan/screens/more.dart';
 import 'package:tumpuan/screens/nav_bar.dart';
 import 'package:tumpuan/screens/nav_model.dart';
 import 'package:tumpuan/screens/panggilPuan.dart';
+import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/styles/style.dart';
 import 'package:whatsapp_share/whatsapp_share.dart';
 import 'package:whatsapp/whatsapp.dart';
@@ -13,6 +17,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:telephony/telephony.dart';
 import 'package:direct_sms/direct_sms.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:http/http.dart' as http;
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -34,7 +39,13 @@ class _MainScreenState extends State<MainScreen> {
     _selectedTab = value;
   }
 
+  // void initState() {
+
+  // }
+
+  bool isLoading = true;
   List<NavModel> items = [];
+  List<String> phoneNumbers = [];
 
   bool sosActive = false;
   Gradient _gradient = LinearGradient(colors: [
@@ -61,6 +72,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    // SchedulerBinding.instance.addPostFrameCallback((_) {
+    //   getDataKontakAman();
+    // });
     items = [
       NavModel(
         page: HomePage(),
@@ -79,6 +93,7 @@ class _MainScreenState extends State<MainScreen> {
         navKey: moreNavKey,
       ),
     ];
+    // getDataKontakAman();
   }
 
   WhatsApp whatsapp = WhatsApp();
@@ -247,7 +262,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> location() async {
     final hasPermission = await _handleLocationPermission();
-    if (!hasPermission) return;
+    if (!hasPermission || !mounted) return;
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     print('test');
@@ -278,6 +293,58 @@ class _MainScreenState extends State<MainScreen> {
       for (var i = 0; i < listNum.length; i++) {
         directSms.sendSms(message: "${_url}", phone: "${listNum[i]}");
       }
+      // for (var i = 0; i < phoneNumbers.length; i++) {
+      //   print("${phoneNumbers[i]}");
+      //   directSms.sendSms(
+      //       message: "Help Your Friend !!! \n${_url}",
+      //       phone: "${phoneNumbers[i]}");
+      // }
+      // for (var phoneNumber in phoneNumbers) {
+      //   print(phoneNumber);
+      //   directSms.sendSms(
+      //       message: "Help Your Friend !!! \n${_url}", phone: phoneNumber);
+      // }
     }
+  }
+
+  Future<void> getDataKontakAman() async {
+    if (!mounted) return;
+    setState(() {
+      isLoading = true;
+    });
+    // get data from form
+    // submit data to the server
+    final url = 'http://10.0.2.2:8000/api/kontakamans';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map;
+      final result = json['data'] ?? [] as List;
+
+      // Clear the phoneNumbers list before adding new numbers
+      phoneNumbers.clear();
+
+      // Extract phone numbers from each data entry and add them to phoneNumbers list
+      for (var data in result) {
+        final phoneNumber = data['phoneNumber'].toString();
+        print('phone number: $phoneNumber');
+        phoneNumbers.add(phoneNumber);
+      }
+
+      setState(() {
+        phoneNumbers =
+            phoneNumbers; // Update dataContact with the obtained data
+      });
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      isLoading = false;
+    });
+    // showsuccess or fail message based on status
+    print(response.statusCode);
+    print('data pas api tarik kontak' + response.body);
   }
 }

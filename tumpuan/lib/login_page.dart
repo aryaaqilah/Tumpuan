@@ -42,17 +42,20 @@ class _LoginPageState extends State<LoginPage> {
 
   void initState() {
     super.initState();
+    // getDataKontakAman();
     getData();
   }
 
+  bool isLoading = true;
+  List<String> phoneNumbers = [];
   List<dynamic> dataMore = [];
-  final List listNum = [
-    '62895617896999',
-    '6285773030388',
-    '6281368701176',
-    '62895334296207',
-    '6282277842107'
-  ];
+  // final List listNum = [
+  //   '62895617896999',
+  //   '6285773030388',
+  //   '6281368701176',
+  //   '62895334296207',
+  //   '6282277842107'
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 buildTextField(
                   controller: usernameController,
                   obscureText: false,
-                  hintText: 'Email',
+                  hintText: 'Username',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your username';
@@ -246,6 +249,8 @@ class _LoginPageState extends State<LoginPage> {
     print('data pas api tarik' + response.body);
   }
 
+  // Contact aman darisini sampe abis
+
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -304,11 +309,20 @@ class _LoginPageState extends State<LoginPage> {
     // sendSms(_url);
     // telephony.sendSmsByDefaultApp(to: "6285773030388", message: "${_url}");
     final permission = Permission.sms.request();
+
+    print("masuk ");
     if (await permission.isGranted) {
-      for (var i = 0; i < listNum.length; i++) {
-        print("${listNum[i]}");
+      // for (var i = 0; i < listNum.length; i++) {
+      //   print("${listNum[i]}");
+      //   directSms.sendSms(
+      //       message: "Help Your Friend !!! \n${_url}", phone: "${listNum[i]}");
+      // }
+      print("masukkkk");
+      for (var i = 0; i < phoneNumbers.length; i++) {
+        print("${phoneNumbers[i]}");
         directSms.sendSms(
-            message: "Help Your Friend !!! \n${_url}", phone: "${listNum[i]}");
+            message: "Help Your Friend !!! \n${_url}",
+            phone: "${phoneNumbers[i]}");
       }
     }
   }

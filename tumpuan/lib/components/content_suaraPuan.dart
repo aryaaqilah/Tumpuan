@@ -1,56 +1,143 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/callView.dart';
 import 'package:tumpuan/components/editContact.dart';
 import 'package:tumpuan/screens/isiSuaraPuan.dart';
+import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/styles/style.dart';
+import 'package:http/http.dart' as http;
+
+// Widget getDataSuaraPuan(List<dynamic> dataSuaraPuan) {
+//   String id;
+//   String title;
+//   String content;
+//   String media;
+//   String dop;
+//   String kategori_id;
+//   String user_id;
+
+//   List<Widget> dataSuaraBoxes = [];
+//   for (var i = 0; i < dataSuaraPuan.length; i++) {
+//     id = dataSuaraPuan[i]['id'].toString();
+//     title = dataSuaraPuan[i]['title'].toString();
+//     content = dataSuaraPuan[i]['content'].toString();
+//     media = dataSuaraPuan[i]['media'].toString();
+//     dop = dataSuaraPuan[i]['dop'].toString();
+//     kategori_id = dataSuaraPuan[i]['kategori_id'].toString();
+//     user_id = dataSuaraPuan[i]['user_id'].toString();
+
+//     // dataSuaraBoxes.add(FutureBuilder<String?>(
+//     //   future: getKategoriById(kategori_id),
+//     //   builder: (context, snapshot) {
+//     //     // if (snapshot.connectionState == ConnectionState.waiting) {
+//     //     //   return CircularProgressIndicator(); // Tampilkan loading indicator jika masih dalam proses pengambilan data
+//     //     // } else if (snapshot.hasError) {
+//     //     //   return Text('Error: ${snapshot.error}');
+//     //     // } else {
+//     //     String kategoriName =
+//     //         snapshot.data ?? ''; // Gunakan string kosong jika nilai null
+//     //     return SuaraPuanBox(
+//     //       id: id,
+//     //       title: title,
+//     //       content: content,
+//     //       media: media,
+//     //       dop: dop,
+//     //       kategori_id: kategori_id,
+//     //       user_id: user_id,
+//     //       kategori_name: kategoriName,
+//     //     );
+//     //     // }
+//     //   },
+//     // ));
+
+//     dataSuaraBoxes.add(FutureBuilder<String?>(
+//       future: getKategoriById(kategori_id),
+//       builder: (context, snapshot) {
+//         String kategoriName =
+//             snapshot.data ?? ''; // Gunakan string kosong jika nilai null
+//         return SuaraPuanBox(
+//           id: id,
+//           title: title,
+//           content: content,
+//           media: media,
+//           dop: dop,
+//           kategori_id: kategori_id,
+//           user_id: user_id,
+//           kategori_name: kategoriName,
+//         );
+//       },
+//     ));
+
+//     // String? kategoriName = await getKategoriById(kategori_id);
+
+//     // dataSuaraBoxes.add(SuaraPuanBox(
+//     //     id: id,
+//     //     title: title,
+//     //     content: content,
+//     //     media: media,
+//     //     dop: dop,
+//     //     kategori_id: kategori_id,
+//     //     user_id: user_id,
+//     //     kategori_name: kategoriName ?? ''));
+//     dataSuaraBoxes.add(SizedBox(height: 10));
+//   }
+//   return Column(
+//     children: dataSuaraBoxes,
+//   );
+// }
 
 Widget getDataSuaraPuan(List<dynamic> dataSuaraPuan) {
-  String title;
-  String content;
-  String media;
-  String dop;
-  String kategori_id;
-  String user_id;
-
-  List<Widget> dataSuaraBoxes = [];
-  for (var i = 0; i < dataSuaraPuan.length; i++) {
-    title = dataSuaraPuan[i]['title'].toString();
-    content = dataSuaraPuan[i]['content'].toString();
-    media = dataSuaraPuan[i]['media'].toString();
-    dop = dataSuaraPuan[i]['dop'].toString();
-    kategori_id = dataSuaraPuan[i]['kategori_id'].toString();
-    user_id = dataSuaraPuan[i]['user_id'].toString();
-
-    dataSuaraBoxes.add(SuaraPuanBox(
-        title: title,
-        content: content,
-        media: media,
-        dop: dop,
-        kategori_id: kategori_id,
-        user_id: user_id));
-    dataSuaraBoxes.add(SizedBox(height: 10));
-  }
   return Column(
-    children: dataSuaraBoxes,
+    children: dataSuaraPuan.map((data) {
+      final id = data['id'].toString();
+      final title = data['title'].toString();
+      final content = data['content'].toString();
+      final media = data['media'].toString();
+      final dop = data['dop'].toString();
+      final kategori_id = data['kategori_id'].toString();
+      final user_id = data['user_id'].toString();
+
+      return FutureBuilder<String?>(
+        future: getKategoriById(kategori_id),
+        builder: (context, snapshot) {
+          final kategoriName = snapshot.data ?? '';
+          return SuaraPuanBox(
+            id: id,
+            title: title,
+            content: content,
+            media: media,
+            dop: dop,
+            kategori_id: kategori_id,
+            user_id: user_id,
+            kategori_name: kategoriName,
+          );
+        },
+      );
+    }).toList(),
   );
 }
 
 class SuaraPuanBox extends StatelessWidget {
   SuaraPuanBox(
       {super.key,
+      required this.id,
       required this.title,
       required this.content,
       required this.media,
       required this.dop,
       required this.kategori_id,
-      required this.user_id});
+      required this.user_id,
+      required this.kategori_name});
 
+  final String id;
   final String title;
   final String content;
   final String media;
   final String dop;
   final String kategori_id;
   final String user_id;
+  final String kategori_name;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +173,7 @@ class SuaraPuanBox extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        kategori_id,
+                        kategori_name,
                         style: TextStyle(
                             fontFamily: 'Satoshi',
                             fontWeight: FontWeight.bold,
@@ -101,6 +188,7 @@ class SuaraPuanBox extends StatelessWidget {
                             Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
                                     builder: (context) => IsiSuaraPuan(
+                                          id: id,
                                           title: title,
                                           content: content,
                                           media: media,
@@ -172,4 +260,21 @@ class SuaraPuanBox extends StatelessWidget {
       ],
     );
   }
+}
+
+Future<String?> getKategoriById(String kategoriId) async {
+  final url = 'http://10.0.2.2:8000/api/kategorisuarapuans/$kategoriId';
+  final uri = Uri.parse(url);
+  final response =
+      await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+
+  if (response.statusCode == 200) {
+    final json = jsonDecode(response.body) as Map;
+    final result = json['data'];
+    if (result != null && result.containsKey('nama')) {
+      return result['nama'].toString();
+    }
+  }
+
+  return null;
 }

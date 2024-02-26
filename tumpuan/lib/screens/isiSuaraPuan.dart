@@ -1,16 +1,41 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tumpuan/components/bannerSuaraPuan.dart';
 import 'dart:ui';
+import 'package:http/http.dart' as http;
+
+import 'package:tumpuan/services/auth_service.dart';
 
 class Comment {
   String text;
-  DateTime date;
+  String date;
   String userName;
   String userProfilePic;
   Comment(this.text, this.date, this.userName, this.userProfilePic);
 }
 
+class User {
+  String username;
+  String email;
+  String password;
+  String name;
+  String dob;
+  String gender;
+
+  User({
+    required this.username,
+    required this.email,
+    required this.password,
+    required this.name,
+    required this.dob,
+    required this.gender,
+  });
+}
+
 class IsiSuaraPuan extends StatefulWidget {
+  final String id;
   final String title;
   final String content;
   final String media;
@@ -20,6 +45,7 @@ class IsiSuaraPuan extends StatefulWidget {
 
   const IsiSuaraPuan({
     Key? key,
+    required this.id,
     required this.title,
     required this.content,
     required this.media,
@@ -33,10 +59,24 @@ class IsiSuaraPuan extends StatefulWidget {
 }
 
 class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
+  bool isLoading = true;
+
+  void initState() {
+    super.initState();
+    getCurrentUser();
+    getData();
+  }
+
+  List<dynamic> dataComment = [];
+  List<dynamic> dataCurrentUser = [];
   List<Comment> comments = [];
 
   TextEditingController _commentController = TextEditingController();
   TextEditingController _userNameController = TextEditingController();
+
+  late String comment;
+  late String dop;
+
   @override
   Widget build(BuildContext context) {
     final dataSuaraPuan = [
@@ -188,35 +228,36 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                         color: Colors.black,
                         fontSize: 20),
                   ),
-                  SizedBox(
-                    height: 20,
-                    width: 100,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => IsiSuaraPuan(
-                                title: 'title',
-                                content: 'content',
-                                media: 'media',
-                                dop: 'dop',
-                                kategori_id: 'kategori_id',
-                                user_id: 'user_id')));
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            const Color.fromRGBO(251, 111, 146, 1)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        )),
-                      ),
-                      child: const Text(
-                        'See More',
-                        style: TextStyle(fontFamily: 'Satoshi'),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 20,
+                  //   width: 100,
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //           builder: (context) => IsiSuaraPuan(
+                  //               id: 'id',
+                  //               title: 'title',
+                  //               content: 'content',
+                  //               media: 'media',
+                  //               dop: 'dop',
+                  //               kategori_id: 'kategori_id',
+                  //               user_id: 'user_id')));
+                  //     },
+                  //     style: ButtonStyle(
+                  //       backgroundColor: MaterialStateProperty.all(
+                  //           const Color.fromRGBO(251, 111, 146, 1)),
+                  //       shape:
+                  //           MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //               RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(18.0),
+                  //       )),
+                  //     ),
+                  //     child: const Text(
+                  //       'See More',
+                  //       style: TextStyle(fontFamily: 'Satoshi'),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -380,38 +421,40 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                           ),
                           IconButton(
                             icon: Icon(Icons.send),
-                            onPressed: _postComment,
+                            onPressed: () {
+                              submitComment();
+                            },
                           ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 30,
-                        right: 40,
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 0),
-                            child: Text('Name : ',
-                                style: TextStyle(
-                                  fontFamily: 'Satoshi',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                )),
-                          ),
-                          Expanded(
-                            child: TextField(
-                              controller: _userNameController,
-                              decoration: InputDecoration(
-                                hintText: 'Enter your display name...',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(
+                    //     left: 30,
+                    //     right: 40,
+                    //   ),
+                    //   child: Row(
+                    //     children: <Widget>[
+                    //       Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 0),
+                    //         child: Text('Name : ',
+                    //             style: TextStyle(
+                    //               fontFamily: 'Satoshi',
+                    //               fontWeight: FontWeight.bold,
+                    //               fontSize: 16,
+                    //             )),
+                    //       ),
+                    //       Expanded(
+                    //         child: TextField(
+                    //           controller: _userNameController,
+                    //           decoration: InputDecoration(
+                    //             hintText: 'Enter your display name...',
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -422,24 +465,167 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
     );
   }
 
-  void _postComment() {
-    String newCommentText = _commentController.text;
-    String userName = _userNameController.text.isNotEmpty
-        ? _userNameController.text
-        : 'Anonymous';
-    DateTime now = DateTime.now();
-    Comment newComment =
-        Comment(newCommentText, now, userName, 'images/profileDefault.jpg');
-    setState(() {
-      comments.add(newComment);
-      _commentController.clear();
-    });
+  Future<String?> getUsernameById(String userId) async {
+    final url = 'http://10.0.2.2:8000/api/users/$userId';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map;
+      final result = json['data'];
+      if (result != null && result.containsKey('name')) {
+        return result['name'].toString();
+      }
+    }
+
+    return null;
   }
 
-  @override
-  void dispose() {
-    _commentController.dispose();
-    _userNameController.dispose();
-    super.dispose();
+  Future<void> getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    // get data from form
+    // submit data to the server
+    final url = 'http://10.0.2.2:8000/api/suarapuans/${widget.id}/commentpuans';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map;
+      print('items kita' + json['data'].toString());
+      final result = json['data'] ?? [] as List;
+      setState(() {
+        dataComment = result;
+      });
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+    // showsuccess or fail message based on status
+    print(response.statusCode);
+    print('data pas api tarik' + response.body);
+
+    for (var data in dataComment) {
+      var comment = data['comment'].toString();
+      var dop = data['dop'].toString();
+
+      String? username = await getUsernameById(data['user_id'].toString());
+      if (username != null) {
+        Comment newComment = Comment(
+          comment,
+          dop,
+          username,
+          'images/profileDefault.jpg',
+        );
+
+        setState(() {
+          comments.add(newComment);
+        });
+      }
+    }
+  }
+
+  Future<String?> getCurrentUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    // get data from form
+    // submit data to the server
+    final url = 'http://10.0.2.2:8000/api/users/current';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map;
+      print('items kita' + json['data'].toString());
+      final result = json['data'] ?? [] as List;
+      // setState(() {
+      //   dataCurrentUser = result;
+      // });
+
+      if (result != null && result.containsKey('name')) {
+        final name = result['name'].toString();
+        setState(() {
+          isLoading = false;
+        });
+        return name;
+      }
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+    // showsuccess or fail message based on status
+    print(response.statusCode);
+    print('data pas api tarik' + response.body);
+  }
+
+  Future<void> submitComment() async {
+    final comment = _commentController.text;
+    final dop = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
+
+    print(comment + ' - ' + dop);
+
+    final body = {
+      'comment': comment,
+      'dop': dop,
+      // 'user_id': dataCurrentUser[0]['id'].toString(),
+    };
+
+    final id = widget.id;
+    print(id);
+    // submit data to the server
+    final url = 'http://10.0.2.2:8000/api/suarapuans/${widget.id}/commentpuans';
+    print('url: ' + url);
+    final uri = Uri.parse(url);
+    final response = await http.post(uri, body: jsonEncode(body), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': '${AuthService.token}'
+    });
+    // showsuccess or fail message based on status
+    print(response.statusCode);
+    print(response.body);
+
+    String? username = await getCurrentUser();
+    if (username != null) {
+      print('username: $username');
+
+      // String username = AuthService.token.toString();
+      // String username = widget.user_id;
+
+      // print('username: ' + username);
+
+      Comment newComment =
+          Comment(comment, dop, username, 'images/profileDefault.jpg');
+
+      setState(() {
+        comments.add(newComment);
+        _commentController.clear();
+      });
+    }
+
+    // void _postComment() {
+    //   String newCommentText = _commentController.text;
+    //   String userName = _userNameController.text.isNotEmpty
+    //       ? _userNameController.text
+    //       : 'Anonymous';
+    //   DateTime now = DateTime.now();
+    //   Comment newComment =
+    //       Comment(newCommentText, now, userName, 'images/profileDefault.jpg');
+    //   setState(() {
+    //     comments.add(newComment);
+    //     _commentController.clear();
+    //   });
+    // }
+
+    @override
+    void dispose() {
+      _commentController.dispose();
+      _userNameController.dispose();
+      super.dispose();
+    }
   }
 }

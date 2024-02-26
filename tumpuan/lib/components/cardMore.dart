@@ -159,20 +159,20 @@ class MoreBox extends StatelessWidget {
               Container(
                 child: Row(
                   children: [
-                    // IconButton(
-                    //   icon: Icon(Icons.mode_comment_outlined),
-                    //   onPressed: () {
-                    //     Navigator.of(context, rootNavigator: true)
-                    //         .push(MaterialPageRoute(
-                    //             builder: (context) => Comment(
-                    //                   idPost: idPost,
-                    //                 )));
-                    //   },
+                    IconButton(
+                      icon: Icon(Icons.mode_comment_outlined),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true)
+                            .push(MaterialPageRoute(
+                                builder: (context) => Comment(
+                                      idPost: 'idPost',
+                                    )));
+                      },
+                    ),
+                    // SizedBox(
+                    //   width: 5,
                     // ),
-                    // // SizedBox(
-                    // //   width: 5,
-                    // // ),
-                    // Text(commentCount)
+                    Text('1')
                   ],
                 ),
               ),
