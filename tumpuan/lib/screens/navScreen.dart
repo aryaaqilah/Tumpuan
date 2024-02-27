@@ -176,6 +176,7 @@ class _MainScreenState extends State<MainScreen> {
               setState(() {
                 sosActive = !sosActive;
                 if (sosActive) {
+                  location();
                   showDialog(
                       barrierColor: Color(0x01000000),
                       context: context,
@@ -189,7 +190,6 @@ class _MainScreenState extends State<MainScreen> {
                 }
               });
               // isInstalled();
-              location();
             },
           ),
           // FloatingActionButton(

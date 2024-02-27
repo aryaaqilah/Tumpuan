@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
+import 'dart:typed_data';
 
 class CallView extends StatelessWidget {
   CallView({super.key, required this.name, required this.number});
@@ -6,8 +9,21 @@ class CallView extends StatelessWidget {
   final String name;
   final String number;
 
+  final player = AudioPlayer();
+
+  Future<void> playSound() async {
+    String soundPath = "ringtone.mp3";
+    // await player.play(AssetSource(soundPath));
+    player.play(AssetSource(soundPath));
+  }
+
+  Future<void> stopSound() async {
+    player.stop();
+  }
+
   @override
   Widget build(BuildContext context) {
+    playSound();
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -56,7 +72,11 @@ class CallView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.0),
                       ))),
                   onPressed: () {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
+                    // await player.play(AssetSource('audios/ringtone.mp3'));
+                    // await player.setSourceAsset('audios/ringtone.mp3');
+                    // player.play;
+                    // playSound();
                   },
                   child: Icon(
                     Icons.volume_up_rounded,
@@ -73,7 +93,7 @@ class CallView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.0),
                       ))),
                   onPressed: () {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
                   },
                   child: Icon(
                     Icons.pause,
@@ -90,7 +110,7 @@ class CallView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.0),
                       ))),
                   onPressed: () {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
                   },
                   child: Icon(
                     Icons.mic_off,
@@ -109,6 +129,7 @@ class CallView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.0),
                     ))),
                 onPressed: () {
+                  stopSound();
                   Navigator.pop(context);
                 },
                 child: Icon(
