@@ -25,10 +25,10 @@ class More extends StatefulWidget {
 class _MoreState extends State<More> {
   final ScrollController _scrollController = ScrollController();
   bool isLoading = true;
-
   void initState() {
     super.initState();
     getData();
+    getUserData();
   }
 
   List<dynamic> dataMore = [
@@ -64,7 +64,16 @@ class _MoreState extends State<More> {
     // ],
   ];
 
-  final dataUser = ['Nixonnn', 'images/profilePict.png', '12345'];
+  // List<String> dataUser = [
+  //   // 'author',
+  //   // 'images/profilePict.png',
+  //   // 'idPost'
+  // ];
+
+  late List<String> dataUser;
+
+  late String username;
+
   TextEditingController threadNameController = TextEditingController();
   File? _image;
   @override
@@ -84,9 +93,11 @@ class _MoreState extends State<More> {
               children: [
                 // SearchCard(),
                 HeaderMore(
-                  username: dataUser[0],
-                  img: dataUser[1],
-                  userid: dataUser[2],
+                  username: username,
+                  img: dataUser.isNotEmpty
+                      ? dataUser[1]
+                      : 'images/profilePict.png',
+                  // userid: dataUser[2],
                 ),
                 StickyHeader(
                   controller: _scrollController,
@@ -237,5 +248,36 @@ class _MoreState extends State<More> {
     // showsuccess or fail message based on status
     print(response.statusCode);
     print('data pas api tarik' + response.body);
+  }
+
+  Future<List<String>> getCurrentUser() async {
+    final url = 'http://10.0.2.2:8000/api/users/current';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map;
+      final result = json['data'] ?? [];
+      if (result.isNotEmpty &&
+          result.containsKey('name') &&
+          result.containsKey('id')) {
+        final username = result['name'].toString();
+        final userId = result['id'].toString();
+        final profilePicture =
+            'images/profilePict.png'; // or the default value from API
+        return [username, profilePicture, userId];
+      }
+    }
+    return [];
+  }
+
+  Future<void> getUserData() async {
+    final userData = await getCurrentUser();
+    if (userData.isNotEmpty) {
+      setState(() {
+        username = userData[0];
+        dataUser = userData;
+      });
+    }
   }
 }

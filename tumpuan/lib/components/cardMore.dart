@@ -1,11 +1,15 @@
 // import 'dart:html';
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/callView.dart';
 import 'package:tumpuan/components/editContact.dart';
 import 'package:tumpuan/screens/commentRuangPuan.dart';
 import 'package:tumpuan/screens/more.dart';
+import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/styles/style.dart';
+import 'package:http/http.dart' as http;
 
 Widget getDataMore(List<dynamic> dataMore) {
   // More objectMore = new More();
@@ -17,7 +21,7 @@ Widget getDataMore(List<dynamic> dataMore) {
   String image;
   String date;
   String teks;
-  String idPost;
+  int idRuangPuan;
   String likeCount;
   String commentCount;
 
@@ -34,7 +38,7 @@ Widget getDataMore(List<dynamic> dataMore) {
     // teks = dataMore[i][1] != null ? dataMore[i][1].toString() : '';
     // date = dataMore[i][2] != null ? dataMore[i][1].toString() : '';
     // image = dataMore[i][3] != null ? dataMore[i][1].toString() : '';
-    // idPost = dataMore[i][5];
+    idRuangPuan = dataMore[i]['id'];
     // likeCount = dataMore[i][4] != null ? dataMore[i][1].toString() : '';
     likeCount = dataMore[i]['like'].toString();
     // commentCount = dataMore[i][7];
@@ -45,6 +49,7 @@ Widget getDataMore(List<dynamic> dataMore) {
       image: image,
       date: date,
       teks: teks,
+      idRuangPuan: idRuangPuan,
       // idPost: idPost,
       likeCount: likeCount,
       // commentCount: commentCount,
@@ -67,6 +72,7 @@ class MoreBox extends StatelessWidget {
     required this.date,
     required this.teks,
     // required this.idPost,
+    required this.idRuangPuan,
     required this.likeCount,
     // required this.commentCount
   });
@@ -78,6 +84,7 @@ class MoreBox extends StatelessWidget {
   final String teks;
   // final String idPost;
   final String likeCount;
+  final int idRuangPuan;
   // final String commentCount;
 
   int checker = 1;
@@ -86,6 +93,7 @@ class MoreBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // late String userName;
     bool showImage = image.isNotEmpty;
     return Center(
         child: Container(
@@ -165,7 +173,7 @@ class MoreBox extends StatelessWidget {
                         Navigator.of(context, rootNavigator: true)
                             .push(MaterialPageRoute(
                                 builder: (context) => Comment(
-                                      idPost: 'idPost',
+                                      idRuangPuan: idRuangPuan,
                                     )));
                       },
                     ),

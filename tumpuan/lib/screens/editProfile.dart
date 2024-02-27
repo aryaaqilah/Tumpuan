@@ -7,11 +7,11 @@ class EditProfile extends StatefulWidget {
     super.key,
     required this.username,
     required this.profilePicture,
-    required this.userID,
+    // required this.userID,
   });
 
   final String username;
-  final String userID;
+  // final String userID;
   final String profilePicture;
 
   @override
@@ -20,7 +20,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   late String username;
-  late String userID;
+  // late String userID;
   late String profilePicture;
 
   Widget build(BuildContext context) {
@@ -151,41 +151,41 @@ class _EditProfileState extends State<EditProfile> {
               // width: 300,
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'User ID',
-                        style: TextStyle(
-                            fontFamily: 'Satoshi',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: TextField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: widget.userID,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   children: [
+                  //     Text(
+                  //       'User ID',
+                  //       style: TextStyle(
+                  //           fontFamily: 'Satoshi',
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: 17),
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 0),
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.grey[200],
+                  //       border: Border.all(color: Colors.black),
+                  //       borderRadius: BorderRadius.circular(12),
+                  //     ),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.only(left: 20.0),
+                  //       child: TextField(
+                  //         readOnly: true,
+                  //         decoration: InputDecoration(
+                  //           border: InputBorder.none,
+                  //           hintText: widget.userID,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

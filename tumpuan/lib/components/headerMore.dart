@@ -4,15 +4,15 @@ import 'package:tumpuan/screens/settings.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class HeaderMore extends StatelessWidget {
-  HeaderMore(
-      {super.key,
-      required String this.username,
-      required String this.img,
-      required String this.userid});
+  HeaderMore({
+    super.key,
+    required String this.username,
+    required String this.img,
+  });
 
   late String username;
   late String img;
-  late String userid;
+  // late String userid;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,6 @@ class HeaderMore extends StatelessWidget {
                                     builder: (context) => EditProfile(
                                           username: username,
                                           profilePicture: img,
-                                          userID: userid,
                                         )));
                           },
                           child: Text(
@@ -94,7 +93,7 @@ class HeaderMore extends StatelessWidget {
                                 builder: (context) => Settings(
                                       username: username,
                                       profilePicture: img,
-                                      userID: userid,
+                                      // userID: userid,
                                     )));
                       },
                     )

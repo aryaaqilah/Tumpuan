@@ -10,11 +10,11 @@ class Settings extends StatefulWidget {
     super.key,
     required this.username,
     required this.profilePicture,
-    required this.userID,
+    // required this.userID,
   });
 
   final String username;
-  final String userID;
+  // final String userID;
   final String profilePicture;
 
   @override
@@ -71,7 +71,7 @@ class _SettingsState extends State<Settings> {
                           builder: (context) => EditProfile(
                                 username: username,
                                 profilePicture: profilePicture,
-                                userID: userID,
+                                // userID: userID,
                               )));
                     },
                     child: Text(
