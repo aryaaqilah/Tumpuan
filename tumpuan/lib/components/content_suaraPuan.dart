@@ -185,17 +185,16 @@ class SuaraPuanBox extends StatelessWidget {
                         width: 100,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                                    builder: (context) => IsiSuaraPuan(
-                                          id: id,
-                                          title: title,
-                                          content: content,
-                                          media: media,
-                                          dop: dop,
-                                          kategori_id: kategori_id,
-                                          user_id: user_id,
-                                        )));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => IsiSuaraPuan(
+                                      id: id,
+                                      title: title,
+                                      content: content,
+                                      media: media,
+                                      dop: dop,
+                                      kategori_id: kategori_id,
+                                      user_id: user_id,
+                                    )));
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(

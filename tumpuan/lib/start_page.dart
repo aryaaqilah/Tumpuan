@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/login_page.dart';
+import 'package:tumpuan/screens/playVideo.dart';
 import 'package:tumpuan/signUp/intro1.dart';
 
 class StartPage extends StatefulWidget {
@@ -40,6 +41,8 @@ class _StartPageState extends State<StartPage> {
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const LoginPage()));
+                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //     builder: (context) => const VideoApp()));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(

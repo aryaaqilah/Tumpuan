@@ -1,11 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tumpuan/components/bannerSuaraPuan.dart';
 import 'dart:ui';
 import 'package:http/http.dart' as http;
-
+import 'package:video_player/video_player.dart';
 import 'package:tumpuan/services/auth_service.dart';
 
 class Comment {
@@ -61,10 +60,27 @@ class IsiSuaraPuan extends StatefulWidget {
 class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
   bool isLoading = true;
 
+  late VideoPlayerController _videoController;
   void initState() {
     super.initState();
     getCurrentUser();
     getData();
+
+    // uncomment yang ini klo mau pake link, tinggal ganti linknya
+    // _videoController = VideoPlayerController.networkUrl(Uri.parse(
+    //     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'));
+
+    // ..initialize().then((_) {
+    //   // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    //   setState(() {});
+    // });
+
+    // ini buat klo data videonya dari local
+    _videoController = VideoPlayerController.asset('images/bee.mp4');
+    _videoController.initialize().then((value) {
+      setState(() {});
+    });
+    // _videoController.setLooping(true);
   }
 
   List<dynamic> dataComment = [];
@@ -101,6 +117,7 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
         actions: <Widget>[],
         leading: IconButton(
           onPressed: () {
+            _videoController.pause();
             Navigator.pop(context);
           },
           icon: Icon(
@@ -113,7 +130,7 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
         child: Column(
           children: [
             Padding(
-                padding: const EdgeInsets.only(top: 50),
+                padding: const EdgeInsets.only(top: 10),
                 child: Image.asset(
                   'images/suaraPuanImg.png',
                   width: MediaQuery.of(context).size.width,
@@ -203,6 +220,50 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 4,
+                child: _videoController.value.isInitialized
+                    ? AspectRatio(
+                        aspectRatio: _videoController.value.aspectRatio,
+                        child: VideoPlayer(_videoController),
+                      )
+                    : Container(
+                        // child: Text('gada'),
+                        ),
+              ),
+            ),
+            Container(
+              child: Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _videoController.value.isPlaying
+                            ? _videoController.pause()
+                            : _videoController.play();
+                      });
+                    },
+                    icon: Icon(
+                      !_videoController.value.isPlaying ||
+                              _videoController.value.isCompleted
+                          ? Icons.play_arrow
+                          : Icons.pause,
+                    ),
+                  ),
+                ],
+              )),
+            ),
+            // SizedBox(
+            //   height: 20,
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Text(

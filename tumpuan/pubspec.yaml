@@ -64,6 +64,7 @@ dependencies:
   direct_sms:
   permission_handler: 
   flutter_sound: 
+  video_player:
   
   # image_picker: ^1.0.7
 
