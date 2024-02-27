@@ -14,7 +14,15 @@ class _CatatanHaidState extends State<CatatanHaid> {
   late DateTime _focusedDay = DateTime.now();
   late DateTime _selectedDay = DateTime.now();
   late DateTime _rangeStartDay = DateTime.utc(2024, 2, 26);
+  late DateTime _rangeStartDayplus30 =
+      _rangeStartDay.add(const Duration(days: 30));
+  late DateTime _rangeStartDayminus30 =
+      _rangeStartDay.subtract(const Duration(days: 30));
+
   late DateTime _rangeEndDay = DateTime.utc(2024, 3, 3);
+  late DateTime _rangeEndDayplus30 = _rangeEndDay.add(const Duration(days: 30));
+  late DateTime _rangeEndDayminus30 =
+      _rangeEndDay.subtract(const Duration(days: 30));
   late DateTime _previousFocusedMonth = DateTime.now();
 
   late int startCycle = 28;
@@ -45,9 +53,9 @@ class _CatatanHaidState extends State<CatatanHaid> {
               children: [
                 // Text('data'),
                 TableCalendar(
-                  rangeStartDay: _rangeStartDay,
-                  rangeEndDay: _rangeEndDay,
-                  rangeSelectionMode: RangeSelectionMode.toggledOn,
+                  // rangeStartDay: _rangeStartDay,
+                  // rangeEndDay: _rangeEndDay,
+                  // rangeSelectionMode: RangeSelectionMode.toggledOn,
                   firstDay: DateTime.utc(2010, 10, 16),
                   lastDay: DateTime.utc(2030, 3, 14),
                   focusedDay: _focusedDay,
@@ -68,32 +76,32 @@ class _CatatanHaidState extends State<CatatanHaid> {
                     weekendTextStyle: TextStyle(
                       color: Colors.red,
                     ),
-                    selectedDecoration: BoxDecoration(
-                      color: Colors.blueAccent,
-                      shape: BoxShape.circle,
-                    ),
-                    rangeHighlightColor: AppColors
-                        .pink1, // Ubah warna range seleksi menjadi pink
-                    rangeStartDecoration: BoxDecoration(
-                      color: AppColors.pink1,
-                      shape: BoxShape.circle,
-                    ),
-                    rangeEndDecoration: BoxDecoration(
-                      color: AppColors.pink1,
-                      shape: BoxShape.circle,
-                    ),
-                    withinRangeTextStyle: TextStyle(
-                        fontFamily: 'Satoshi',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    rangeStartTextStyle: TextStyle(
-                        fontFamily: 'Satoshi',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    rangeEndTextStyle: TextStyle(
-                        fontFamily: 'Satoshi',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                    // selectedDecoration: BoxDecoration(
+                    //   color: Colors.blueAccent,
+                    //   shape: BoxShape.circle,
+                    // ),
+                    // rangeHighlightColor: AppColors
+                    //     .pink1, // Ubah warna range seleksi menjadi pink
+                    // rangeStartDecoration: BoxDecoration(
+                    //   color: AppColors.pink1,
+                    //   shape: BoxShape.circle,
+                    // ),
+                    // rangeEndDecoration: BoxDecoration(
+                    //   color: AppColors.pink1,
+                    //   shape: BoxShape.circle,
+                    // ),
+                    // withinRangeTextStyle: TextStyle(
+                    //     fontFamily: 'Satoshi',
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.white),
+                    // rangeStartTextStyle: TextStyle(
+                    //     fontFamily: 'Satoshi',
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.white),
+                    // rangeEndTextStyle: TextStyle(
+                    //     fontFamily: 'Satoshi',
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.white),
                     todayDecoration: BoxDecoration(
                       color: Colors.blueAccent,
                       shape: BoxShape.circle,
@@ -120,6 +128,45 @@ class _CatatanHaidState extends State<CatatanHaid> {
                     // decoration: BoxDecoration(
                     //     border: BorderDirectional(
                     //         bottom: BorderSide(color: Colors.black)))
+                  ),
+                  calendarBuilders: CalendarBuilders(
+                    // Mengubah warna hari dalam jangkauan _rangeStartDay menjadi pink
+                    defaultBuilder: (context, date, _) {
+                      if (date.isAfter(
+                                  _rangeStartDay.subtract(Duration(days: 1))) &&
+                              date.isBefore(
+                                  _rangeEndDay.add(Duration(days: 1))) ||
+                          date.isAfter(_rangeStartDayplus30
+                                  .subtract(Duration(days: 1))) &&
+                              date.isBefore(
+                                  _rangeEndDayplus30.add(Duration(days: 1))) ||
+                          date.isAfter(_rangeStartDayminus30
+                                  .subtract(Duration(days: 1))) &&
+                              date.isBefore(
+                                  _rangeEndDayminus30.add(Duration(days: 1))) ||
+                          date.isAtSameMomentAs(_rangeStartDay)) {
+                        // Ini adalah hari dalam jangkauan _rangeStartDay
+                        return Container(
+                          margin: EdgeInsets.all(3),
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.pink
+                                .withOpacity(0.5), // Warna pink dengan opacity
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${date.day}',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        );
+                      } else {
+                        // Ini adalah hari di luar jangkauan _rangeStartDay
+                        return null; // Kembalikan null untuk menggunakan styling default
+                      }
+                    },
                   ),
                 ),
                 SizedBox(
@@ -408,10 +455,25 @@ class _CatatanHaidState extends State<CatatanHaid> {
   void _handlePageChange() {
     if (_focusedDay.isAfter(_previousFocusedMonth)) {
       _rangeStartDay = _rangeStartDay.add(const Duration(days: 30));
+      _rangeStartDayplus30 = _rangeStartDayplus30.add(const Duration(days: 30));
+      _rangeStartDayminus30 =
+          _rangeStartDayminus30.add(const Duration(days: 30));
+
       _rangeEndDay = _rangeEndDay.add(const Duration(days: 30));
+      _rangeEndDayplus30 = _rangeEndDayplus30.add(const Duration(days: 30));
+      _rangeEndDayminus30 = _rangeEndDayminus30.add(const Duration(days: 30));
     } else if (_focusedDay.isBefore(_previousFocusedMonth)) {
       _rangeStartDay = _rangeStartDay.subtract(const Duration(days: 30));
+      _rangeStartDayplus30 =
+          _rangeStartDayplus30.subtract(const Duration(days: 30));
+      _rangeStartDayminus30 =
+          _rangeStartDayminus30.subtract(const Duration(days: 30));
+
       _rangeEndDay = _rangeEndDay.subtract(const Duration(days: 30));
+      _rangeEndDayplus30 =
+          _rangeEndDayplus30.subtract(const Duration(days: 30));
+      _rangeEndDayminus30 =
+          _rangeEndDayminus30.subtract(const Duration(days: 30));
     }
     _previousFocusedMonth = _focusedDay;
   }
