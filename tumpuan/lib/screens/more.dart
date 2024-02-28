@@ -24,6 +24,8 @@ class More extends StatefulWidget {
 
 class _MoreState extends State<More> {
   final ScrollController _scrollController = ScrollController();
+  // late String? username;
+  String? username;
   bool isLoading = true;
   void initState() {
     super.initState();
@@ -72,7 +74,7 @@ class _MoreState extends State<More> {
 
   late List<String> dataUser;
 
-  late String username;
+  // late String? username;
 
   TextEditingController threadNameController = TextEditingController();
   File? _image;
@@ -92,13 +94,16 @@ class _MoreState extends State<More> {
               controller: _scrollController,
               children: [
                 // SearchCard(),
-                HeaderMore(
-                  username: username,
-                  img: dataUser.isNotEmpty
-                      ? dataUser[1]
-                      : 'images/profilePict.png',
-                  // userid: dataUser[2],
-                ),
+                if (username != null)
+                  HeaderMore(
+                    username: username != null
+                        ? username!
+                        : '', // Gunakan username ?? '' untuk memastikan nilai tidak null
+                    img: dataUser.isNotEmpty
+                        ? dataUser[1]
+                        : 'images/profilePict.png',
+                  ),
+
                 StickyHeader(
                   controller: _scrollController,
                   header: Card(
