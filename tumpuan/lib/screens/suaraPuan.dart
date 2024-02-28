@@ -31,14 +31,14 @@ class _SuaraPuanState extends State<SuaraPuan> {
 
   @override
   Widget build(BuildContext context) {
-    // final dataSuaraPuan2 = [
-    //   ['title1', 'images/suaraPuanImg.png', 'date1', '1', '1'],
-    //   ['title2', 'images/suaraPuanImg.png', 'date2', '2', '2'],
-    //   ['title3', 'images/suaraPuanImg.png', 'date3', '3', '3'],
-    //   ['title4', 'images/suaraPuanImg.png', 'date4', '4', '4'],
-    // ];
+    final dataSuaraPuan2 = [
+      ['title1', 'images/suaraPuanImg.png', 'date1', '1', '1'],
+      ['title2', 'images/suaraPuanImg.png', 'date2', '2', '2'],
+      ['title3', 'images/suaraPuanImg.png', 'date3', '3', '3'],
+      ['title4', 'images/suaraPuanImg.png', 'date4', '4', '4'],
+    ];
 
-    // final dataBannerSuara = dataSuaraPuan2.sublist(0, 3);
+    final dataBannerSuara = dataSuaraPuan2.sublist(0, 3);
 
     // final dots
 
@@ -102,8 +102,8 @@ class _SuaraPuanState extends State<SuaraPuan> {
                   });
                 },
                 children: [
-                  // for (var item in dataBannerSuara) getDataBannerSuaraPuan(item)
-                  for (var item in dataBannerSuara) BannerWidget(data: item),
+                  for (var item in dataBannerSuara) getDataBannerSuaraPuan(item)
+                  // for (var item in dataBannerSuara) BannerWidget(data: item),
                 ],
               ),
             ),
