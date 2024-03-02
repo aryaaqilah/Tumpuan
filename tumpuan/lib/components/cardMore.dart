@@ -18,9 +18,10 @@ Widget getDataMore(List<dynamic> dataMore) {
 
   String username;
   String profilePict;
-  String image;
+  // String image;
   String date;
   String teks;
+  // String media;
   int idRuangPuan;
   String likeCount;
   String commentCount;
@@ -34,7 +35,8 @@ Widget getDataMore(List<dynamic> dataMore) {
     // profilePict = dataMore[i][1];
     teks = dataMore[i]['threadName'].toString();
     date = dataMore[i]['threadDate'].toString();
-    image = "lala";
+    // image = "lala";
+    // media = dataMore[i]['media'].toString();
     // teks = dataMore[i][1] != null ? dataMore[i][1].toString() : '';
     // date = dataMore[i][2] != null ? dataMore[i][1].toString() : '';
     // image = dataMore[i][3] != null ? dataMore[i][1].toString() : '';
@@ -46,7 +48,7 @@ Widget getDataMore(List<dynamic> dataMore) {
     dataMoreBoxes.add(MoreBox(
       // username: username,
       // profilePict: profilePict,
-      image: image,
+      // media: media,
       date: date,
       teks: teks,
       idRuangPuan: idRuangPuan,
@@ -68,9 +70,10 @@ class MoreBox extends StatelessWidget {
     super.key,
     // required this.username,
     // required this.profilePict,
-    required this.image,
+    // required this.image,
     required this.date,
     required this.teks,
+    // required this.media,
     // required this.idPost,
     required this.idRuangPuan,
     required this.likeCount,
@@ -79,9 +82,10 @@ class MoreBox extends StatelessWidget {
 
   // late final String username;
   // final String profilePict;
-  final String image;
+  // final String image;
   final String date;
   final String teks;
+  // final String media;
   // final String idPost;
   final String likeCount;
   final int idRuangPuan;
@@ -94,7 +98,7 @@ class MoreBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // late String userName;
-    bool showImage = image.isNotEmpty;
+    // bool showImage = media.isNotEmpty;
     return Center(
         child: Container(
       // height: 100,

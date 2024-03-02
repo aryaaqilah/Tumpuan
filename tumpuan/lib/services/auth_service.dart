@@ -16,4 +16,8 @@ class AuthService {
       return false;
     }
   }
+
+  static void logout() {
+    token = null;
+  }
 }

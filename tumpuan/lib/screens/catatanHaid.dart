@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/styles/style.dart';
+import 'package:http/http.dart' as http;
 
 class CatatanHaid extends StatefulWidget {
   const CatatanHaid({Key? key}) : super(key: key);
@@ -11,15 +15,28 @@ class CatatanHaid extends StatefulWidget {
 }
 
 class _CatatanHaidState extends State<CatatanHaid> {
+  bool isLoading = true;
+
+  void initState() {
+    super.initState();
+    getCurrentUser().then((userid) {
+      if (userid != null) {
+        getData(userid);
+      }
+    });
+  }
+
   late DateTime _focusedDay = DateTime.now();
   late DateTime _selectedDay = DateTime.now();
-  late DateTime _rangeStartDay = DateTime.utc(2024, 2, 26);
+  // late DateTime _rangeStartDay = DateTime.utc(2024, 2, 26);
+  late DateTime _rangeStartDay;
   late DateTime _rangeStartDayplus30 =
       _rangeStartDay.add(const Duration(days: 30));
   late DateTime _rangeStartDayminus30 =
       _rangeStartDay.subtract(const Duration(days: 30));
 
-  late DateTime _rangeEndDay = DateTime.utc(2024, 3, 3);
+  // late DateTime _rangeEndDay = DateTime.utc(2024, 3, 3);
+  late DateTime _rangeEndDay;
   late DateTime _rangeEndDayplus30 = _rangeEndDay.add(const Duration(days: 30));
   late DateTime _rangeEndDayminus30 =
       _rangeEndDay.subtract(const Duration(days: 30));
@@ -28,8 +45,60 @@ class _CatatanHaidState extends State<CatatanHaid> {
   late int startCycle = 28;
   late int endCycle = 34;
 
+  Future<String?> getCurrentUser() async {
+    final url = 'http://10.0.2.2:8000/api/users/current';
+    final uri = Uri.parse(url);
+
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      if (jsonData['data'] != null) {
+        final data = jsonData['data'];
+        if (data.containsKey('id')) {
+          return data['id'].toString();
+        }
+      }
+    }
+    return null;
+  }
+
+  Future<void> getData(String userid) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final url = 'http://10.0.2.2:8000/api/catatanhaids/$userid';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      if (jsonData['data'] != null) {
+        final data = jsonData['data'];
+
+        if (data['start_date'] != null && data['end_date'] != null) {
+          setState(() {
+            _rangeStartDay = DateTime.parse(data['start_date']);
+            _rangeEndDay = DateTime.parse(data['end_date']);
+          });
+        }
+      }
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+
+    print(response.statusCode);
+    print('data pas api tarik' + response.body);
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("start date $_rangeStartDay");
+    print("end date $_rangeEndDay");
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
@@ -58,6 +127,8 @@ class _CatatanHaidState extends State<CatatanHaid> {
                   // rangeSelectionMode: RangeSelectionMode.toggledOn,
                   firstDay: DateTime.utc(2010, 10, 16),
                   lastDay: DateTime.utc(2030, 3, 14),
+                  // firstDay: _rangeStartDay,
+                  // lastDay: _rangeEndDay,
                   focusedDay: _focusedDay,
                   onPageChanged: (focusedDay) {
                     setState(() {

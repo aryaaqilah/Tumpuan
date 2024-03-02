@@ -213,7 +213,8 @@ class _MoreState extends State<More> {
     final body = {
       "threadName": threadName,
       "threadDate": threadDate,
-      "media": "",
+      // "media":
+      //     "C:\PPTI\CAWU 4 UAC\SE PROJECT\Tumpuan\tumpuan\images\lifestyle-1.jpg",
       "like": 0
     };
     // submit data to the server

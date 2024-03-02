@@ -1,13 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:tumpuan/services/auth_service.dart';
 
 import 'package:tumpuan/signUp/question3.dart';
 import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
+import 'package:http/http.dart' as http;
 
 class Question2 extends StatefulWidget {
-  const Question2({Key? key}) : super(key: key);
+  // const Question2({Key? key}) : super(key: key);
+
+  final String username;
+  final String password;
+  const Question2({
+    Key? key,
+    required this.username,
+    required this.password,
+  }) : super(key: key);
 
   @override
   State<Question2> createState() => _Question2State();
@@ -27,6 +39,18 @@ class _Question2State extends State<Question2> {
 
   @override
   Widget build(BuildContext context) {
+    print("last username: ${widget.username}");
+    print("last password: ${widget.password}");
+
+    getIdByUsername(widget.username).then((userId) {
+      if (userId != null) {
+        print('User ID: $userId');
+        // Lakukan apa pun yang perlu Anda lakukan dengan user ID di sini
+      } else {
+        print('Failed to get user ID');
+      }
+    });
+
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: SingleChildScrollView(
@@ -134,7 +158,7 @@ class _Question2State extends State<Question2> {
 
                                 if (pickedDate != null) {
                                   dateInputController.text =
-                                      DateFormat('dd MMMM yyyy')
+                                      DateFormat('yyyy-MM-dd')
                                           .format(pickedDate);
                                 }
                               },
@@ -192,7 +216,7 @@ class _Question2State extends State<Question2> {
 
                                 if (pickedDate != null) {
                                   dateInputControllerend.text =
-                                      DateFormat('dd MMMM yyyy')
+                                      DateFormat('yyyy-MM-dd')
                                           .format(pickedDate);
                                 }
                               },
@@ -243,9 +267,37 @@ class _Question2State extends State<Question2> {
                         ),
                         child: Center(
                           child: TextButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              // if (dateInputController.text.isNotEmpty ||
+                              //     dontKnowSelected) {
+                              //   Navigator.of(context).push(MaterialPageRoute(
+                              //       builder: (context) => const Question3()));
+                              // } else {
+                              //   // Show a snackbar or dialog to inform the user to fill the required fields.
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //         content: Text(
+                              //             'Please select a date or check "I don\'t know".')),
+                              //   );
+                              // }
                               if (dateInputController.text.isNotEmpty ||
                                   dontKnowSelected) {
+                                // Lakukan login otomatis dengan username dan password yang diberikan
+                                await doLogin();
+
+                                // Ambil ID berdasarkan username
+                                final userId =
+                                    await getIdByUsername(widget.username);
+
+                                // Jika ID berhasil diperoleh, kirimkan data catatan haid
+                                if (userId != null) {
+                                  await submitData();
+                                }
+
+                                // Lakukan logout setelah submit data catatan haid
+                                AuthService.logout();
+
+                                // Pindah ke halaman selanjutnya
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => const Question3()));
                               } else {
@@ -273,6 +325,54 @@ class _Question2State extends State<Question2> {
         ),
       ),
     );
+  }
+
+  doLogin() async {
+    final username = widget.username;
+    final password = widget.password;
+
+    bool isSuccess =
+        await AuthService().login(username: username, password: password);
+
+    if (!isSuccess) {
+      print(isSuccess);
+    } else {}
+  }
+
+  Future<String?> getIdByUsername(String username) async {
+    final url = 'http://10.0.2.2:8000/api/users/username/$username';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map;
+      final result = json['data'];
+      if (result != null && result.containsKey('id')) {
+        return result['id'].toString();
+      }
+    }
+
+    return null;
+  }
+
+  Future<void> submitData() async {
+    final dateStart = dateInputController.text;
+    final dateEnd = dateInputControllerend.text;
+    final body = {
+      'start_date': dateStart,
+      'end_date': dateEnd,
+    };
+
+    final url = "http://10.0.2.2:8000/api/catatanhaids";
+    final uri = Uri.parse(url);
+    final response = await http.post(uri, body: jsonEncode(body), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': '${AuthService.token}'
+    });
+
+    print(response.statusCode);
+    print(response.body);
   }
 }
 

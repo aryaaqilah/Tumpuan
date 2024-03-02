@@ -3,6 +3,8 @@ import 'package:tumpuan/components/contactBox.dart';
 import 'package:tumpuan/screens/editProfile.dart';
 import 'package:tumpuan/screens/emergencyContact.dart';
 import 'package:tumpuan/screens/navScreen.dart';
+import 'package:tumpuan/services/auth_service.dart';
+import 'package:tumpuan/splash_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class Settings extends StatefulWidget {
@@ -524,7 +526,11 @@ class _SettingsState extends State<Settings> {
                     ),
                     Container(
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            AuthService.logout();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => SplashPage()));
+                          },
                           icon: Icon(
                             Icons.arrow_forward_ios_rounded,
                             size: 15,

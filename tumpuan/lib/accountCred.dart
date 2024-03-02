@@ -171,7 +171,10 @@ class _AccountCredState extends State<AccountCred> {
                               if (_formKey.currentState!.validate()) {
                                 RegistrationUser();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const BridgetoQ(),
+                                  builder: (context) => BridgetoQ(
+                                    username: usernameController.text,
+                                    password: passwordController.text,
+                                  ),
                                 ));
                               }
                             },

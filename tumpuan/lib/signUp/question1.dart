@@ -6,7 +6,15 @@ import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class Question1 extends StatefulWidget {
-  const Question1({Key? key}) : super(key: key);
+  // const Question1({Key? key}) : super(key: key);
+
+  final String username;
+  final String password;
+  const Question1({
+    Key? key,
+    required this.username,
+    required this.password,
+  }) : super(key: key);
 
   @override
   State<Question1> createState() => _Question1State();
@@ -159,7 +167,10 @@ class _Question1State extends State<Question1> {
                               ? () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => const Question2(),
+                                      builder: (context) => Question2(
+                                        username: widget.username,
+                                        password: widget.password,
+                                      ),
                                     ),
                                   );
                                 }

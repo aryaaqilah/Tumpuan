@@ -2,7 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:tumpuan/signUp/question1.dart';
 
 class BridgetoQ extends StatefulWidget {
-  const BridgetoQ({super.key});
+  // const BridgetoQ({super.key});
+
+  final String username;
+  final String password;
+  const BridgetoQ({
+    Key? key,
+    required this.username,
+    required this.password,
+  }) : super(key: key);
 
   @override
   State<BridgetoQ> createState() => _BridgetoQState();
@@ -11,6 +19,7 @@ class BridgetoQ extends StatefulWidget {
 class _BridgetoQState extends State<BridgetoQ> {
   @override
   Widget build(BuildContext context) {
+    print('Username cekkk: ${widget.username}');
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       body: SafeArea(
@@ -25,8 +34,11 @@ class _BridgetoQState extends State<BridgetoQ> {
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const Question1()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Question1(
+                            username: widget.username,
+                            password: widget.password,
+                          )));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
