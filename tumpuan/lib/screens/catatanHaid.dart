@@ -812,8 +812,7 @@ Future<void> _showMarkDialog(BuildContext context) async {
 
                               if (pickedDate != null) {
                                 dateInputController.text =
-                                    DateFormat('dd MMMM yyyy')
-                                        .format(pickedDate);
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
                               }
                             },
                           ),
@@ -867,8 +866,7 @@ Future<void> _showMarkDialog(BuildContext context) async {
 
                               if (pickedDate != null) {
                                 dateInputControllerend.text =
-                                    DateFormat('dd MMMM yyyy')
-                                        .format(pickedDate);
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
                               }
                             },
                           ),
@@ -906,6 +904,10 @@ Future<void> _showMarkDialog(BuildContext context) async {
           TextButton(
             child: const Text('Done', style: TextStyle(color: AppColors.pink1)),
             onPressed: () {
+              if (dateInputController.text.isNotEmpty &&
+                  dateInputControllerend.text.isNotEmpty) {
+                editData(dateInputController.text, dateInputControllerend.text);
+              }
               Navigator.of(context).pop();
             },
           ),
@@ -913,4 +915,41 @@ Future<void> _showMarkDialog(BuildContext context) async {
       );
     },
   );
+}
+
+Future<String?> getCurrentUser() async {
+  final url = 'http://10.0.2.2:8000/api/users/current';
+  final uri = Uri.parse(url);
+
+  final response =
+      await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+  if (response.statusCode == 200) {
+    final jsonData = jsonDecode(response.body);
+    if (jsonData['data'] != null) {
+      final data = jsonData['data'];
+      if (data.containsKey('id')) {
+        return data['id'].toString();
+      }
+    }
+  }
+  return null;
+}
+
+Future<void> editData(dateStartEdit, dateEndEdit) async {
+  dateStartEdit = dateStartEdit;
+  dateEndEdit = dateEndEdit;
+  final body = {
+    'start_date': dateStartEdit,
+    'end_date': dateEndEdit,
+  };
+  final id = await getCurrentUser();
+  final url = "http://10.0.2.2:8000/api/catatanhaids/$id";
+  final uri = Uri.parse(url);
+  final response = await http.put(uri, body: jsonEncode(body), headers: {
+    'Content-Type': 'application/json',
+    'Authorization': '${AuthService.token}'
+  });
+
+  print(response.statusCode);
+  print(response.body);
 }
