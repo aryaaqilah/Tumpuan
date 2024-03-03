@@ -63,19 +63,6 @@ class _PanggilPuanState extends State<PanggilPuan> {
         },
       ),
     );
-    Widget deleteButton = Container(
-      height: 25,
-      // color: const Color.fromARGB(255, 94, 80, 39),
-      child: TextButton(
-        child: Text(
-          "Delete Contact",
-          style: TextStyle(color: Colors.white, fontSize: 10),
-        ),
-        onPressed: () {
-          Navigator.of(context, rootNavigator: true).pop();
-        },
-      ),
-    );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
@@ -87,7 +74,6 @@ class _PanggilPuanState extends State<PanggilPuan> {
           Divider(
             color: Colors.white,
           ),
-          deleteButton,
         ],
       ),
       actionsAlignment: MainAxisAlignment.center,
@@ -142,21 +128,20 @@ class _PanggilPuanState extends State<PanggilPuan> {
                 //     name: 'Ayah',
                 //     image: 'images/profileDefault.jpg',
                 //     number: '082122504942'),
-                getDataContact(dataMore),
+                getDataContact(dataMore, getData),
                 SizedBox(height: 10),
                 IconButton(
                     onPressed: () {
-                      // Navigator.of(context, rootNavigator: true).push(
-                      //     MaterialPageRoute(
-                      //         builder: (context) => const AddContact()));
-                      setState(() {
-                        showDialog(
-                            barrierColor: Color(0x01000000),
-                            context: context,
-                            builder: (BuildContext context) {
-                              return alert;
-                            });
-                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddContact(
+                            onContactAdded: () {
+                              getData(); // Memperbarui data setelah kontak ditambahkan
+                            },
+                          ),
+                        ),
+                      );
                     },
                     icon: Icon(
                       Icons.add_circle,

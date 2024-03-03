@@ -8,7 +8,8 @@ import 'package:http/http.dart' as http;
 
 class AddContact extends StatefulWidget {
   final Function() onContactAdded; // Callback function
-  const AddContact({Key? key, required this.onContactAdded}) : super(key: key);
+  
+  const AddContact({Key? key, required this.onContactAdded,}) : super(key: key);
 
   @override
   State<AddContact> createState() => _AddContactState();
@@ -178,7 +179,7 @@ class _AddContactState extends State<AddContact> {
       setState(() {
       isLoading = false;
     });
-    widget.onContactAdded(); // Memanggil callback setelah kontak ditambahkan
+    widget.onContactAdded();
 
   }
 

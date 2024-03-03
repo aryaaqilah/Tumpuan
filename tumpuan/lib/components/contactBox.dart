@@ -5,7 +5,7 @@ import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/styles/style.dart';
 import 'package:http/http.dart' as http;
 
-Widget getDataContact(List<dynamic> dataMore) {
+Widget getDataContact(List<dynamic> dataMore, VoidCallback onUpdate) {
   String name;
   String image = 'images/profileDefault.jpg';
   String number;
@@ -27,6 +27,7 @@ Widget getDataContact(List<dynamic> dataMore) {
       number: number,
       relation: relation,
       id: id,
+      onUpdate: onUpdate,
     ));
     dataMoreBoxes.add(SizedBox(height: 10));
   }
@@ -36,19 +37,22 @@ Widget getDataContact(List<dynamic> dataMore) {
 }
 
 class ContactBox extends StatelessWidget {
-  ContactBox(
-      {super.key,
-      required this.name,
-      required this.image,
-      required this.number,
-      required this.relation,
-      required this.id});
+  ContactBox({
+    Key? key,
+    required this.name,
+    required this.image,
+    required this.number,
+    required this.relation,
+    required this.id,
+    required this.onUpdate,
+  }) : super(key: key);
 
-  late final String name;
+  final String name;
   final String number;
   final String relation;
   final String image;
   final String id;
+  final VoidCallback onUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +67,10 @@ class ContactBox extends StatelessWidget {
         padding: const EdgeInsets.only(left: 20.0),
         child: Column(
           children: [
-            // SizedBox(height: 3),
             Container(
               height: 20,
               width: 320,
               alignment: Alignment.bottomRight,
-              // color: Colors.amber,
               child: IconButton(
                 icon: Icon(
                   Icons.edit_rounded,
@@ -107,7 +109,6 @@ class ContactBox extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        // color: Colors.amber,
                         width: 200,
                         child: Text(name,
                             style: TextStyle(
@@ -133,14 +134,13 @@ class ContactBox extends StatelessWidget {
               height: 20,
               width: 320,
               alignment: Alignment.bottomRight,
-              // color: Colors.amber,
               child: IconButton(
                 icon: Icon(
                   Icons.delete,
                   color: Colors.grey,
                 ),
                 onPressed: () {
-                  deleteContact(id);
+                  showConfirmationDialog(context); // Tampilkan popup konfirmasi
                 },
                 iconSize: 15,
               ),
@@ -151,8 +151,7 @@ class ContactBox extends StatelessWidget {
     );
   }
 
-  Future<void> deleteContact(String id) async {
-    // final id = dataMore.isNotEmpty ? dataMore[0]['id'] : "";
+  Future<void> deleteContact(String id, VoidCallback onUpdate) async {
     final url = "http://10.0.2.2:8000/api/kontakpalsus/$id";
     final uri = Uri.parse(url);
     final response = await http
@@ -160,8 +159,44 @@ class ContactBox extends StatelessWidget {
 
     if (response.statusCode == 200) {
       print('delete success');
+      onUpdate(); // Panggil callback onUpdate untuk memperbarui tampilan
     } else {
       print('delete failed');
     }
   }
+  Future<void> showConfirmationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Konfirmasi'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Apakah Anda yakin ingin menghapus kontak ini?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Batal'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup popup
+              },
+            ),
+            TextButton(
+              child: Text('Hapus'),
+              onPressed: () {
+                deleteContact(id,
+                    onUpdate); // Panggil fungsi deleteContact setelah konfirmasi
+                Navigator.of(context).pop(); // Tutup popup
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
