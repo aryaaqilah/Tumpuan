@@ -118,12 +118,26 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceAro,
                     children: [
-                      Container(
-                        width: 145,
-                        height: 150,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("images/btn_countdown.png"))),
+                      Stack(
+                        children: [Container(
+                          width: 145,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage("images/btn_countdown.png"))),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal : 8, vertical: 8),
+                          child: Text(
+                            '${countdown} Days',
+                            style: TextStyle(
+                                fontFamily: 'Satoshi',
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: const Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                        )
+                        ]
                       ),
                       SizedBox(width: 10),
                       GestureDetector(

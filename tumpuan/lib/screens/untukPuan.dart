@@ -62,13 +62,14 @@ class _UntukPuanState extends State<UntukPuan> {
               children: [
                 CustomScrollView(
                   slivers: [
-                    SliverListBldr(),
+                    // SliverListBldr(),
                     // Add other slivers as needed
                   ],
                 ),
                 CustomScrollView(
                   slivers: [
                     SliverListBldr2(),
+
                     // Add other slivers as needed
                   ],
                 ),

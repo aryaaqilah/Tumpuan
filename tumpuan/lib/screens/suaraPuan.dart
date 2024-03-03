@@ -27,7 +27,7 @@ class _SuaraPuanState extends State<SuaraPuan> {
   }
 
   List<dynamic> dataSuaraPuan = [];
-  List<dynamic> dataBannerSuara = [];
+List<dynamic> dataBannerSuara = [];
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +101,9 @@ class _SuaraPuanState extends State<SuaraPuan> {
                     currentTab = index;
                   });
                 },
-                children: [
-                  for (var item in dataBannerSuara) getDataBannerSuaraPuan(item)
-                  // for (var item in dataBannerSuara) BannerWidget(data: item),
-                ],
+                children: dataSuaraPuan
+                    .map((item) => BannerWidget(data: item))
+                    .toList(),
               ),
             ),
             Container(
@@ -144,8 +143,7 @@ class _SuaraPuanState extends State<SuaraPuan> {
         var content = data['content'].toString();
         var media = data['media'].toString();
         var dop = data['dop'].toString();
-        var kategori_id = data['kategori_id'].toString();
-        var user_id = data['user_id'].toString();
+        var kategori_id = data['kategori_id'];
 
         dataSuaraPuan.add({
           'id': id,
@@ -153,14 +151,15 @@ class _SuaraPuanState extends State<SuaraPuan> {
           'content': content,
           'media': media,
           'dop': dop,
-          'kategori_id': kategori_id,
-          'user_id': user_id,
-        });
+          'kategori_id': kategori_id,        });
       }
 
       setState(() {
         // Update state after fetching data
         dataSuaraPuan = resultList;
+        dataBannerSuara = dataSuaraPuan.take(4).toList();
+
+
         isLoading = false;
       });
     } else {
@@ -196,9 +195,11 @@ class BannerWidget extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Image.network(
-              data['media'].toString()), // Assuming 'media' contains image URL
+            data['media'].toString(),
+          ), // Assuming 'media' contains image URL
         ],
       ),
     );
   }
 }
+

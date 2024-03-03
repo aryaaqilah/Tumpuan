@@ -22,6 +22,7 @@ class More extends StatefulWidget {
   }
 }
 
+
 class _MoreState extends State<More> {
   final ScrollController _scrollController = ScrollController();
   // late String? username;
@@ -78,6 +79,7 @@ class _MoreState extends State<More> {
 
   TextEditingController threadNameController = TextEditingController();
   File? _image;
+
   @override
   Widget build(BuildContext context) {
     print(dataMore);
@@ -137,23 +139,13 @@ class _MoreState extends State<More> {
                                   ),
                                 );
                                 setState(() {
-                                  _image =
-                                      pickedImage ?? File('images/ktp.png');
+                                  _image = pickedImage ?? File('images/ktp.png');
                                 });
                               },
                               icon: _image != null
                                   ? Icon(Icons.photo, color: Colors.green)
                                   : Icon(Icons.add_photo_alternate,
                                       color: Colors.grey)),
-                          // ElevatedButton(
-                          //     style: ButtonStyle(
-                          //         backgroundColor:
-                          //             MaterialStateProperty.all(AppColors.bg)),
-                          //     onPressed: () {},
-                          //     child: Icon(
-                          //       Icons.photo,
-                          //       color: Colors.grey,
-                          //     )),
                           SizedBox(
                             width: 5,
                           ),
@@ -162,7 +154,7 @@ class _MoreState extends State<More> {
                                 backgroundColor:
                                     MaterialStateProperty.all(AppColors.pink1)),
                             onPressed: () {
-                              submitData();
+                              submitData(imageFile: null);
                               getData();
                             },
                             child: Text('Post'),
@@ -206,28 +198,59 @@ class _MoreState extends State<More> {
     );
   }
 
-  Future<void> submitData() async {
-    // get data from form
+Future<void> submitData({required File? imageFile}) async {
     final threadName = threadNameController.text;
     final threadDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+    String? imagePath;
+
+    final url = 'http://10.0.2.2:8000/api/ruangPuans';
+    final uri = Uri.parse(url);
+
+    try {
+      var request = http.MultipartRequest('POST', uri);
+      request.headers['Authorization'] =
+          '${AuthService.token}'; // Add authorization header
+
+      if (imageFile != null) {
+        request.files
+            .add(await http.MultipartFile.fromPath('media', imageFile.path));
+      }
+
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 201) {
+        final responseData = jsonDecode(response.body);
+        imagePath =
+            responseData['media']; // Assuming the API returns the file path
+      } else {
+        print('Error posting data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error submitting data: $e');
+    }
+
     final body = {
       "threadName": threadName,
       "threadDate": threadDate,
-      // "media":
-      //     "C:\PPTI\CAWU 4 UAC\SE PROJECT\Tumpuan\tumpuan\images\lifestyle-1.jpg",
       "like": 0
     };
-    // submit data to the server
-    final url = 'http://10.0.2.2:8000/api/ruangPuans';
-    final uri = Uri.parse(url);
+
     final response = await http.post(uri, body: jsonEncode(body), headers: {
       'Content-Type': 'application/json',
       'Authorization': '${AuthService.token}'
     });
-    // showsuccess or fail message based on status
-    print(response.statusCode);
+
+    print('hasil post ruang puan ${response.statusCode}');
+    print(body);
     print(response.body);
+    threadNameController.clear();
+
+    getData();
   }
+
+
 
   Future<void> getData() async {
     setState(() {
@@ -287,3 +310,5 @@ class _MoreState extends State<More> {
     }
   }
 }
+
+
