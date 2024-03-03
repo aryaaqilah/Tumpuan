@@ -7,7 +7,8 @@ import 'package:tumpuan/styles/style.dart';
 import 'package:http/http.dart' as http;
 
 class AddContact extends StatefulWidget {
-  const AddContact({super.key});
+  final Function() onContactAdded; // Callback function
+  const AddContact({Key? key, required this.onContactAdded}) : super(key: key);
 
   @override
   State<AddContact> createState() => _AddContactState();
@@ -152,6 +153,9 @@ class _AddContactState extends State<AddContact> {
   }
 
   Future<void> submitData() async {
+    setState(() {
+      isLoading = true;
+    });
     final name = nameController.text;
     final number = numberController.text;
     final relation = relationController.text;
@@ -170,6 +174,12 @@ class _AddContactState extends State<AddContact> {
 
     print(response.statusCode);
     print(response.body);
+    getData();
+      setState(() {
+      isLoading = false;
+    });
+    widget.onContactAdded(); // Memanggil callback setelah kontak ditambahkan
+
   }
 
   Future<void> getData() async {

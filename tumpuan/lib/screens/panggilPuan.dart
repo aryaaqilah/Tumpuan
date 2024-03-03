@@ -52,7 +52,14 @@ class _PanggilPuanState extends State<PanggilPuan> {
         onPressed: () {
           Navigator.of(context, rootNavigator: true).pop();
           Navigator.of(context, rootNavigator: true).push(
-              MaterialPageRoute(builder: (context) => const AddContact()));
+            MaterialPageRoute(
+              builder: (context) => AddContact(
+                onContactAdded: () {
+                  getData(); // Memperbarui data setelah kontak ditambahkan
+                },
+              ),
+            ),
+          );
         },
       ),
     );
@@ -139,7 +146,6 @@ class _PanggilPuanState extends State<PanggilPuan> {
                 SizedBox(height: 10),
                 IconButton(
                     onPressed: () {
-                      getData();
                       // Navigator.of(context, rootNavigator: true).push(
                       //     MaterialPageRoute(
                       //         builder: (context) => const AddContact()));
