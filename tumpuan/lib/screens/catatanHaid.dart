@@ -28,13 +28,17 @@ class _CatatanHaidState extends State<CatatanHaid> {
 
   late DateTime _focusedDay = DateTime.now();
   late DateTime _selectedDay = DateTime.now();
-  late DateTime _rangeStartDay = DateTime.utc(2024, 2, 26); // start period dari database
+  // late DateTime _rangeStartDay =
+  //     DateTime.utc(2024, 2, 26); // start period dari database
+  late DateTime _rangeStartDay;
   late DateTime _rangeStartDayplus30 =
       _rangeStartDay.add(const Duration(days: 30));
   late DateTime _rangeStartDayminus30 =
-      _rangeStartDay.subtract(const Duration(days: 30));  
+      _rangeStartDay.subtract(const Duration(days: 30));
 
-  late DateTime _rangeEndDay = DateTime.utc(2024, 3, 3); // end period dari database
+  // late DateTime _rangeEndDay =
+  //     DateTime.utc(2024, 3, 3); // end period dari database
+  late DateTime _rangeEndDay;
   late DateTime _rangeEndDayplus30 = _rangeEndDay.add(const Duration(days: 30));
   late DateTime _rangeEndDayminus30 =
       _rangeEndDay.subtract(const Duration(days: 30));
