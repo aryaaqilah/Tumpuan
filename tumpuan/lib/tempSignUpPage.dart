@@ -366,6 +366,7 @@ class _tempSignUpPageState extends State<tempSignUpPage> with TickerProviderStat
             emailController: emailController,
             usernameController: usernameController,
             passwordController: passwordController,
+            isImageUploaded: isImageUploaded,
             // isOnDesktopAndWeb: _isOnDesktopAndWeb,
           ),
         )
@@ -470,6 +471,7 @@ class PageIndicator extends StatelessWidget {
     required this.emailController,
     required this.usernameController,
     required this.passwordController,
+    required this.isImageUploaded,
   });
 
   final int currentPageIndex;
@@ -482,6 +484,7 @@ class PageIndicator extends StatelessWidget {
   TextEditingController emailController;
   TextEditingController usernameController;
   TextEditingController passwordController;
+  bool isImageUploaded;
   bool _isVisible = true;
 
   @override
@@ -526,11 +529,22 @@ class PageIndicator extends StatelessWidget {
             child: SizedBox(
                 width: 125,
                 child: FilledButton(
-                  onPressed: () {                  
+                  onPressed: () {
+                  if (currentPageIndex == 0) {
+                    if (formKey.currentState!.validate() == false) {
+                      return;
+                    }
+                  }              
+                  if (currentPageIndex == 1) {
+                    if (isImageUploaded == false) {
+                      return;
+                    }
+                  }   
                   if (currentPageIndex == 2) {
-                    Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const BridgetoQ(username: '', password: '',)));
-                    return;
+                    if (formKey.currentState!.validate()){
+                      Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => BridgetoQ(username: usernameController.text, password: passwordController.text,)));
+                    }
                   }
                   onUpdateCurrentPageIndex(currentPageIndex + 1);
                   },
