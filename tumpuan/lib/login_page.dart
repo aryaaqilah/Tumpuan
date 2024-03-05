@@ -7,6 +7,7 @@ import 'package:tumpuan/screens/navScreen.dart';
 import 'package:tumpuan/screens/mapScreen.dart';
 import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/services/tumpuanServices.dart';
+import 'package:tumpuan/signUp/intro.dart';
 import 'package:tumpuan/signUp/intro1.dart';
 import 'package:tumpuan/utils/snackbar_helper.dart';
 import 'package:http/http.dart' as http;
@@ -157,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                           // share
                           () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const Intro1()));
+                            builder: (context) => const Intro()));
                       },
                       //     () {
                       //   Navigator.of(context).pushReplacement(MaterialPageRoute(

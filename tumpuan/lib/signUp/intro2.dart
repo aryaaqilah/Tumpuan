@@ -16,7 +16,7 @@ class _Intro2State extends State<Intro2> {
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: SafeArea(
-          child: Center(
+        child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

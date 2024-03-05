@@ -62,7 +62,7 @@ class _Question1State extends State<Question1> {
                       style: TextStyle(
                         fontFamily: 'Brodies',
                         color: Color.fromRGBO(251, 111, 146, 1),
-                        fontSize: 40,
+                        fontSize: 30,
                       ),
                     ),
                   ),

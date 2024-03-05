@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tumpuan/signUp/question1.dart';
+import 'package:tumpuan/signUp/questions.dart';
 
 class BridgetoQ extends StatefulWidget {
   // const BridgetoQ({super.key});
@@ -32,20 +33,25 @@ class _BridgetoQState extends State<BridgetoQ> {
             const SizedBox(height: 50),
             SizedBox(
               width: 300,
-              child: ElevatedButton(
+              child: FilledButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => Question1(
-                            username: widget.username,
-                            password: widget.password,
-                          )));
+                      builder: (context) => 
+                      // Question1(
+                      //       username: widget.username,
+                      //       password: widget.password,
+                      // )
+                      questions(),
+                      ));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
                         const Color.fromRGBO(251, 111, 146, 1))),
                 child: const Text(
                   'Next',
-                  style: TextStyle(fontFamily: 'Satoshi'),
+                  style: TextStyle(fontFamily: 'Satoshi',
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
                 ),
               ),
             ),

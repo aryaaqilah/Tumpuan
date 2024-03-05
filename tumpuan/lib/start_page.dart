@@ -3,6 +3,9 @@ import 'package:tumpuan/login_page.dart';
 import 'package:tumpuan/screens/playVideo.dart';
 import 'package:tumpuan/signUp/intro1.dart';
 
+// Temporary
+import 'package:tumpuan/signUp/intro.dart';
+
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
 
@@ -37,7 +40,7 @@ class _StartPageState extends State<StartPage> {
             const SizedBox(height: 200),
             SizedBox(
               width: 300,
-              child: ElevatedButton(
+              child: FilledButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const LoginPage()));
@@ -49,7 +52,8 @@ class _StartPageState extends State<StartPage> {
                         const Color.fromRGBO(251, 111, 146, 1))),
                 child: const Text(
                   'Login',
-                  style: TextStyle(fontFamily: 'Satoshi'),
+                  style: TextStyle(fontFamily: 'Satoshi',
+                  fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -58,17 +62,18 @@ class _StartPageState extends State<StartPage> {
             ),
             SizedBox(
               width: 300,
-              child: ElevatedButton(
+              child: FilledButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Intro1()));
+                      MaterialPageRoute(builder: (context) => const Intro()));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
                         const Color.fromRGBO(251, 111, 146, 1))),
                 child: const Text(
                   'Sign Up',
-                  style: TextStyle(fontFamily: 'Satoshi'),
+                  style: TextStyle(fontFamily: 'Satoshi',
+                  fontWeight: FontWeight.bold),
                 ),
               ),
             ),
