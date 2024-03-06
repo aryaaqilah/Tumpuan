@@ -398,7 +398,7 @@ class _tempSignUpPageState extends State<tempSignUpPage> with TickerProviderStat
     );
   }
 
-  Future<void> RegistrationUser() async {
+  Future<void> RegistrationUser(var firstNameController, var dateInputController, var emailController, var usernameController, var passwordController) async {
     final name = firstNameController.text;
     final dob = dateInputController.text;
     final email = emailController.text;
@@ -465,6 +465,8 @@ _currentProgressPercent(var currentPageIndex, var progressPercentage) {
 }
 
 class PageIndicator extends StatelessWidget {
+  _tempSignUpPageState tempSignUpPage = new _tempSignUpPageState();
+
   PageIndicator({
     super.key,
     required this.tabController,
@@ -552,6 +554,7 @@ class PageIndicator extends StatelessWidget {
                   }   
                   if (currentPageIndex == 2) {
                     if (formKey.currentState!.validate()){
+                      tempSignUpPage.RegistrationUser(firstNameController, dateInputController, emailController, usernameController, passwordController);
                       Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => BridgetoQ(username: usernameController.text, password: passwordController.text,)));
                     }
