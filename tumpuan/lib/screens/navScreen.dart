@@ -27,6 +27,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  // bool isLoading = true;
+
+  // void initState() {
+  //   super.initState();
+
+  // }
+
   final homeNavKey = GlobalKey<NavigatorState>();
   final haidNavKey = GlobalKey<NavigatorState>();
   final panggilNavKey = GlobalKey<NavigatorState>();
@@ -46,6 +53,12 @@ class _MainScreenState extends State<MainScreen> {
   bool isLoading = true;
   List<NavModel> items = [];
   List<String> phoneNumbers = [];
+
+  // late DateTime _startdate = DateTime.now();
+  // late DateTime _enddate = DateTime.now();
+
+  late DateTime _startdate = DateTime.now();
+  late DateTime _enddate = DateTime.now();
 
   bool sosActive = false;
   Gradient _gradient = LinearGradient(colors: [
@@ -72,16 +85,28 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+
+    getCurrentUser().then((userid) {
+      if (userid != null) {
+        getData(userid);
+      }
+    });
     // SchedulerBinding.instance.addPostFrameCallback((_) {
     //   getDataKontakAman();
     // });
     items = [
       NavModel(
-        page: HomePage(),
+        page: HomePage(
+          startdate: _startdate,
+          enddate: _enddate,
+        ),
         navKey: homeNavKey,
       ),
       NavModel(
-        page: CatatanHaid(),
+        page: CatatanHaid(
+          startdate: _startdate,
+          enddate: _enddate,
+        ),
         navKey: haidNavKey,
       ),
       NavModel(
@@ -112,6 +137,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // print(${_startdate} + '-' + ${_enddate});
     AlertDialog alert = AlertDialog(
       // title: Text("My title"),
       content: Text(
@@ -229,6 +255,56 @@ class _MainScreenState extends State<MainScreen> {
               ),
       ),
     );
+  }
+
+  Future<String?> getCurrentUser() async {
+    final url = 'http://10.0.2.2:8000/api/users/current';
+    final uri = Uri.parse(url);
+
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      if (jsonData['data'] != null) {
+        final data = jsonData['data'];
+        if (data.containsKey('id')) {
+          return data['id'].toString();
+        }
+      }
+    }
+    return null;
+  }
+
+  Future<void> getData(String userid) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final url = 'http://10.0.2.2:8000/api/catatanhaids/$userid';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      if (jsonData['data'] != null) {
+        final data = jsonData['data'];
+
+        if (data['start_date'] != null && data['end_date'] != null) {
+          setState(() {
+            _startdate = DateTime.parse(data['start_date']);
+            _enddate = DateTime.parse(data['end_date']);
+          });
+        }
+      }
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+
+    print(response.statusCode);
+    print('data pas api tarik' + response.body);
   }
 
   Future<bool> _handleLocationPermission() async {

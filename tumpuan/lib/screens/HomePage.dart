@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tumpuan/components/dailyQuiz.dart';
 import 'package:tumpuan/components/widgetUntukPuan.dart';
@@ -6,26 +8,107 @@ import 'package:tumpuan/screens/newUntukPuan.dart';
 import 'package:tumpuan/screens/suaraPuan.dart';
 import 'package:tumpuan/screens/untukPuan.dart';
 import 'package:tumpuan/screens/home.dart';
+import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/styles/style.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.startdate, required this.enddate});
+
+  final DateTime startdate;
+  final DateTime enddate;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isLoading = true;
+
+  void initState() {
+    super.initState();
+    getCurrentUser().then((userid) {
+      if (userid != null) {
+        getData(userid);
+      }
+    });
+  }
+
   late int countdown = 22;
-  late DateTime _rangeStartDay = DateTime.utc(2024, 2, 26);
-  late DateTime _rangeEndDay = DateTime.utc(2024, 3, 3);
+  late DateTime _rangeStartDay = widget.startdate;
+  late DateTime _rangeEndDay = widget.enddate;
+  late DateTime _rangeStartDayplus30 =
+      _rangeStartDay.add(const Duration(days: 30));
+  late DateTime _rangeEndDayplus30 = _rangeEndDay.add(const Duration(days: 30));
+
+  // late DateTime _startdate = DateTime.now();
+  // late DateTime _enddate = DateTime.now();
+
+  Future<String?> getCurrentUser() async {
+    final url = 'http://10.0.2.2:8000/api/users/current';
+    final uri = Uri.parse(url);
+
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      if (jsonData['data'] != null) {
+        final data = jsonData['data'];
+        if (data.containsKey('id')) {
+          return data['id'].toString();
+        }
+      }
+    }
+    return null;
+  }
+
+  Future<void> getData(String userid) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final url = 'http://10.0.2.2:8000/api/catatanhaids/$userid';
+    final uri = Uri.parse(url);
+    final response =
+        await http.get(uri, headers: {'Authorization': '${AuthService.token}'});
+
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      if (jsonData['data'] != null) {
+        final data = jsonData['data'];
+
+        if (data['start_date'] != null && data['end_date'] != null) {
+          setState(() {
+            _rangeStartDay = DateTime.parse(data['start_date']);
+            _rangeEndDay = DateTime.parse(data['end_date']);
+          });
+        }
+      }
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+
+    print(response.statusCode);
+    print('data pas api tarik' + response.body);
+  }
 
   @override
   Widget build(BuildContext context) {
-    String formattedEndDate = DateFormat('d MMMM yyyy').format(_rangeEndDay);
+    _rangeStartDayplus30 = _rangeStartDay.add(const Duration(days: 30));
+    _rangeEndDayplus30 = _rangeEndDay.add(const Duration(days: 30));
+    print("nbb start date $_rangeStartDay");
+    print("uhu end date $_rangeEndDay");
+    Duration difference = _rangeStartDayplus30.difference(DateTime.now());
+    countdown = difference.inDays;
+    // print(_startdate + '-' + _enddate);
+
+    String formattedEndDate =
+        DateFormat('d MMMM yyyy').format(_rangeEndDayplus30);
     String formattedStartDate =
-        DateFormat('d MMMM yyyy').format(_rangeStartDay);
+        DateFormat('d MMMM yyyy').format(_rangeStartDayplus30);
 
     // NavBar newNav = new NavBar();
 
@@ -118,27 +201,29 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceAro,
                     children: [
-                      Stack(
-                        children: [Container(
+                      Stack(children: [
+                        Container(
                           width: 145,
                           height: 150,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage("images/btn_countdown.png"))),
+                                  image:
+                                      AssetImage("images/btn_countdown.png"))),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal : 8, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 23, vertical: 35),
                           child: Text(
                             '${countdown} Days',
                             style: TextStyle(
                                 fontFamily: 'Satoshi',
-                                fontSize: 18,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 255, 255, 255)),
+                                color:
+                                    const Color.fromARGB(255, 255, 255, 255)),
                           ),
                         )
-                        ]
-                      ),
+                      ]),
                       SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {
@@ -218,8 +303,9 @@ class _HomePageState extends State<HomePage> {
                               MaterialStateProperty.all(AppColors.pink1)),
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const CatatanHaid(
-                                // title: 'Untuk Puan',
+                            builder: (context) => CatatanHaid(
+                                  startdate: widget.startdate,
+                                  enddate: widget.enddate,
                                 )));
                       },
                       child: Text(
