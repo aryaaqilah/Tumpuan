@@ -298,27 +298,34 @@ class _tempSignUpPageState extends State<tempSignUpPage> with TickerProviderStat
                     ),
                   ),
                   const SizedBox(height: 30),
-                  buildTextField(
-                    controller: usernameController,
-                    hintText: 'Username',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your username';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  //password
-                  buildTextField(
-                    controller: passwordController,
-                    hintText: 'Password',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      return null;
-                    },
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children:[
+                      buildTextField(
+                        controller: usernameController,
+                        hintText: 'Username',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your username';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      //password
+                      buildTextField(
+                        controller: passwordController,
+                        hintText: 'Password',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
+                      ),
+                      ]
+                    )
                   ),
                   const SizedBox(height: 200),
                   Row(
@@ -391,39 +398,38 @@ class _tempSignUpPageState extends State<tempSignUpPage> with TickerProviderStat
     );
   }
 
-  // Future<void> RegistrationUser() async {
-  //   final name = widget.name;
-  //   final dob = widget.dob;
-  //   final email = widget.email;
+  Future<void> RegistrationUser() async {
+    final name = firstNameController.text;
+    final dob = dateInputController.text;
+    final email = emailController.text;
+    final username = usernameController.text;
+    final password = passwordController.text;
 
-  //   final username = usernameController.text;
-  //   final password = passwordController.text;
+    print('Name: $name');
+    print('DOB: $dob');
+    print('Email: $email');
 
-  //   print('Name: $name');
-  //   print('DOB: $dob');
-  //   print('Email: $email');
+    final token = Uuid().v4();
 
-  //   final token = Uuid().v4();
+    final body = {
+      "name": name,
+      "dob": dob,
+      "email": email,
+      "username": username,
+      "password": password,
+      "gender": 1,
+      "token": token,
+    };
 
-  //   final body = {
-  //     "name": name,
-  //     "dob": dob,
-  //     "email": email,
-  //     "username": username,
-  //     "password": password,
-  //     "gender": 1,
-  //     "token": token,
-  //   };
+    final url = 'http://10.0.2.2:8000/api/users';
+    final uri = Uri.parse(url);
+    final response = await http.post(uri, body: jsonEncode(body), headers: {
+      'Content-Type': 'application/json',
+    });
 
-  //   final url = 'http://10.0.2.2:8000/api/users';
-  //   final uri = Uri.parse(url);
-  //   final response = await http.post(uri, body: jsonEncode(body), headers: {
-  //     'Content-Type': 'application/json',
-  //   });
-
-  //   print(response.statusCode);
-  //   print(response.body);
-  // }
+    print(response.statusCode);
+    print(response.body);
+  }
 
   Widget buildTextField({
     required TextEditingController controller,
@@ -534,6 +540,10 @@ class PageIndicator extends StatelessWidget {
                     if (formKey.currentState!.validate() == false) {
                       return;
                     }
+                    print(firstNameController.text);
+                    print(lastNameController.text);
+                    print(dateInputController.text);
+                    print(emailController.text);
                   }              
                   if (currentPageIndex == 1) {
                     if (isImageUploaded == false) {
@@ -545,7 +555,10 @@ class PageIndicator extends StatelessWidget {
                       Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => BridgetoQ(username: usernameController.text, password: passwordController.text,)));
                     }
+
+                    return;
                   }
+
                   onUpdateCurrentPageIndex(currentPageIndex + 1);
                   },
                   style: ButtonStyle(

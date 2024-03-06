@@ -78,26 +78,30 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                     )
                   : Image.file(_imageFile!),
               SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
+              FilledButton(
+                style: FilledButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(251, 111, 146, 1),
                 ),
                 onPressed: () => _getImage(ImageSource.camera),
                 child: Text(
                   'Take Picture',
                   style: TextStyle(
-                      fontFamily: 'Satoshi', fontWeight: FontWeight.bold),
+                      fontFamily: 'Satoshi', fontWeight: FontWeight.bold,
+                      color: Colors.white
+                      ),
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
+              FilledButton(
+                style: FilledButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(251, 111, 146, 1),
                 ),
                 onPressed: () => _getImage(ImageSource.gallery),
                 child: Text(
                   'Choose from Gallery',
                   style: TextStyle(
-                      fontFamily: 'Satoshi', fontWeight: FontWeight.bold),
+                      fontFamily: 'Satoshi', fontWeight: FontWeight.bold,
+                      color: Colors.white
+                      ),
                 ),
               ),
               SizedBox(

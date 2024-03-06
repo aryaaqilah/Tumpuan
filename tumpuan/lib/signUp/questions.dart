@@ -11,7 +11,16 @@ import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
 class questions extends StatefulWidget {
-  const questions({Key? key}) : super(key: key);
+  // questions({Key? key}) : super(key: key);
+
+  final String username;
+  final String password;
+
+  const questions({
+    Key? key,
+    required this.username,
+    required this.password,
+  }) : super(key: key);
 
   @override
   State<questions> createState() => _questionsState();
@@ -20,6 +29,7 @@ class questions extends StatefulWidget {
 double progressPercentage = 0.2;
 
 class _questionsState extends State<questions> with TickerProviderStateMixin{
+  
   List<Map<String, dynamic>> question1 = [
     {"id": 0, "selected": false, "title": 'My cycle is regular'},
     {"id": 1, "selected": false, "title": 'My cycle is irregular'},
@@ -58,6 +68,7 @@ class _questionsState extends State<questions> with TickerProviderStateMixin{
   late TextEditingController dateInputController;
   late TextEditingController dateInputControllerend;
   bool dontKnowSelected = false;
+  bool dontKnowSelectedEnd = false;
 
   @override
   void initState() {
@@ -77,6 +88,10 @@ class _questionsState extends State<questions> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
+    // cek username ama password
+    print("q username: ${widget.username}");
+    print("q password: ${widget.password}");
+
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
@@ -263,7 +278,7 @@ class _questionsState extends State<questions> with TickerProviderStateMixin{
                                     readOnly: true,
                                     onTap: () async {
                                       setState(() {
-                                        dontKnowSelected = false;
+                                        dontKnowSelectedEnd = false;
                                       });
                                       DateTime? pickedDate = await showDatePicker(
                                         context: context,
@@ -421,6 +436,10 @@ class _questionsState extends State<questions> with TickerProviderStateMixin{
               tabController: _tabController,
               currentPageIndex: _currentPageIndex,
               onUpdateCurrentPageIndex: _updateCurrentPageIndex,
+              isAnyOptionSelected: _isAnyOptionSelected(_currentPageIndex),
+              dateInputController: dateInputController,
+              dontKnowSelected: dontKnowSelected,
+              dontKnowSelectedEnd: dontKnowSelectedEnd,
               // isOnDesktopAndWeb: _isOnDesktopAndWeb,
             ),
           )
@@ -429,8 +448,30 @@ class _questionsState extends State<questions> with TickerProviderStateMixin{
     );
   }
 
-bool _isAnyOptionSelected() {
-  return question1.any((item) => item['selected'] == true);
+bool _isAnyOptionSelected(int currentPageIndex) {
+  if(currentPageIndex == 0){
+    if (question1.any((item) => item['selected'] == true)){
+      return true;
+    };
+    return false;
+  } else if (currentPageIndex == 2){
+    if (question3.any((item) => item['selected'] == true)){
+      return true;
+    };
+    return false;
+  } else if (currentPageIndex == 3){
+    if (question4.any((item) => item['selected'] == true)){
+      return true;
+    };
+    return false;
+  } else if (currentPageIndex == 4){
+    if (question5.any((item) => item['selected'] == true)){
+      return true;
+    };
+    return false;
+  }
+
+  return false;
 }
 
 void _handlePageViewChanged(int currentPageIndex) {
@@ -470,11 +511,20 @@ class PageIndicator extends StatelessWidget {
     required this.tabController,
     required this.currentPageIndex,
     required this.onUpdateCurrentPageIndex,
+    required this.isAnyOptionSelected,
+    required this.dateInputController,
+    required this.dontKnowSelected,
+    required this.dontKnowSelectedEnd,
   });
 
+  late TextEditingController dateInputController;
   final int currentPageIndex;
   final TabController tabController;
   final void Function(int) onUpdateCurrentPageIndex;
+  bool isAnyOptionSelected;
+  bool dontKnowSelected;
+  bool dontKnowSelectedEnd;
+
   bool _isVisible = true;
 
   @override
@@ -522,13 +572,22 @@ class PageIndicator extends StatelessWidget {
                 width: 109,
                 child: FilledButton(
                   onPressed: () {                  
+                  if (isAnyOptionSelected == false && currentPageIndex != 1) {
+                    return;
+                  }
+
+                  if(currentPageIndex == 1){
+                    if (dateInputController.text.isEmpty || (dontKnowSelected == true && dontKnowSelectedEnd == true)) {
+                      return;
+                    }
+                  }
+
                   if (currentPageIndex == 4) {
                     Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => const AllSetPage()));
                     return;
-                  } else if (currentPageIndex != 0){
-                    progressPercentage += 0.2;
                   }
+                  
                   onUpdateCurrentPageIndex(currentPageIndex + 1);
                   },
                   style: ButtonStyle(

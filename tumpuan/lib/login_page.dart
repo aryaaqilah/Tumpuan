@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                 //sign in button
                 SizedBox(
                   width: 100,
-                  child: ElevatedButton(
+                  child: FilledButton(
                     onPressed:
                         // if (_formKey.currentState!.validate()) {
                         //   Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -130,7 +130,8 @@ class _LoginPageState extends State<LoginPage> {
                             const Color.fromRGBO(251, 111, 146, 1))),
                     child: const Text(
                       'Login',
-                      style: TextStyle(fontFamily: 'Satoshi'),
+                      style: TextStyle(fontFamily: 'Satoshi',
+                      color: Colors.white),
                     ),
                   ),
                 ),

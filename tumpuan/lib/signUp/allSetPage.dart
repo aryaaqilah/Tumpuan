@@ -23,7 +23,7 @@ class _AllSetPageState extends State<AllSetPage> {
             const SizedBox(height: 50),
             SizedBox(
               width: 300,
-              child: ElevatedButton(
+              child: FilledButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => const LoginPage()));
@@ -33,7 +33,7 @@ class _AllSetPageState extends State<AllSetPage> {
                         const Color.fromRGBO(251, 111, 146, 1))),
                 child: const Text(
                   'Login',
-                  style: TextStyle(fontFamily: 'Satoshi'),
+                  style: TextStyle(fontFamily: 'Satoshi', color: Colors.white),
                 ),
               ),
             ),
