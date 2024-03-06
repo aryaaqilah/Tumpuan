@@ -5,6 +5,7 @@ import 'package:tumpuan/screens/emergencyContact.dart';
 import 'package:tumpuan/screens/navScreen.dart';
 import 'package:tumpuan/services/auth_service.dart';
 import 'package:tumpuan/splash_page.dart';
+import 'package:tumpuan/start_page.dart';
 import 'package:tumpuan/styles/style.dart';
 
 class Settings extends StatefulWidget {
@@ -581,4 +582,42 @@ class _SettingsState extends State<Settings> {
       ),
     );
   }
+}
+
+Future<void> _showCloseDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content: const SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              // Image(image: AssetImage('images/cancelRegist.png')),
+              Text('Are you sure you want to sign out?')
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: AppColors.pink1),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('Yes', style: TextStyle(color: AppColors.pink1)),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const StartPage()),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

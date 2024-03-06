@@ -8,7 +8,11 @@ import 'package:tumpuan/styles/style.dart';
 import 'package:http/http.dart' as http;
 
 class CatatanHaid extends StatefulWidget {
-  const CatatanHaid({Key? key}) : super(key: key);
+  const CatatanHaid({Key? key, required this.startdate, required this.enddate})
+      : super(key: key);
+
+  final DateTime startdate;
+  final DateTime enddate;
 
   @override
   State<CatatanHaid> createState() => _CatatanHaidState();
@@ -30,7 +34,7 @@ class _CatatanHaidState extends State<CatatanHaid> {
   late DateTime _selectedDay = DateTime.now();
   // late DateTime _rangeStartDay =
   //     DateTime.utc(2024, 2, 26); // start period dari database
-  late DateTime _rangeStartDay;
+  late DateTime _rangeStartDay = widget.startdate;
   late DateTime _rangeStartDayplus30 =
       _rangeStartDay.add(const Duration(days: 30));
   late DateTime _rangeStartDayminus30 =
@@ -38,7 +42,7 @@ class _CatatanHaidState extends State<CatatanHaid> {
 
   // late DateTime _rangeEndDay =
   //     DateTime.utc(2024, 3, 3); // end period dari database
-  late DateTime _rangeEndDay;
+  late DateTime _rangeEndDay = widget.enddate;
   late DateTime _rangeEndDayplus30 = _rangeEndDay.add(const Duration(days: 30));
   late DateTime _rangeEndDayminus30 =
       _rangeEndDay.subtract(const Duration(days: 30));
@@ -99,8 +103,16 @@ class _CatatanHaidState extends State<CatatanHaid> {
 
   @override
   Widget build(BuildContext context) {
+    _rangeStartDayplus30 = _rangeStartDay.add(const Duration(days: 30));
+    _rangeStartDayminus30 = _rangeStartDay.subtract(const Duration(days: 30));
+    _rangeEndDayplus30 = _rangeEndDay.add(const Duration(days: 30));
+    _rangeEndDayminus30 = _rangeEndDay.subtract(const Duration(days: 30));
     print("start date $_rangeStartDay");
     print("end date $_rangeEndDay");
+    print("start date plus$_rangeStartDayplus30");
+    print("end date plus $_rangeEndDayplus30");
+    print("start date minus$_rangeStartDayminus30");
+    print("end date minus $_rangeEndDayminus30");
     return Scaffold(
       backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
@@ -209,12 +221,10 @@ class _CatatanHaidState extends State<CatatanHaid> {
                                   _rangeStartDay.subtract(Duration(days: 1))) &&
                               date.isBefore(
                                   _rangeEndDay.add(Duration(days: 1))) ||
-                          date.isAfter(_rangeStartDayplus30
-                                  .subtract(Duration(days: 1))) &&
+                          date.isAfter(_rangeStartDayplus30) &&
                               date.isBefore(
                                   _rangeEndDayplus30.add(Duration(days: 1))) ||
-                          date.isAfter(_rangeStartDayminus30
-                                  .subtract(Duration(days: 1))) &&
+                          date.isAfter(_rangeStartDayminus30) &&
                               date.isBefore(
                                   _rangeEndDayminus30.add(Duration(days: 1))) ||
                           date.isAtSameMomentAs(_rangeStartDay)) {
