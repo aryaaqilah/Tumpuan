@@ -97,6 +97,7 @@ Widget getDataSuaraPuan(List<dynamic> dataSuaraPuan) {
       final dop = data['dop'].toString();
       final kategori_id = data['kategori_id'].toString();
       final user_id = data['user_id'].toString();
+      // final kategori_name = data['kategori_id
 
       return FutureBuilder<String?>(
         future: getKategoriById(kategori_id),
@@ -143,9 +144,6 @@ class SuaraPuanBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // SizedBox(
-        //   height: 20,
-        // ),
         Container(
           width: 330,
           child: Divider(
@@ -214,12 +212,37 @@ class SuaraPuanBox extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  width: 330,
-                  height: 150,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('images/suaraPuanImg.png'))),
+                GestureDetector(
+                  onTap: () {
+                    // Action to perform when the Container is tapped
+                    print('Container tapped');
+                  },
+                  child: Container(
+                    width: 325,
+                    height: 148,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => IsiSuaraPuan(
+                                  id: id,
+                                  title: title,
+                                  content: content,
+                                  media: media,
+                                  dop: dop,
+                                  kategori_id: kategori_id,
+                                  user_id: user_id,
+                                )));
+                      },
+                      child: Image.network(
+                        media,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(height: 10),
                 IntrinsicHeight(
@@ -235,7 +258,7 @@ class SuaraPuanBox extends StatelessWidget {
                         color: Colors.grey,
                         thickness: 1,
                       ),
-                      Text('Tumpuan',
+                      Text(kategori_name,
                           style: TextStyle(
                               fontFamily: 'Satoshi',
                               fontWeight: FontWeight.bold,
@@ -245,13 +268,16 @@ class SuaraPuanBox extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 7),
-                Text(title,
-                    style: TextStyle(
-                        fontFamily: 'Satoshi',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                    maxLines: 2),
+                Text(
+                  title,
+                  style: TextStyle(
+                      fontFamily: 'Satoshi',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 20),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
           ),

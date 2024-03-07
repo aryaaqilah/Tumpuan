@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:tumpuan/components/bannerSuaraPuan.dart';
 import 'dart:ui';
 import 'package:http/http.dart' as http;
+import 'package:tumpuan/components/content_suaraPuan.dart';
 import 'package:video_player/video_player.dart';
 import 'package:tumpuan/services/auth_service.dart';
 
@@ -31,6 +32,37 @@ class User {
     required this.dob,
     required this.gender,
   });
+}
+
+Widget getDataSuaraPuan(List<dynamic> dataSuaraPuan) {
+  return Column(
+    children: dataSuaraPuan.map((data) {
+      final id = data['id'].toString();
+      final title = data['title'].toString();
+      final content = data['content'].toString();
+      final media = data['media'].toString();
+      final dop = data['dop'].toString();
+      final kategori_id = data['kategori_id'].toString();
+      final user_id = data['user_id'].toString();
+
+      return FutureBuilder<String?>(
+        future: getKategoriById(kategori_id),
+        builder: (context, snapshot) {
+          final kategoriName = snapshot.data ?? '';
+          return SuaraPuanBox(
+            id: id,
+            title: title,
+            content: content,
+            media: media,
+            dop: dop,
+            kategori_id: kategori_id,
+            user_id: user_id,
+            kategori_name: kategoriName,
+          );
+        },
+      );
+    }).toList(),
+  );
 }
 
 class IsiSuaraPuan extends StatefulWidget {
@@ -96,10 +128,27 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
   @override
   Widget build(BuildContext context) {
     final dataSuaraPuan = [
-      ['author', 'images/suaraPuanImg.png', 'date', 'category', 'title'],
-      ['author2', 'images/suaraPuanImg.png', 'date2', 'category2', 'title2'],
-      ['author3', 'images/suaraPuanImg.png', 'date3', 'category3', 'title3'],
-      ['author4', 'images/suaraPuanImg.png', 'date4', 'category4', 'title4'],
+      [
+        'Vivienne Westwood Menghasilkan Uang Rp 1,6 M Per Hari di Tahun Dia Meninggal',
+        'images/business-1.jpg',
+        '21 February 2024',
+        'Business',
+        'title2'
+      ],
+      [
+        'Buttonscarves dan Kami. Rilis Koleksi Kolaborasi Tema Pemberdayaan Wanita',
+        'images/lifestyle-1.jpg',
+        '13 February 2023',
+        'Lifestyle',
+        'title'
+      ],
+      [
+        'Polisi dan Psikolog Dampingi Anak Dayang Santi untuk Hilangkan Trauma',
+        'images/news-1.jpeg',
+        '9 February 2024',
+        'News',
+        'title3'
+      ],
     ];
 
     final dataBannerSuara = dataSuaraPuan.sublist(0, 3);
@@ -131,8 +180,8 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
           children: [
             Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Image.asset(
-                  'images/suaraPuanImg.png',
+                child: Image.network(
+                  widget.media,
                   width: MediaQuery.of(context).size.width,
                   height: 200,
                   fit: BoxFit.cover,
@@ -153,6 +202,7 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                 ),
               ),
             ),
+            SizedBox(height: 2),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -161,7 +211,7 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                   child: Row(
                     children: [
                       Text(
-                        widget.dop,
+                        widget.dop + " | ",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: 'Satoshi',
@@ -171,7 +221,7 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                         ),
                       ),
                       Text(
-                        " | " + widget.kategori_id,
+                        getCategory(int.parse(widget.kategori_id)),
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: 'Satoshi',
@@ -203,15 +253,8 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Text(
-                // 'Dua brand lokal yang populer di kalangan hijabers berkolaborasi dan membuat gebrakan terbaru. Ialah Buttonscarves dan Kami. yang berkolaborasi mengeluarkan koleksi untuk memperdayakan wanita. Brand Kami. didirikan oleh Istafiana Candarini, Nadya Karina, dan Afina Candarini pada 2009. Sedangkan CEO dan Founder dari Buttonscarves Linda Anggrea mendirikan brandnya sejak 2016. Dalam kehidupan sehari-hari, pemilik kedua brand ini saling dekat dan mengenal satu sama lain. Kerap bertemu, tercetus lah ide untuk berkolaborasi bersama.\n\n'
-                // 'Buttonscarves dan Kami. merilis koleksi yang dinamai Kimmonia Series. Istafiana Candarini atau akrab disapa Irin ini mengungkapkan proses awal koleksi kolaborasinya dengan Linda. "Kurang lebih selama dua tahun yang lalu ada percakapan yang membahas tentang kolaborasi. Karena pelanggan setia kita minta kita untuk kolaborasi. Dan kita mengiyakan berkolaborasi," kata Irin saat konferensi pers Buttonscarves x Kami. Kimmonia Exhibition, Senin (12/2/2024) di Pondok Indah Mall 3, Jakarta Selatan. Linda menambahkan koleksi Kimmonia tercetus karena dia, Irin dan founder Buttonscarves serta Kami. lainnya kerap berkolaborasi bukan hanya kali ini saja. Persaingan sehat terjadi dan mereka tak takut untuk bertukar pikiran mengenai industri modest fashion.\n\n'
-                // '"Walau pun toko kita sebelahan, kita saling tukar pikiran dan bertanya tahun depan membahas tren misalnya. Saling improve supplier dan lain-lain," kata Linda. Nadya Karina atau biasa dipanggil Karin yang merupakan creative director Kami. lebih lanjut menjelaskan arti dari Kimmonia yang merupakan nama koleksi kolaborasi dengan Buttonscarves. Kimmonia sendiri berarti perempuan hebat. "Kita pilih karena isinya di Buttonscarves dan Kami. itu perempuan semua yang sama-sama seumuran juga. Background kehidupannya sama, bisnisnya sama dan itu kenapa kita pilih nama Kimmonia," ujarnya.\n\n'
-                // 'Dalam mewujudkan koleksi kolaborasi, membutuhkan proses yang panjang. Karin mengaku banyak belajar lagi tentang kolaborasi. "Karena kita kepengen hasil produknya maksimal dan karakter keduanya benar-benar kelihatan. Alhamdulillah teasernya benar-benar antusias kita keluar karakternya," jelas Karin. Linda yang merupakan ibu dari empat orang anak ini koleksi kolaborasi ini didominasi motif Kami., sedangkan lay out busana dan hijabnya Buttonscarves. Mereka pun menggabungkan dua logo brand sebagai motif hijab monogram.\n\n'
-                // '"Karena ada yang mau versinya masing-masing walau berbeda tetap satu. Kenapa tidak berkolaborasi pattern yang dilebur menjadi satu," jelasnya. Irin menambahkan menggabungkan dua DNA brand tidaklah mudah. Ada beberapa ide yang tak bisa diwujudkan bersama. "Kalau tantangannya sendiri waktu itu yang nggak jadi itu ada bros. Akhirnya fokus yang mau kita buat sekarang membawa kilas balik Jemima Series akhirnya lebih fresh," ungkap Irin.\n\n'
-                // 'Salah satu hal menarik dari koleksi kolaborasi ini terdapat elemen kaktus, lilac series dari Buttonscarves dan Jemina Series dari Kami. Ada emblem atau logo hijab dari masing-masing brand yang bisa dibolak-balik. Koleksi Kimmonia yang merupakan kolaborasi Buttonscarves dan Kami. ini terdiri dari hijab, busana mulai dari atasan hingga dress serta baju untuk pria dan anak-anak. Harga hijab dibanderol Rp 425 Ribu dan busananya Rp 1,5 Juta. Tak hanya koleksi hijab, kolaborasi dua brand lokal ini juga mengeluarkan tote bag untuk melengkapi kebutuhan wanita. Untuk koleksi tas ini kata Linda, dia dan tim Kami. juga mencari titik temu untuk tetap mempertahankan dua DNA dari masing-masing brand.\n\n'
-                // '"Akhirnya ciri khasnya key chain yang bisa dilepas pasang pada tote bag. Sisi depan belakangnya ada logo Buttonscarves dan Kami. koleksi ini juga tersedia untuk pria dan anak-anak," ujar Linda. Irin menegaskan koleksi kolaborasi ini didedikasikan sebagai lambang persahabatan antar kedua brand. Linda menambahkan, mereka juga ingin memberikan contoh kepada pelaku industri untuk bisa mendukung satu sama lain. "Di Malaysia itu masih jarang antar lintas modest brand bisa berkolaborasi. Karena berkolaborasi itu ada nilai baik yang lebih banyak. Ada sesuatu hal baru yang didapatkan. Semakin sadar bahwa banyak hal yang bisa improve satu sama lain," kata Linda.\n\n',
                 widget.content,
-                textAlign: TextAlign.left,
+                textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontFamily: 'Satoshi',
                   fontWeight: FontWeight.w600,
@@ -486,6 +529,7 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
                               submitComment();
                             },
                           ),
+                          SizedBox(height: 15),
                         ],
                       ),
                     ),
@@ -689,4 +733,17 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
       super.dispose();
     }
   }
+}
+
+String getCategory(int id) {
+  if (id == 1)
+    return 'Lifestyle';
+  else if (id == 2)
+    return 'Business';
+  else if (id == 3)
+    return 'News';
+  else if (id == 4)
+    return 'Health';
+  else
+    return '-';
 }

@@ -1,11 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:tumpuan/Widgets/sliver_list.dart';
-import 'package:tumpuan/Widgets/sliver_list2.dart';
-import 'package:tumpuan/Widgets/sliver_list3.dart';
-import 'package:tumpuan/components/bannerSuaraPuan.dart';
-import 'package:tumpuan/components/content_suaraPuan.dart';
+// import 'package:tumpuan/components/content_suaraPuan.dart';
+import 'package:tumpuan/screens/isiSuaraPuan.dart';
 import 'package:tumpuan/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,21 +24,10 @@ class _SuaraPuanState extends State<SuaraPuan> {
   }
 
   List<dynamic> dataSuaraPuan = [];
-List<dynamic> dataBannerSuara = [];
+  List<dynamic> dataBannerSuara = [];
 
   @override
   Widget build(BuildContext context) {
-    final dataSuaraPuan2 = [
-      ['title1', 'images/suaraPuanImg.png', 'date1', '1', '1'],
-      ['title2', 'images/suaraPuanImg.png', 'date2', '2', '2'],
-      ['title3', 'images/suaraPuanImg.png', 'date3', '3', '3'],
-      ['title4', 'images/suaraPuanImg.png', 'date4', '4', '4'],
-    ];
-
-    final dataBannerSuara = dataSuaraPuan2.sublist(0, 3);
-
-    // final dots
-
     final PageController controller = PageController();
     int currentTab = 0;
 
@@ -93,7 +79,7 @@ List<dynamic> dataBannerSuara = [];
               ),
             ),
             Container(
-              height: 230,
+              height: 250,
               child: PageView(
                 controller: controller,
                 onPageChanged: (index) {
@@ -143,7 +129,7 @@ List<dynamic> dataBannerSuara = [];
         var content = data['content'].toString();
         var media = data['media'].toString();
         var dop = data['dop'].toString();
-        var kategori_id = data['kategori_id'];
+        var kategori_id = data['kategori_id'].toString();
 
         dataSuaraPuan.add({
           'id': id,
@@ -151,14 +137,14 @@ List<dynamic> dataBannerSuara = [];
           'content': content,
           'media': media,
           'dop': dop,
-          'kategori_id': kategori_id,        });
+          'kategori_id': kategori_id,
+        });
       }
 
       setState(() {
         // Update state after fetching data
         dataSuaraPuan = resultList;
         dataBannerSuara = dataSuaraPuan.take(4).toList();
-
 
         isLoading = false;
       });
@@ -181,25 +167,95 @@ class BannerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.fromLTRB(33, 17, 33, 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.blue,
+        // color: Colors.blue,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Container(
+            width: 325,
+            height: 148,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => IsiSuaraPuan(
+                          id: data['id'].toString(),
+                          title: data['title'].toString(),
+                          content: data['content'].toString(),
+                          media: data['media'].toString(),
+                          dop: data['dop'].toString(),
+                          kategori_id: data['kategori_id'].toString(),
+                          user_id: data['user_id'].toString(),
+                        )));
+              },
+              child: Image.network(
+                data['media'].toString(),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SizedBox(height: 4),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            child: Row(
+              children: [
+                Text(
+                  data['dop'].toString(),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Satoshi',
+                    fontWeight: FontWeight.w900,
+                    color: const Color.fromRGBO(251, 111, 146, 1),
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  " | " +
+                      getCategory(int.parse(data['kategori_id'].toString())),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Satoshi',
+                    fontWeight: FontWeight.w900,
+                    color: const Color.fromRGBO(251, 111, 146, 1),
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 3),
           Text(
             data['title'].toString(),
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+                fontFamily: 'Satoshi',
+                fontWeight: FontWeight.w900,
+                color: Colors.black,
+                fontSize: 20),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(height: 10),
-          Image.network(
-            data['media'].toString(),
-          ), // Assuming 'media' contains image URL
         ],
       ),
     );
   }
 }
 
+String getCategory(int id) {
+  if (id == 1)
+    return 'Lifestyle';
+  else if (id == 2)
+    return 'Business';
+  else if (id == 3)
+    return 'News';
+  else if (id == 4)
+    return 'Health';
+  else
+    return '-';
+}

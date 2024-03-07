@@ -96,7 +96,7 @@ class BannerSuaraPuanBox extends StatelessWidget {
                         color: Colors.grey,
                         thickness: 1,
                       ),
-                      Text('Tumpuan',
+                      Text(kategori_id,
                           style: TextStyle(
                               fontFamily: 'Satoshi',
                               fontWeight: FontWeight.bold,
@@ -107,16 +107,17 @@ class BannerSuaraPuanBox extends StatelessWidget {
                 ),
                 // SizedBox(height: 2),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Text(
                     title,
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      fontFamily: 'Satoshi',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
+                        fontFamily: 'Satoshi',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 20),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
