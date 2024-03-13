@@ -44,21 +44,22 @@ Widget getDataSuaraPuan(List<dynamic> dataSuaraPuan) {
       final dop = data['dop'].toString();
       final kategori_id = data['kategori_id'].toString();
       final user_id = data['user_id'].toString();
+      final video = data['video'].toString();
 
       return FutureBuilder<String?>(
         future: getKategoriById(kategori_id),
         builder: (context, snapshot) {
           final kategoriName = snapshot.data ?? '';
           return SuaraPuanBox(
-            id: id,
-            title: title,
-            content: content,
-            media: media,
-            dop: dop,
-            kategori_id: kategori_id,
-            user_id: user_id,
-            kategori_name: kategoriName,
-          );
+              id: id,
+              title: title,
+              content: content,
+              media: media,
+              dop: dop,
+              kategori_id: kategori_id,
+              user_id: user_id,
+              kategori_name: kategoriName,
+              video: video);
         },
       );
     }).toList(),
@@ -73,6 +74,7 @@ class IsiSuaraPuan extends StatefulWidget {
   final String dop;
   final String kategori_id;
   final String user_id;
+  final String video;
 
   const IsiSuaraPuan({
     Key? key,
@@ -83,6 +85,7 @@ class IsiSuaraPuan extends StatefulWidget {
     required this.dop,
     required this.kategori_id,
     required this.user_id,
+    required this.video,
   }) : super(key: key);
 
   @override
@@ -108,11 +111,11 @@ class _IsiSuaraPuanState extends State<IsiSuaraPuan> {
     // });
 
     // ini buat klo data videonya dari local
-    _videoController = VideoPlayerController.asset('images/bee.mp4');
+    _videoController = VideoPlayerController.asset(widget.video);
     _videoController.initialize().then((value) {
       setState(() {});
     });
-    // _videoController.setLooping(true);
+    _videoController.setLooping(true);
   }
 
   List<dynamic> dataComment = [];

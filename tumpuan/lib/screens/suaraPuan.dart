@@ -130,12 +130,14 @@ class _SuaraPuanState extends State<SuaraPuan> {
         var media = data['media'].toString();
         var dop = data['dop'].toString();
         var kategori_id = data['kategori_id'].toString();
+        var video = data['video'].toString();
 
         dataSuaraPuan.add({
           'id': id,
           'title': title,
           'content': content,
           'media': media,
+          'video': video,
           'dop': dop,
           'kategori_id': kategori_id,
         });
@@ -193,6 +195,7 @@ class BannerWidget extends StatelessWidget {
                           dop: data['dop'].toString(),
                           kategori_id: data['kategori_id'].toString(),
                           user_id: data['user_id'].toString(),
+                          video: data['video'].toString(),
                         )));
               },
               child: Image.network(
