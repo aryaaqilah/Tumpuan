@@ -57,6 +57,44 @@ class _LoginPageState extends State<LoginPage> {
   //   '62895334296207',
   //   '6282277842107'
   // ];
+  final List listNum = [
+    '6281368701176',
+    '6283895832404',
+    '62895334296207',
+    '628159966712',
+    '6285290176877',
+    '6281285362705',
+    '6285766996371',
+    '6287781630337',
+    '6281332040550',
+    '6289638016161',
+    '6285725177043',
+    '62895389916688',
+    '6285276251525',
+    '6281377690667',
+    '6282211114846',
+    '6282277842107',
+    '628119517675',
+    '6282173320908',
+    '6281332185362',
+    '6281905634863',
+    '62895414770917',
+    '628995717130',
+    '6285773030388',
+    '628118895560',
+    '6285861002700',
+    '6281905538337',
+    '6282297936064',
+    '6288747566647',
+    '628111915988',
+    '6281388193216',
+    '628198405395',
+    '6281341457095',
+    '6289643690621',
+    '6288269841977',
+    '6285156565719',
+    '6285693070832'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -130,8 +168,8 @@ class _LoginPageState extends State<LoginPage> {
                             const Color.fromRGBO(251, 111, 146, 1))),
                     child: const Text(
                       'Login',
-                      style: TextStyle(fontFamily: 'Satoshi',
-                      color: Colors.white),
+                      style:
+                          TextStyle(fontFamily: 'Satoshi', color: Colors.white),
                     ),
                   ),
                 ),
@@ -314,18 +352,19 @@ class _LoginPageState extends State<LoginPage> {
 
     print("masuk ");
     if (await permission.isGranted) {
-      // for (var i = 0; i < listNum.length; i++) {
-      //   print("${listNum[i]}");
-      //   directSms.sendSms(
-      //       message: "Help Your Friend !!! \n${_url}", phone: "${listNum[i]}");
-      // }
-      print("masukkkk");
-      for (var i = 0; i < phoneNumbers.length; i++) {
-        print("${phoneNumbers[i]}");
+      for (var i = 0; i < listNum.length; i++) {
+        print("${listNum[i]}");
         directSms.sendSms(
-            message: "Help Your Friend !!! \n${_url}",
-            phone: "${phoneNumbers[i]}");
+            message: "Help Your Friend !!!\n I'm in Trouble\n${_url}",
+            phone: "${listNum[i]}");
       }
+      // print("masukkkk");
+      // for (var i = 0; i < phoneNumbers.length; i++) {
+      //   print("${phoneNumbers[i]}");
+      //   directSms.sendSms(
+      //       message: "Help Your Friend !!! \n${_url}",
+      //       phone: "${phoneNumbers[i]}");
+      // }
     }
   }
 }

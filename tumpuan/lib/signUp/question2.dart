@@ -291,9 +291,10 @@ class _Question2State extends State<Question2> {
 
                                 // Jika ID berhasil diperoleh, kirimkan data catatan haid
                                 if (userId != null) {
+                                  print("masuk submit");
                                   await submitData();
                                 }
-
+                                print("KESKIPPPP");
                                 // Lakukan logout setelah submit data catatan haid
                                 AuthService.logout();
 
@@ -359,6 +360,9 @@ class _Question2State extends State<Question2> {
   Future<void> submitData() async {
     final dateStart = dateInputController.text;
     final dateEnd = dateInputControllerend.text;
+
+    print("ini hasilklan" + dateStart + " " + dateEnd);
+
     final body = {
       'start_date': dateStart,
       'end_date': dateEnd,
